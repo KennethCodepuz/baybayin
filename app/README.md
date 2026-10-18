@@ -1,0 +1,55 @@
+# Baybayin drawing capture prototype
+
+This prototype uses a Next.js frontend and a FastAPI backend. It records a target label, a final image, and ordered pointer events. The backend checks that the recording is structurally complete before the browser downloads it; neither component validates Baybayin characters or stroke rules yet. The physical book and expert-reviewed rubric are pending.
+
+## Run on this Windows computer
+
+The dependencies have been installed in `frontend/node_modules` and `backend/.venv`. Open **two PowerShell terminals** and leave both running.
+
+In the first terminal, start FastAPI:
+
+```powershell
+cd 'C:\Users\Kenne\OneDrive\Documents\ChatGPT\Thesis-writing\app\backend'
+.\.venv\Scripts\python.exe -m uvicorn main:app --host 127.0.0.1 --port 8000
+```
+
+In the second terminal, start Next.js:
+
+```powershell
+cd 'C:\Users\Kenne\OneDrive\Documents\ChatGPT\Thesis-writing\app\frontend'
+npm.cmd run dev -- --hostname 127.0.0.1
+```
+
+Open **http://127.0.0.1:3000** in Chrome or Edge. Enter a character name such as `ka`, draw in the white box, and select **Download sample**. The target is a label for the saved sample, not a correctness check. Stop each server with Ctrl+C in its terminal.
+
+## First-time setup on another computer
+
+Install Python 3.10 or newer and Node.js 20.9 or newer. Then run the following from the `app` directory:
+
+```powershell
+cd backend
+py -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+cd ..\frontend
+npm.cmd install
+```
+
+Start each service as shown above, using the corresponding `app\backend` and `app\frontend` paths on that computer. Do not open an HTML file directly; Next.js serves the page.
+
+## Tests
+
+Run these in separate terminals from their respective directories:
+
+```powershell
+# From app\backend
+.\.venv\Scripts\python.exe -m pytest -q
+
+# From app\frontend
+npm.cmd test
+```
+
+## Sample format and data handling
+
+The downloaded JSON includes a version, UTC creation time, manually entered target, canvas dimensions, PNG data URL, and ordered events. Event coordinates are in canvas pixels relative to its upper-left corner; timestamps are browser event timestamps in milliseconds relative to the browser's time origin, not wall-clock times. Each event includes its pointer type. Stroke boundaries are preserved. The FastAPI endpoint returns the sample but does not save it. Identifiers and consent handling are not implemented, so use test data only until a research protocol is approved. The browser may rename repeated downloads; manage exported files carefully.
+
+The prototype listens on localhost and is for development only. Reference sources, permissions, character specifications, and an expert-approved stroke rubric are documented as pending in `research/reference-and-rubric.md`.

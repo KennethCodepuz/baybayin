@@ -1,0 +1,19 @@
+:root { font-family: system-ui, sans-serif; color: #243029; background: #f3f5f0; }
+* { box-sizing: border-box; }
+body { margin: 0; padding: 2rem 1rem; }
+main { max-width: 720px; margin: auto; background: white; border: 1px solid #d8e0d5; border-radius: 14px; padding: 2rem; }
+h1 { margin: 0 0 .6rem; font-size: 2rem; }
+p { line-height: 1.5; }
+.eyebrow { color: #356347; font-weight: 700; font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; }
+label { display: block; margin-top: 1.5rem; font-weight: 650; }
+input { width: 100%; margin-top: .4rem; padding: .7rem; border: 1px solid #8fa093; border-radius: 6px; font: inherit; }
+.hint { color: #58675d; font-size: .88rem; }
+.canvas-wrap { border: 1px solid #8fa093; border-radius: 8px; overflow: hidden; }
+canvas { display: block; width: 100%; height: auto; touch-action: none; cursor: crosshair; }
+.actions { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: 1rem; }
+button { font: inherit; font-weight: 600; padding: .65rem 1rem; border: 1px solid #9aac9e; border-radius: 6px; color: #243029; background: white; cursor: pointer; }
+button.primary { background: #285d3c; border-color: #285d3c; color: white; }
+button:disabled { opacity: .55; cursor: not-allowed; }
+button:focus-visible, input:focus-visible { outline: 3px solid #a97825; outline-offset: 2px; }
+#status { min-height: 1.5em; font-weight: 600; }
+@media (max-width: 480px) { main { padding: 1.2rem; } h1 { font-size: 1.6rem; } }
