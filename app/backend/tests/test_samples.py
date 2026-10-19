@@ -1,4 +1,5 @@
 from fastapi.testclient import TestClient
+import pytest
 from main import app
 
 client = TestClient(app)
@@ -50,4 +51,33 @@ def test_rejects_invalid_canvas_and_image():
     assert client.post('/api/samples/check', json=payload).status_code == 422
     payload = sample()
     payload['image'] = 'not an image'
+    assert client.post('/api/samples/check', json=payload).status_code == 422
+
+
+def test_accepts_multiple_strokes_including_a_dot():
+    payload = sample()
+    payload['events'].extend([
+        {"type": "down", "x": 50, "y": 60, "timestamp": 130, "pointerType": "touch"},
+        {"type": "up", "x": 50, "y": 60, "timestamp": 140, "pointerType": "touch"},
+    ])
+    response = client.post('/api/samples/check', json=payload)
+    assert response.status_code == 200
+    assert response.json()['sample'] == payload
+
+
+@pytest.mark.parametrize('change', ['version', 'missing', 'empty', 'duplicate_down', 'stray_up', 'stray_move'])
+def test_rejects_unsupported_or_incomplete_recordings(change):
+    payload = sample()
+    if change == 'version':
+        payload['version'] = 2
+    elif change == 'missing':
+        del payload['target']
+    elif change == 'empty':
+        payload['events'] = []
+    elif change == 'duplicate_down':
+        payload['events'][1]['type'] = 'down'
+    elif change == 'stray_up':
+        payload['events'][0]['type'] = 'up'
+    else:
+        payload['events'][0]['type'] = 'move'
     assert client.post('/api/samples/check', json=payload).status_code == 422

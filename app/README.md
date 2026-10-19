@@ -1,6 +1,6 @@
 # Baybayin drawing capture prototype
 
-This prototype uses a Next.js frontend and a FastAPI backend. It records a target label, a final image, and ordered pointer events. The backend checks that the recording is structurally complete before the browser downloads it; neither component validates Baybayin characters or stroke rules yet. The physical book and expert-reviewed rubric are pending.
+This prototype uses a Next.js frontend and a FastAPI backend. It records a target label, a final image, and ordered pointer events, and can reopen and replay saved recordings. The backend checks that recordings are structurally complete; neither component validates Baybayin characters or stroke rules yet. The physical book and expert-reviewed rubric are pending.
 
 ## Run on this Windows computer
 
@@ -21,6 +21,12 @@ npm.cmd run dev -- --hostname 127.0.0.1
 ```
 
 Open **http://127.0.0.1:3000** in Chrome or Edge. Enter a character name such as `ka`, draw in the white box, and select **Download sample**. The target is a label for the saved sample, not a correctness check. Stop each server with Ctrl+C in its terminal.
+
+## Review a saved recording
+
+With both servers running, use **Open saved sample** to select a JSON file previously downloaded by the prototype. The review area shows its label, recording time, original canvas dimensions, and number of pen contacts. Select **Replay saved strokes** to watch the recorded events in order; you can stop the replay or close the sample. The review canvas is separate from the current drawing, which remains available while you review.
+
+The importer accepts version 1 JSON files up to 32 MiB, with canvas dimensions from 1 to 1,000,000 pixels in each direction. It checks the sample using the local FastAPI server and draws the recorded events at a uniform scale. If the file cannot be opened or checked, the current drawing and previously opened sample remain available. The app does not save or change the imported file. Pen contacts are recorded pen-down events, not confirmed correct strokes; opening or replaying a sample does not validate its writing.
 
 ## First-time setup on another computer
 

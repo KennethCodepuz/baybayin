@@ -1,6 +1,6 @@
 # Reference and rubric working notes
 
-**Status: draft, not approved for participant labeling or validation.** The physical Baybayin book is being digitized; its contents have not yet been reviewed for this project. Fill in this document after the source and a qualified reviewer are available.
+**Status: draft, not approved for participant labeling or validation.** The physical Baybayin book is being digitized. A separate illustrated PDF has been supplied and reviewed for the pilot; its stroke instructions still need expert interpretation.
 
 ## Primary source register
 
@@ -15,6 +15,10 @@
 | Relationship to KWF reference | Pending verification |
 
 Record each rule with its exact source location. If the book does not specify stroke order, direction, or count, identify any proposed study convention separately and have the expert review it. A character's picture alone does not establish its stroke sequence.
+
+## Supplied pilot reference
+
+Joel Bagain Lopez, *Pagsulat ng Baybayin*, [supplied PDF](../../Pagsulat-ng-Baybayin_Step-by-Step.pdf): `ba` on PDF page 7, `ka` on page 15, and kudlit examples on pages 36–37. The title page displays the cover of *Pinagyamang Baybayin*, but the PDF's exact publication relationship to the physical book and the KWF standard remain to be confirmed. A [draft ba and ka specification](ba-ka-pilot-character-specifications.md) records observations and questions for expert review.
 
 ## Pilot character specification
 

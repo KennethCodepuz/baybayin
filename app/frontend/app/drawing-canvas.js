@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { DrawingCapture } from '../lib/capture.js';
+import RecordingReview from './recording-review.js';
 
 const apiUrl = 'http://127.0.0.1:8000';
 
@@ -196,6 +197,7 @@ export default function DrawingCanvas() {
       </div>
       <p id="status" role="status" aria-live="polite">{status}</p>
       <p className="hint">The downloaded JSON contains the drawing image, coordinates, timestamps, and input type. Keep research samples in an approved location.</p>
+      <RecordingReview />
     </main>
   );
 }
