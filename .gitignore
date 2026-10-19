@@ -1,0 +1,23 @@
+# Environment files may contain API keys, passwords, or other secrets.
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Local credentials and private keys.
+.secrets
+.secrets.*
+.aws/credentials
+.netrc
+.npmrc
+.pypirc
+.htpasswd
+credentials.json
+credentials.*.json
+service-account*.json
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+*.jks
