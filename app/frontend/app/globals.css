@@ -15,6 +15,7 @@ button { font: inherit; font-weight: 600; padding: .65rem 1rem; border: 1px soli
 button.primary { background: #285d3c; border-color: #285d3c; color: white; }
 button:disabled { opacity: .55; cursor: not-allowed; }
 button:focus-visible, input:focus-visible { outline: 3px solid #a97825; outline-offset: 2px; }
+select { width: 100%; margin-top: .4rem; padding: .7rem; border: 1px solid #8fa093; border-radius: 6px; font: inherit; background: white; }
 #status { min-height: 1.5em; font-weight: 600; }
 .review { border-top: 1px solid #d8e0d5; margin-top: 2rem; padding-top: 1rem; }
 .review h2 { margin-bottom: .5rem; }
@@ -22,4 +23,8 @@ button:focus-visible, input:focus-visible { outline: 3px solid #a97825; outline-
 .sample-details { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: .8rem; }
 .sample-details dt { color: #58675d; font-size: .85rem; }
 .sample-details dd { margin: .15rem 0 0; overflow-wrap: anywhere; }
+.library-form { border-top: 1px solid #d8e0d5; margin-top: 1.5rem; padding-top: 1rem; }
+.library-form h2 { margin-bottom: 0; }
+.record-list { padding-left: 0; list-style: none; }
+.record-list li { margin: .5rem 0; }
 @media (max-width: 480px) { main { padding: 1.2rem; } h1 { font-size: 1.6rem; } }

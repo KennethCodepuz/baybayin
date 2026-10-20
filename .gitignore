@@ -21,3 +21,6 @@ service-account*.json
 *.pfx
 *.keystore
 *.jks
+
+# Developer-only reference recordings and manifests.
+app/data/reference-library/

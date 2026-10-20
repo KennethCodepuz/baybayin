@@ -57,7 +57,7 @@
 
 ## Shared draft review checklist
 
-Use the selected character's reviewed specification together with the final image and a replay of its recorded events. The current app can replay the drawing in the current session and download JSON; importing a saved JSON for later replay is not implemented yet.
+Use the selected character's reviewed specification together with the final image and a replay of its recorded events. The current app can import a saved JSON for later replay. The developer reference library can also store a candidate recording with its provenance, but it must not be marked approved until this specification has an expert-approved version.
 
 | Check | Evidence to inspect | Decision |
 |---|---|---|

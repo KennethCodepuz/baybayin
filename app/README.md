@@ -28,6 +28,14 @@ With both servers running, use **Open saved sample** to select a JSON file previ
 
 The importer accepts version 1 JSON files up to 32 MiB, with canvas dimensions from 1 to 1,000,000 pixels in each direction. It checks the sample using the local FastAPI server and draws the recorded events at a uniform scale. If the file cannot be opened or checked, the current drawing and previously opened sample remain available. The app does not save or change the imported file. Pen contacts are recorded pen-down events, not confirmed correct strokes; opening or replaying a sample does not validate its writing.
 
+## Developer reference library
+
+The local developer workflow is available at **http://127.0.0.1:3000/developer-reference-library** while both services are running. It imports a checked version 1 drawing JSON, attaches source and review metadata, and saves the result as a **candidate** reference. The pilot accepts only samples labelled `ba` or `ka`.
+
+Candidate recordings are not validator ground truth. A developer can mark a recording approved only after adding a matching expert-approved character specification with a version, reviewer code, and decision date. The library can list and replay stored recordings and produces a graph-ready `manifest.json` for approved reference records.
+
+The library stores recordings and its manifest in `app/data/reference-library/`, which Git ignores. Back up that directory using the team’s approved private storage; do not commit real recordings, non-public reviewer details, or the generated manifest. This local route has no authentication and is for a developer-controlled computer only. A deployed research or learner system will need authenticated storage and an approved retention policy.
+
 ## First-time setup on another computer
 
 Install Python 3.10 or newer and Node.js 20.9 or newer. Then run the following from the `app` directory:
