@@ -6,6 +6,7 @@ from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
+from knowledge_graph import KnowledgeGraph, load_knowledge_graph
 from reference_library import DuplicateReferenceError, ReferenceNotFoundError, ReferenceRepository
 
 
@@ -61,9 +62,6 @@ class Sample(BaseModel):
         return self
 
 
-PilotTarget = Literal['ba', 'ka']
-
-
 class SourceReference(BaseModel):
     model_config = ConfigDict(extra='forbid')
     title: str = Field(min_length=1, max_length=200)
@@ -90,13 +88,6 @@ class ReferenceCreate(BaseModel):
     capture: CaptureMetadata
     review: InitialReview
 
-    @model_validator(mode='after')
-    def pilot_target_matches_sample(self):
-        if self.sample.target not in {'ba', 'ka'}:
-            raise ValueError('The developer reference pilot currently supports only ba and ka')
-        return self
-
-
 class ReviewTransition(BaseModel):
     model_config = ConfigDict(extra='forbid')
     status: Literal['approved', 'rejected', 'superseded']
@@ -108,7 +99,7 @@ class ReviewTransition(BaseModel):
 
 class CharacterSpecification(BaseModel):
     model_config = ConfigDict(extra='forbid')
-    target: PilotTarget
+    target: str = Field(min_length=1, max_length=100)
     version: str = Field(min_length=1, max_length=100, pattern=r'^[A-Za-z0-9._-]+$')
     status: Literal['draft', 'approved']
     source: SourceReference
@@ -124,6 +115,7 @@ class CharacterSpecification(BaseModel):
 
 app = FastAPI(title='Baybayin capture API')
 app.state.reference_repository = ReferenceRepository(Path(__file__).resolve().parent.parent / 'data' / 'reference-library')
+app.state.knowledge_graph = load_knowledge_graph(Path(__file__).resolve().parents[2] / 'knowledge-graph')
 app.add_middleware(
     CORSMiddleware,
     allow_origins=['http://localhost:3000', 'http://127.0.0.1:3000'],
@@ -138,13 +130,62 @@ def check_sample(sample: Sample):
     return {'sample': sample}
 
 
+@app.get('/api/knowledge-graph/catalog')
+def knowledge_graph_catalog():
+    graph = knowledge_graph()
+    return {
+        'sourceId': graph.source_id,
+        'version': 1,
+        'targets': [public_target(target) for target in graph.current_release_targets()],
+    }
+
+
+@app.get('/api/knowledge-graph/readiness')
+def knowledge_graph_readiness():
+    return {'targets': [public_target(target) for target in knowledge_graph().current_release_targets()]}
+
+
+@app.get('/api/knowledge-graph/targets/{target_id}')
+def knowledge_graph_target(target_id: str):
+    target = knowledge_graph().find_target(target_id)
+    if not target:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Knowledge-graph target not found')
+    return {'target': public_target(target)}
+
+
 def reference_repository() -> ReferenceRepository:
     return app.state.reference_repository
+
+
+def knowledge_graph() -> KnowledgeGraph:
+    return app.state.knowledge_graph
+
+
+def target_readiness(target_id: str) -> str:
+    records = [
+        record for record in reference_repository().list_records()
+        if record['target'] == target_id and record['dataClass'] == 'reference'
+    ]
+    if not records:
+        return 'awaiting_candidate'
+    approved = [record for record in records if record['status'] == 'approved']
+    for record in approved:
+        version = record['review'].get('specificationVersion')
+        specification = reference_repository().get_specification(target_id, version) if version else None
+        if specification and specification['status'] == 'approved':
+            return 'reference_ready'
+    return 'awaiting_expert_approval'
+
+
+def public_target(target: dict) -> dict:
+    return {**target, 'readiness': target_readiness(target['targetId'])}
 
 
 @app.post('/api/references', status_code=status.HTTP_201_CREATED)
 def create_reference(reference: ReferenceCreate):
     repository = reference_repository()
+    if not knowledge_graph().is_current_release_target(reference.sample.target):
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail='Reference target is not in the current core release')
     sample = reference.sample.model_dump(mode='json')
     record = {
         'target': reference.sample.target,
@@ -191,6 +232,8 @@ def get_reference(record_id: str):
 
 @app.post('/api/specifications', status_code=status.HTTP_201_CREATED)
 def create_specification(specification: CharacterSpecification):
+    if not knowledge_graph().is_current_release_target(specification.target):
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail='Specification target is not in the current core release')
     try:
         return {'specification': reference_repository().create_specification(specification.model_dump(mode='json'))}
     except DuplicateReferenceError:

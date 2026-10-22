@@ -53,10 +53,10 @@ def test_creates_and_lists_a_candidate_without_changing_the_sample(client):
     assert client.get('/api/references').json()['records'] == [record]
 
 
-def test_rejects_duplicates_and_targets_outside_the_pilot(client):
+def test_rejects_duplicates_and_accepts_core_graph_targets(client):
     assert client.post('/api/references', json=candidate_payload()).status_code == 201
     assert client.post('/api/references', json=candidate_payload()).status_code == 409
-    assert client.post('/api/references', json=candidate_payload('nga')).status_code == 422
+    assert client.post('/api/references', json=candidate_payload('nga')).status_code == 201
 
 
 def test_requires_an_approved_matching_specification_before_approval(client):

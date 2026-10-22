@@ -1,0 +1,47 @@
+{
+  "rules": [
+    {
+      "id": "inherent-a",
+      "when": {"graphemeClass":"consonant_a", "diacritic":"none"},
+      "then": {"reading":"consonant + /a/"},
+      "status": "source_asserted",
+      "sourceRefs": ["lopez-2025-pdf#pdf-page=58"]
+    },
+    {
+      "id": "replace-inherent-vowel",
+      "when": {"graphemeClass":"consonant_a", "diacritic":"kudlit-pamalit"},
+      "then": {"reading":"consonant + selected replacement vowel"},
+      "status": "source_asserted",
+      "sourceRefs": ["lopez-2025-pdf#pdf-page=58", "lopez-2025-pdf#pdf-page=79", "lopez-2025-pdf#pdf-page=80"]
+    },
+    {
+      "id": "cancel-inherent-vowel",
+      "when": {"graphemeClass":"consonant_a", "diacritic":"kudlit-pangkaltas"},
+      "then": {"reading":"pure consonant", "position":"above for syllable onset; below for coda or standalone"},
+      "status": "source_asserted",
+      "sourceRefs": ["lopez-2025-pdf#pdf-page=82", "lopez-2025-pdf#pdf-page=84"]
+    },
+    {
+      "id": "balanghay-roman-reading",
+      "when": {"content":"non_phonetic_or_proper_name_or_foreign_term", "marker":"balanghay"},
+      "then": {"reading":"Roman alphabet", "purpose":"preserve original-language pronunciation"},
+      "status": "source_asserted",
+      "sourceRefs": ["lopez-2025-pdf#pdf-page=75", "lopez-2025-pdf#pdf-page=89"]
+    },
+    {
+      "id": "optional-extension-symbols",
+      "when": {"content":"legal_or_technical_name", "symbol":"extensionSymbols"},
+      "then": {"availability":"optional"},
+      "status": "source_asserted",
+      "sourceRefs": ["lopez-2025-pdf#pdf-page=75", "lopez-2025-pdf#pdf-page=85"]
+    },
+    {
+      "id": "special-initials-proposal",
+      "when": {"content":"special_initials"},
+      "then": {"availability":"do_not_enable_as_default_validator_rule"},
+      "status": "proposed_not_accepted",
+      "sourceRefs": ["lopez-2025-pdf#pdf-page=86"]
+    }
+  ],
+  "excludedFromActiveValidation": ["proposed_not_accepted rules", "unverified visual geometry", "unverified stroke order or stroke count"]
+}

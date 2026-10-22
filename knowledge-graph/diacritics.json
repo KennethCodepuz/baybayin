@@ -1,0 +1,51 @@
+{
+  "diacritics": [
+    {
+      "id": "kudlit-pamalit",
+      "class": "vowel_replacement",
+      "function": "Replaces the inherent /a/ of a consonant base glyph.",
+      "variants": [
+        {"id":"pamalit-e","outputVowel":"/e/","markForm":"small_horizontal_line","position":"above","sourceRefs":["lopez-2025-pdf#pdf-page=80"]},
+        {"id":"pamalit-i","outputVowel":"/i/","markForm":"large_dot","position":"above","sourceRefs":["lopez-2025-pdf#pdf-page=80"]},
+        {"id":"pamalit-o","outputVowel":"/o/","markForm":"small_horizontal_line","position":"below","sourceRefs":["lopez-2025-pdf#pdf-page=80"]},
+        {"id":"pamalit-u","outputVowel":"/u/","markForm":"large_dot","position":"below","sourceRefs":["lopez-2025-pdf#pdf-page=80"]}
+      ],
+      "sourceRefs": ["lopez-2025-pdf#pdf-page=78", "lopez-2025-pdf#pdf-page=79", "lopez-2025-pdf#pdf-page=80"]
+    },
+    {
+      "id": "kudlit-pangkaltas",
+      "class": "vowel_cancellation",
+      "function": "Removes the inherent /a/ or an attached final vowel, yielding a pure consonant.",
+      "markForm": "slanted_vertical_line",
+      "positionRules": [
+        {"syllableRole":"onset","position":"above"},
+        {"syllableRole":"coda_or_standalone","position":"below"}
+      ],
+      "sourceRefs": ["lopez-2025-pdf#pdf-page=82", "lopez-2025-pdf#pdf-page=83", "lopez-2025-pdf#pdf-page=84", "lopez-2025-pdf#pdf-page=85"]
+    },
+    {
+      "id": "kudlit-pang-ulit",
+      "class": "repetition",
+      "function": "Repeats a sound, syllable, consecutive syllables, or an entire word.",
+      "variants": [
+        {"id":"pang-ulit-pahantig","scope":"sound_or_syllable"},
+        {"id":"pang-ulit-padalawa","scope":"initial_syllable_twice"},
+        {"id":"pang-ulit-patatlo","scope":"syllable_three_times"},
+        {"id":"pang-ulit-padala-dalawa","scope":"two_consecutive_syllables"},
+        {"id":"pang-ulit-paulit-buo","scope":"whole_word"}
+      ],
+      "sourceRefs": ["lopez-2025-pdf#pdf-page=87"]
+    },
+    {
+      "id": "kudlit-espesyal",
+      "class": "special_case",
+      "function": "Covers special cases, including proper names and scientific or mathematical material.",
+      "variants": [
+        {"id":"balanghay","function":"Marks material read according to the Roman alphabet when it does not follow phonetic Baybayin spelling.","sourceRefs":["lopez-2025-pdf#pdf-page=75","lopez-2025-pdf#pdf-page=89"]},
+        {"id":"kawit","function":"Special marker for symbols or capital letters used in science, mathematics, and statistics.","sourceRefs":["lopez-2025-pdf#pdf-page=89"]}
+      ],
+      "sourceRefs": ["lopez-2025-pdf#pdf-page=89"]
+    }
+  ],
+  "validatorPolicy": "These records define intended linguistic states. Spatial tolerances, mark shape metrics, and stroke order require approved reference templates."
+}

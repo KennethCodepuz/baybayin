@@ -1,0 +1,28 @@
+{
+  "guide": {
+    "id": "grid-baybayin",
+    "description": "A visual guide and proportional standard for writing Baybayin characters.",
+    "grid": {"columns": 4, "rows": 3, "cells": 12},
+    "constraints": [
+      {"id":"grid-placement","rule":"Place each character inside the grid; the central vertical and horizontal lines may be used as axes.","sourceRefs":["lopez-2025-pdf#pdf-page=179"]},
+      {"id":"descending-start","rule":"For a character with a descending flow, begin at Grid 1.","example":"ka","sourceRefs":["lopez-2025-pdf#pdf-page=179"]},
+      {"id":"circular-start","rule":"For a circular character, begin at central Grid 10.","example":"ba","sourceRefs":["lopez-2025-pdf#pdf-page=179"]},
+      {"id":"open-curve-direction","rule":"For an open curve, follow a rightward and downward flow.","sourceRefs":["lopez-2025-pdf#pdf-page=179"]},
+      {"id":"closed-curve-direction","rule":"For a closed or spiral form, follow an upward or circular flow.","sourceRefs":["lopez-2025-pdf#pdf-page=179"]},
+      {"id":"diacritic-placement","rule":"Place a kudlit above or below the base character according to the sound changed; it remains outside the base grid and at a standard size.","sourceRefs":["lopez-2025-pdf#pdf-page=180"]},
+      {"id":"proportion","rule":"Keep each character’s width and height equivalent to the overall grid size.","sourceRefs":["lopez-2025-pdf#pdf-page=180"]}
+    ]
+  },
+  "requiredReferenceTemplate": {
+    "perTargetFields": ["targetId", "approvedBy", "approvalDate", "sourceType", "strokeCount", "orderedStrokes", "normalizedPoints", "startRegion", "endRegion", "allowedScaleRange", "allowedRotationRange", "notes"],
+    "approvalRequirement": "A Baybayin writing expert must approve every template before it is used to pass or fail a learner.",
+    "reason": "The source supplies system-level guidance and visual examples, but a handwriting validator needs explicit, normalized stroke paths and tolerances."
+  },
+  "sourceVisualIndex": [
+    {"targetGroup":"base characters and their key strokes","sourceRefs":["lopez-2025-pdf#pdf-page=140"]},
+    {"targetGroup":"full key-stroke appendix","sourceRefs":["lopez-2025-pdf#pdf-page=177"]},
+    {"targetGroup":"Grid-Baybáyin system guide","sourceRefs":["lopez-2025-pdf#pdf-page=178", "lopez-2025-pdf#pdf-page=179", "lopez-2025-pdf#pdf-page=180"]},
+    {"targetGroup":"Grid-Baybáyin character practice forms","sourceRefs":["lopez-2025-pdf#pdf-page=181", "lopez-2025-pdf#pdf-page=182", "lopez-2025-pdf#pdf-page=183", "lopez-2025-pdf#pdf-page=184", "lopez-2025-pdf#pdf-page=185"]}
+  ],
+  "readiness": "source_constraints_ready; expert_templates_pending"
+}

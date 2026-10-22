@@ -1,0 +1,340 @@
+{
+  "system": "pinagyamang-baybayin",
+  "baseGraphemeCount": 24,
+  "baseGraphemes": [
+    {
+      "id": "vowel-a",
+      "romanization": "a",
+      "phoneme": "/a/",
+      "class": "vowel",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ]
+    },
+    {
+      "id": "vowel-e",
+      "romanization": "e",
+      "phoneme": "/e/",
+      "class": "vowel",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ]
+    },
+    {
+      "id": "vowel-i",
+      "romanization": "i",
+      "phoneme": "/i/",
+      "class": "vowel",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ]
+    },
+    {
+      "id": "vowel-o",
+      "romanization": "o",
+      "phoneme": "/o/",
+      "class": "vowel",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ]
+    },
+    {
+      "id": "vowel-u",
+      "romanization": "u",
+      "phoneme": "/u/",
+      "class": "vowel",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ]
+    },
+    {
+      "id": "consonant-ba",
+      "romanization": "ba",
+      "phoneme": "/b/",
+      "class": "consonant_a",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ]
+    },
+    {
+      "id": "consonant-da",
+      "romanization": "da",
+      "phoneme": "/d/",
+      "class": "consonant_a",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ]
+    },
+    {
+      "id": "consonant-fa",
+      "romanization": "fa",
+      "phoneme": "/f/",
+      "class": "consonant_a",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ]
+    },
+    {
+      "id": "consonant-ga",
+      "romanization": "ga",
+      "phoneme": "/g/",
+      "class": "consonant_a",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ]
+    },
+    {
+      "id": "consonant-ha",
+      "romanization": "ha",
+      "phoneme": "/h/",
+      "class": "consonant_a",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ]
+    },
+    {
+      "id": "consonant-ja",
+      "romanization": "ja",
+      "phoneme": "/dʒ/",
+      "class": "consonant_a",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ]
+    },
+    {
+      "id": "consonant-ka",
+      "romanization": "ka",
+      "phoneme": "/k/",
+      "class": "consonant_a",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ]
+    },
+    {
+      "id": "consonant-la",
+      "romanization": "la",
+      "phoneme": "/l/",
+      "class": "consonant_a",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ]
+    },
+    {
+      "id": "consonant-ma",
+      "romanization": "ma",
+      "phoneme": "/m/",
+      "class": "consonant_a",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ]
+    },
+    {
+      "id": "consonant-na",
+      "romanization": "na",
+      "phoneme": "/n/",
+      "class": "consonant_a",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ]
+    },
+    {
+      "id": "consonant-nga",
+      "romanization": "nga",
+      "phoneme": "/ŋ/",
+      "class": "consonant_a",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ]
+    },
+    {
+      "id": "consonant-pa",
+      "romanization": "pa",
+      "phoneme": "/p/",
+      "class": "consonant_a",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ]
+    },
+    {
+      "id": "consonant-ra",
+      "romanization": "ra",
+      "phoneme": "/r/",
+      "class": "consonant_a",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ]
+    },
+    {
+      "id": "consonant-sa",
+      "romanization": "sa",
+      "phoneme": "/s/",
+      "class": "consonant_a",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ]
+    },
+    {
+      "id": "consonant-ta",
+      "romanization": "ta",
+      "phoneme": "/t/",
+      "class": "consonant_a",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ]
+    },
+    {
+      "id": "consonant-va",
+      "romanization": "va",
+      "phoneme": "/v/",
+      "class": "consonant_a",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ]
+    },
+    {
+      "id": "consonant-wa",
+      "romanization": "wa",
+      "phoneme": "/w/",
+      "class": "consonant_a",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ]
+    },
+    {
+      "id": "consonant-ya",
+      "romanization": "ya",
+      "phoneme": "/j/",
+      "class": "consonant_a",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ]
+    },
+    {
+      "id": "consonant-za",
+      "romanization": "za",
+      "phoneme": "/z/",
+      "class": "consonant_a",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ]
+    }
+  ],
+  "extensionSymbols": [
+    {
+      "id": "extension-c",
+      "romanization": "c",
+      "status": "optional",
+      "use": "legal_or_technical_names",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=75",
+        "lopez-2025-pdf#pdf-page=85"
+      ]
+    },
+    {
+      "id": "extension-q",
+      "romanization": "q",
+      "status": "optional",
+      "use": "legal_or_technical_names",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=75",
+        "lopez-2025-pdf#pdf-page=85"
+      ]
+    },
+    {
+      "id": "extension-x",
+      "romanization": "x",
+      "status": "optional",
+      "use": "legal_or_technical_names",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=75",
+        "lopez-2025-pdf#pdf-page=85"
+      ]
+    },
+    {
+      "id": "extension-ll",
+      "romanization": "ll",
+      "status": "optional",
+      "use": "legal_or_technical_names",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=75",
+        "lopez-2025-pdf#pdf-page=85"
+      ]
+    },
+    {
+      "id": "extension-n-tilde",
+      "romanization": "ñ",
+      "status": "optional",
+      "use": "legal_or_technical_names",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=75",
+        "lopez-2025-pdf#pdf-page=85"
+      ]
+    },
+    {
+      "id": "extension-rr",
+      "romanization": "rr",
+      "status": "optional",
+      "use": "legal_or_technical_names",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=75",
+        "lopez-2025-pdf#pdf-page=85"
+      ]
+    }
+  ],
+  "notes": [
+    "A consonant_a record carries an inherent /a/ until modified by an applicable kudlit.",
+    "The graph uses semantic IDs instead of glyph encodings because this source’s visual forms require separately approved reference assets."
+  ],
+  "phoneticExtensions": [
+    {
+      "id": "phonetic-sha",
+      "romanization": "sha",
+      "phoneme": "/ʃ/",
+      "status": "supported_extension",
+      "derivedFrom": "consonant-sa",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=76"
+      ]
+    },
+    {
+      "id": "phonetic-tsa",
+      "romanization": "tsa",
+      "phoneme": "/tʃ/",
+      "status": "supported_extension",
+      "derivedFrom": "consonant-ta",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=77"
+      ]
+    },
+    {
+      "id": "phonetic-d-interdental",
+      "romanization": "đa",
+      "phoneme": "/đ/",
+      "status": "supported_extension",
+      "derivedFrom": "consonant-da",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=77"
+      ]
+    },
+    {
+      "id": "phonetic-theta",
+      "romanization": "θa",
+      "phoneme": "/θ/",
+      "status": "supported_extension",
+      "derivedFrom": "consonant-ta",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=77"
+      ]
+    },
+    {
+      "id": "phonetic-zha",
+      "romanization": "ʒa",
+      "phoneme": "/ʒ/",
+      "status": "supported_extension",
+      "derivedFrom": "consonant-sa",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=77"
+      ]
+    }
+  ]
+}

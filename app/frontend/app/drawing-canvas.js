@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { DrawingCapture } from '../lib/capture.js';
+import { catalogTargets, selectedTarget } from '../lib/knowledge-graph.js';
+import { apiRequest } from '../lib/reference-library.js';
 import RecordingReview from './recording-review.js';
 
 const apiUrl = 'http://127.0.0.1:8000';
@@ -48,6 +50,7 @@ export default function DrawingCanvas() {
   const animationRef = useRef(null);
   const busyRef = useRef(false);
   const [target, setTarget] = useState('');
+  const [catalog, setCatalog] = useState(null);
   const [status, setStatus] = useState('Ready to draw.');
   const [playing, setPlaying] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -58,6 +61,12 @@ export default function DrawingCanvas() {
     return () => {
       if (animationRef.current !== null) cancelAnimationFrame(animationRef.current);
     };
+  }, []);
+
+  useEffect(() => {
+    apiRequest('/knowledge-graph/catalog')
+      .then(result => setCatalog(result))
+      .catch(error => setStatus(`Cannot load writing targets. ${error.message}`));
   }, []);
 
   function down(event) {
@@ -149,6 +158,7 @@ export default function DrawingCanvas() {
     if (busyRef.current) return;
     try {
       if (animationRef.current !== null) throw new Error('Stop the replay before downloading.');
+      if (!selectedTarget(catalog, target)) throw new Error('Select a source-backed character before downloading.');
       const sample = captureRef.current.sample(target, canvasRef.current.toDataURL('image/png'));
       busyRef.current = true;
       setBusy(true);
@@ -178,14 +188,20 @@ export default function DrawingCanvas() {
     }
   }
 
+  const targets = catalogTargets(catalog);
+  const selected = selectedTarget(catalog, target);
+
   return (
     <main>
       <p className="eyebrow">Research prototype · Capture pilot</p>
       <h1>Baybayin drawing capture</h1>
       <p>Record a drawing and its stroke sequence for later review. This prototype does not yet validate character forms or writing rules.</p>
       <label htmlFor="target">Character you intend to draw</label>
-      <input id="target" value={target} onChange={event => setTarget(event.target.value)} maxLength={100} placeholder="For example: ka" autoComplete="off" disabled={busy} />
-      <p className="hint">Enter the character’s name to identify your sample. You can draw before filling this in. Do not enter a participant’s name.</p>
+      <select id="target" value={target} onChange={event => setTarget(event.target.value)} disabled={busy || !targets.length}>
+        <option value="">{targets.length ? 'Select a character' : 'Loading source-backed characters…'}</option>
+        {targets.map(item => <option key={item.id} value={item.targetId}>{item.label}{item.phoneme ? ` (${item.phoneme})` : ''}</option>)}
+      </select>
+      <p className="hint">{selected ? `${selected.label} is from ${selected.sourceRefs.join(', ')}. Its writing is not scored yet.` : 'Select a source-backed character to identify the sample. Do not enter a participant’s name.'}</p>
       <div className="canvas-wrap">
         <canvas ref={canvasRef} width={640} height={400} aria-label="Drawing area. Draw using a mouse, pen, or touch input."
           onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={interrupt} onLostPointerCapture={interrupt} />

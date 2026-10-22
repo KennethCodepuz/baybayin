@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "sourceId": "lopez-2025-pdf",
+  "purpose": "Visual source material for the image-based form-validation branch. These assets are source references, not approved handwriting templates or learner-scoring thresholds.",
+  "assets": [
+    {
+      "id": "core-character-chart-part-1",
+      "path": "source-pages/page-056.png",
+      "assetType": "rendered_pdf_page",
+      "sourceRefs": ["lopez-2025-pdf#pdf-page=56"],
+      "covers": ["vowel-a", "vowel-e", "vowel-i", "vowel-o", "vowel-u", "consonant-ba", "consonant-da"],
+      "role": "core_character_visual_reference"
+    },
+    {
+      "id": "core-character-chart-part-2",
+      "path": "source-pages/page-057.png",
+      "assetType": "rendered_pdf_page",
+      "sourceRefs": ["lopez-2025-pdf#pdf-page=57"],
+      "covers": ["remaining_core_consonants"],
+      "role": "core_character_visual_reference"
+    },
+    {
+      "id": "kudlit-pamalit-placement-chart",
+      "path": "source-pages/page-080.png",
+      "assetType": "rendered_pdf_page",
+      "sourceRefs": ["lopez-2025-pdf#pdf-page=80"],
+      "covers": ["pamalit-e", "pamalit-i", "pamalit-o", "pamalit-u"],
+      "role": "diacritic_visual_reference"
+    },
+    {
+      "id": "grid-baybayin-guide",
+      "paths": ["source-pages/page-178.png", "source-pages/page-179.png", "source-pages/page-180.png"],
+      "assetType": "rendered_pdf_pages",
+      "sourceRefs": ["lopez-2025-pdf#pdf-page=178", "lopez-2025-pdf#pdf-page=179", "lopez-2025-pdf#pdf-page=180"],
+      "role": "grid_and_stroke_guidance"
+    },
+    {
+      "id": "grid-baybayin-character-forms",
+      "paths": ["source-pages/page-181.png", "source-pages/page-182.png", "source-pages/page-183.png", "source-pages/page-184.png", "source-pages/page-185.png"],
+      "assetType": "rendered_pdf_pages",
+      "sourceRefs": ["lopez-2025-pdf#pdf-page=181", "lopez-2025-pdf#pdf-page=182", "lopez-2025-pdf#pdf-page=183", "lopez-2025-pdf#pdf-page=184", "lopez-2025-pdf#pdf-page=185"],
+      "role": "character_form_practice_reference"
+    }
+  ],
+  "templatePolicy": {
+    "canonicalImageSource": "Render from an expert-approved JSON stroke recording whenever possible.",
+    "requiredBeforeScoring": ["expert-approved character specification", "linked approved JSON recording", "approved canonical image", "image annotation and tolerance review"],
+    "scoringAvailable": false
+  }
+}

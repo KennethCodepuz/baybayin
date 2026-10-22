@@ -1,12 +1,14 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { catalogTargets, selectedTarget } from '../../lib/knowledge-graph.js';
 import { apiRequest, createCandidatePayload } from '../../lib/reference-library.js';
 import { drawRecordingEvent, eventsDue, fitRecording, loadRecording } from '../../lib/review.js';
 
 const initialMetadata = {
   pages: '', convention: 'pinagyamang-baybayin', inputMethod: 'pen',
   reviewerCode: 'pending', notes: 'Awaiting expert review.', dataClass: 'reference',
+  sourceTitle: 'Pinagyamang Baybáyin (Lopez 2025)',
 };
 
 function renderRecording(canvas, sample) {
@@ -76,6 +78,7 @@ export default function ReferenceLibrary() {
   const [metadata, setMetadata] = useState(initialMetadata);
   const [records, setRecords] = useState([]);
   const [specifications, setSpecifications] = useState([]);
+  const [catalog, setCatalog] = useState(null);
   const [selected, setSelected] = useState(null);
   const [status, setStatus] = useState('Load a saved JSON drawing to create a candidate reference.');
   const [busy, setBusy] = useState(false);
@@ -88,7 +91,11 @@ export default function ReferenceLibrary() {
     setSpecifications(specificationResult.specifications);
   }
 
-  useEffect(() => { refresh().catch(error => setStatus(error.message)); }, []);
+  useEffect(() => {
+    Promise.all([refresh(), apiRequest('/knowledge-graph/catalog')])
+      .then(([, graph]) => setCatalog(graph))
+      .catch(error => setStatus(error.message));
+  }, []);
 
   function changeMetadata(event) {
     setMetadata(current => ({ ...current, [event.target.name]: event.target.value }));
@@ -101,10 +108,11 @@ export default function ReferenceLibrary() {
     setBusy(true);
     try {
       const sample = await loadRecording(file);
-      if (!['ba', 'ka'].includes(sample.target)) throw new Error('The developer pilot currently supports only samples labelled ba or ka.');
+      const graphTarget = selectedTarget(catalog, sample.target);
+      if (!graphTarget) throw new Error('This sample target is not part of the current core knowledge-graph release.');
       setCandidate(sample);
       setSelected(null);
-      setMetadata(current => ({ ...current, pages: sample.target === 'ba' ? '7' : '15' }));
+      setMetadata(current => ({ ...current, pages: graphTarget.sourceRefs.join(', ') }));
       setStatus('Sample checked. Complete the candidate metadata before saving it.');
     } catch (error) {
       setStatus(error.message);
@@ -160,7 +168,7 @@ export default function ReferenceLibrary() {
   }
 
   async function createSpecification() {
-    const target = window.prompt('Target character: ba or ka');
+    const target = window.prompt(`Target character: ${targets.map(item => item.targetId).join(', ')}`);
     const version = window.prompt('Specification version, for example ba-1.0');
     const reviewerCode = window.prompt('Reviewer code');
     if (!target || !version || !reviewerCode) return;
@@ -183,16 +191,18 @@ export default function ReferenceLibrary() {
   }
 
   const shown = selected || candidate;
+  const targets = catalogTargets(catalog);
   return <main>
     <p className="eyebrow">Developer-only · Reference library</p>
     <h1>Baybayin reference library</h1>
     <p>Curate expert-reviewed recordings for validator development. A candidate recording is not ground truth until it is linked to an approved specification.</p>
     <label htmlFor="reference-file">Load checked drawing sample</label>
-    <input id="reference-file" type="file" accept=".json,application/json" onChange={chooseFile} disabled={busy} />
+    <input id="reference-file" type="file" accept=".json,application/json" onChange={chooseFile} disabled={busy || !targets.length} />
     <p id="reference-status" role="status" aria-live="polite">{status}</p>
 
     {candidate && <form className="library-form" onSubmit={saveCandidate}>
       <h2>Candidate metadata: {candidate.target}</h2>
+      <p className="hint">Current release status: {selectedTarget(catalog, candidate.target)?.readiness}. Candidate recordings are not validator ground truth.</p>
       <label htmlFor="pages">Source page or pages</label><input id="pages" name="pages" value={metadata.pages} onChange={changeMetadata} required />
       <label htmlFor="convention">Writing convention</label><input id="convention" name="convention" value={metadata.convention} onChange={changeMetadata} required />
       <label htmlFor="input-method">Input method</label><input id="input-method" name="inputMethod" value={metadata.inputMethod} onChange={changeMetadata} required />

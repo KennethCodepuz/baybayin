@@ -27,11 +27,12 @@ test('creates candidate metadata without changing the checked sample', () => {
   assert.equal(payload.review.notes, 'Awaiting expert review.');
 });
 
-test('rejects targets outside the small developer pilot and missing review metadata', () => {
-  assert.throws(() => createCandidatePayload({ ...sample, target: 'nga' }, {
-    pages: '7', convention: 'pinagyamang-baybayin', inputMethod: 'pen',
+test('leaves target eligibility to the backend graph and rejects missing review metadata', () => {
+  const payload = createCandidatePayload({ ...sample, target: 'nga' }, {
+    pages: '56', convention: 'pinagyamang-baybayin', inputMethod: 'pen',
     reviewerCode: 'pending', notes: 'Awaiting expert review.', dataClass: 'reference',
-  }), /ba and ka/);
+  });
+  assert.equal(payload.sample.target, 'nga');
   assert.throws(() => createCandidatePayload(sample, {
     pages: '', convention: 'pinagyamang-baybayin', inputMethod: 'pen',
     reviewerCode: '', notes: '', dataClass: 'reference',

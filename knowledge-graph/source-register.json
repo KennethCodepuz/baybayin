@@ -1,0 +1,17 @@
+{
+  "sources": [
+    {
+      "id": "lopez-2025-pdf",
+      "title": "Pinagyamang Baybáyin: Gabay sa Episyente, Modernisado, at Estandardisadong Pagsulat",
+      "author": "Joel Bagain Lopez",
+      "publisher": "Komisyon sa Wikang Filipino",
+      "year": 2025,
+      "isbn": "978-621-450-385-8",
+      "suppliedFilename": "E-BOOK-KWF_BAYBAYIN-LOPEZ_final.pdf",
+      "citationKey": "Lopez 2025",
+      "primaryFor": ["grapheme inventory", "phonetic correspondence", "kudlit semantics", "Grid-Baybáyin guidance"]
+    }
+  ],
+  "citationConvention": "sourceId#pdf-page=N",
+  "extractionPolicy": "Only source-traceable facts needed for an implementation knowledge graph are represented. Visual glyph artwork and stroke paths are referenced, not copied."
+}

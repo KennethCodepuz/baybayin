@@ -1,0 +1,22 @@
+{
+  "nodes": [
+    {"id":"system:pinagyamang-baybayin","type":"writing_system","label":"Pinagyamang Baybáyin","sourceRefs":["lopez-2025-pdf#pdf-page=56"]},
+    {"id":"rule:inherent-a","type":"rule","label":"Consonant bases carry inherent /a/","sourceRefs":["lopez-2025-pdf#pdf-page=58"]},
+    {"id":"diacritic:kudlit-pamalit","type":"diacritic","label":"Kudlit-pamalit","sourceRefs":["lopez-2025-pdf#pdf-page=79"]},
+    {"id":"diacritic:kudlit-pangkaltas","type":"diacritic","label":"Kudlit-pangkaltas","sourceRefs":["lopez-2025-pdf#pdf-page=82"]},
+    {"id":"diacritic:kudlit-pang-ulit","type":"diacritic","label":"Kudlit-pang-ulit","sourceRefs":["lopez-2025-pdf#pdf-page=87"]},
+    {"id":"diacritic:kudlit-espesyal","type":"diacritic","label":"Kudlit-espesyal","sourceRefs":["lopez-2025-pdf#pdf-page=89"]},
+    {"id":"guide:grid-baybayin","type":"handwriting_guide","label":"Grid-Baybáyin","sourceRefs":["lopez-2025-pdf#pdf-page=178", "lopez-2025-pdf#pdf-page=179", "lopez-2025-pdf#pdf-page=180"]}
+  ],
+  "edges": [
+    {"from":"system:pinagyamang-baybayin","type":"governed_by","to":"rule:inherent-a"},
+    {"from":"system:pinagyamang-baybayin","type":"uses","to":"diacritic:kudlit-pamalit"},
+    {"from":"system:pinagyamang-baybayin","type":"uses","to":"diacritic:kudlit-pangkaltas"},
+    {"from":"system:pinagyamang-baybayin","type":"uses","to":"diacritic:kudlit-pang-ulit"},
+    {"from":"system:pinagyamang-baybayin","type":"uses","to":"diacritic:kudlit-espesyal"},
+    {"from":"system:pinagyamang-baybayin","type":"uses_handwriting_guide","to":"guide:grid-baybayin"},
+    {"from":"diacritic:kudlit-pamalit","type":"replaces","to":"rule:inherent-a"},
+    {"from":"diacritic:kudlit-pangkaltas","type":"cancels","to":"rule:inherent-a"}
+  ],
+  "characterNodeSource": "characters.json#baseGraphemes and characters.json#extensionSymbols"
+}

@@ -1,7 +1,6 @@
 export const API_ROOT = 'http://127.0.0.1:8000/api';
 
 export function createCandidatePayload(sample, metadata) {
-  if (!['ba', 'ka'].includes(sample.target)) throw new Error('The developer pilot currently supports only ba and ka.');
   const pages = metadata.pages.split(',').map(page => page.trim()).filter(Boolean);
   if (!pages.length) throw new Error('Add at least one source page.');
   if (!metadata.convention.trim() || !metadata.inputMethod.trim() || !metadata.reviewerCode.trim() || !metadata.notes.trim()) {
@@ -10,7 +9,7 @@ export function createCandidatePayload(sample, metadata) {
   return {
     sample,
     dataClass: metadata.dataClass,
-    source: { title: 'Pagsulat ng Baybayin', pages, convention: metadata.convention.trim() },
+    source: { title: metadata.sourceTitle || 'Pinagyamang Baybáyin (Lopez 2025)', pages, convention: metadata.convention.trim() },
     capture: { inputMethod: metadata.inputMethod.trim() },
     review: { reviewerCode: metadata.reviewerCode.trim(), notes: metadata.notes.trim() },
   };
