@@ -167,6 +167,21 @@ export default function ReferenceLibrary() {
     }
   }
 
+  async function createBundle(record) {
+    setBusy(true);
+    try {
+      const result = await apiRequest('/reference-bundles', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ referenceRecordId: record.id }),
+      });
+      setStatus(`Created multimodal bundle ${result.bundle.id}. It is reference data, not an active learner scorer.`);
+    } catch (error) {
+      setStatus(error.message);
+    } finally {
+      setBusy(false);
+    }
+  }
+
   async function createSpecification() {
     const target = window.prompt(`Target character: ${targets.map(item => item.targetId).join(', ')}`);
     const version = window.prompt('Specification version, for example ba-1.0');
@@ -218,6 +233,9 @@ export default function ReferenceLibrary() {
       {selected?.status === 'candidate' && <div className="actions">
         <button type="button" disabled={busy} onClick={() => transition(selected, 'approved')}>Approve with specification</button>
         <button type="button" disabled={busy} onClick={() => transition(selected, 'rejected')}>Mark rejected</button>
+      </div>}
+      {selected?.status === 'approved' && <div className="actions">
+        <button type="button" disabled={busy} onClick={() => createBundle(selected)}>Create multimodal reference bundle</button>
       </div>}
     </section>}
 

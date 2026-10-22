@@ -30,7 +30,7 @@ The importer accepts version 1 JSON files up to 32 MiB, with canvas dimensions f
 
 ## Developer reference library
 
-The local developer workflow is available at **http://127.0.0.1:3000/developer-reference-library** while both services are running. It imports a checked version 1 drawing JSON, attaches source and review metadata, and saves the result as a **candidate** reference. The pilot accepts only samples labelled `ba` or `ka`.
+The local developer workflow is available at **http://127.0.0.1:3000/developer-reference-library** while both services are running. It imports a checked version 1 drawing JSON, attaches source and review metadata, and saves the result as a **candidate** reference. It accepts the knowledge graph's current 24 core targets.
 
 Candidate recordings are not validator ground truth. The developer library accepts the current release's 24 core targets from the knowledge graph. A developer can mark a recording approved only after adding a matching expert-approved character specification with a version, reviewer code, and decision date. The library can list and replay stored recordings and produces a graph-ready `manifest.json` for approved reference records.
 
@@ -77,3 +77,11 @@ The curated source data lives in `../knowledge-graph/` and is loaded by FastAPI 
 - `GET /api/knowledge-graph/readiness` for the evidence state of every target.
 
 Readiness means whether a candidate and approved expert reference exist. It never enables learner scoring in this version; `scoringAvailable` remains `false` for every target. Graph changes are repository changes and must be reviewed with their source references. Do not edit the graph through the browser or store private review data in it.
+
+## Multimodal validation infrastructure
+
+Open **http://127.0.0.1:3000/developer-validation** to load a checked sample and inspect the separate image-form, JSON-stroke, and hybrid response contracts. It deliberately reports `scoring unavailable` until an expert has approved a matching reference bundle and thresholds.
+
+An expert recording already includes both modalities: the sample's `image` is the final PNG and `events` are the ordered stroke events. Once an approved reference recording and matching specification exist, `POST /api/reference-bundles` can create a versioned bundle with a normalized canonical image and reproducible stroke features. `POST /api/validation/preview` returns the safe unavailable-state contract, while `POST /api/feedback` returns source-grounded fallback feedback from supplied validator error codes.
+
+The current feedback implementation is deterministic. It is the safety boundary for a future AI provider: any model must receive only structured validator errors and retrieved source references, and it may explain those errors but cannot change validation outcomes.

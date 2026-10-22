@@ -6,7 +6,10 @@ from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
+from feedback import deterministic_feedback, retrieve_feedback_context
 from knowledge_graph import KnowledgeGraph, load_knowledge_graph
+from multimodal import combine_validation, unavailable_branch_result
+from reference_bundle import BundleError, build_reference_bundle
 from reference_library import DuplicateReferenceError, ReferenceNotFoundError, ReferenceRepository
 
 
@@ -113,6 +116,23 @@ class CharacterSpecification(BaseModel):
         return self
 
 
+class ReferenceBundleCreate(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    referenceRecordId: str = Field(min_length=1, max_length=100)
+
+
+class BranchFeedback(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    errors: list[str] = Field(default_factory=list, max_length=20)
+
+
+class FeedbackRequest(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    targetId: str = Field(min_length=1, max_length=100)
+    form: BranchFeedback
+    stroke: BranchFeedback
+
+
 app = FastAPI(title='Baybayin capture API')
 app.state.reference_repository = ReferenceRepository(Path(__file__).resolve().parent.parent / 'data' / 'reference-library')
 app.state.knowledge_graph = load_knowledge_graph(Path(__file__).resolve().parents[2] / 'knowledge-graph')
@@ -151,6 +171,58 @@ def knowledge_graph_target(target_id: str):
     if not target:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Knowledge-graph target not found')
     return {'target': public_target(target)}
+
+
+@app.post('/api/reference-bundles', status_code=status.HTTP_201_CREATED)
+def create_reference_bundle(request: ReferenceBundleCreate):
+    repository = reference_repository()
+    try:
+        record = repository.get_record(request.referenceRecordId)
+    except ReferenceNotFoundError:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Reference record not found')
+    version = record.get('review', {}).get('specificationVersion')
+    specification = repository.get_specification(record['target'], version) if version else None
+    target = knowledge_graph().find_target(record['target'])
+    if not target:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail='Reference target is not in the current core release')
+    try:
+        bundle = build_reference_bundle(record, specification or {}, target['sourceRefs'])
+        return {'bundle': repository.create_bundle(bundle)}
+    except BundleError as error:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail=str(error))
+    except DuplicateReferenceError:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail='A bundle already exists for this approved record and specification')
+
+
+@app.get('/api/reference-bundles')
+def list_reference_bundles():
+    return {'bundles': reference_repository().list_bundles()}
+
+
+@app.post('/api/validation/preview')
+def validation_preview(sample: Sample):
+    target = knowledge_graph().find_target(sample.target)
+    if not target:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail='Sample target is not in the current core release')
+    bundle = next((item for item in reference_repository().list_bundles() if item['targetId'] == sample.target), None)
+    reason = 'expert_thresholds_pending' if bundle else 'reference_bundle_missing'
+    form = unavailable_branch_result('form', reason, target['sourceRefs'])
+    stroke = unavailable_branch_result('stroke', reason, target['sourceRefs'])
+    return combine_validation(sample.target, form, stroke, bundle['id'] if bundle else None)
+
+
+@app.post('/api/feedback')
+def validation_feedback(request: FeedbackRequest):
+    errors = [*request.form.errors, *request.stroke.errors]
+    try:
+        context = retrieve_feedback_context(knowledge_graph(), request.targetId, errors)
+    except ValueError:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Knowledge-graph target not found')
+    return deterministic_feedback(context, {
+        'targetId': request.targetId,
+        'form': request.form.model_dump(),
+        'stroke': request.stroke.model_dump(),
+    })
 
 
 def reference_repository() -> ReferenceRepository:

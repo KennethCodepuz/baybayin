@@ -19,6 +19,7 @@ class ReferenceRepository:
         self.root = Path(root)
         self.records_dir = self.root / 'records'
         self.specifications_dir = self.root / 'specifications'
+        self.bundles_dir = self.root / 'bundles'
 
     @staticmethod
     def checksum(sample: dict) -> str:
@@ -28,6 +29,7 @@ class ReferenceRepository:
     def _ensure_directories(self):
         self.records_dir.mkdir(parents=True, exist_ok=True)
         self.specifications_dir.mkdir(parents=True, exist_ok=True)
+        self.bundles_dir.mkdir(parents=True, exist_ok=True)
 
     @staticmethod
     def _write_json(path: Path, value: dict):
@@ -90,6 +92,29 @@ class ReferenceRepository:
             key=lambda specification: (specification['target'], specification['version']),
         )
 
+    def create_bundle(self, bundle: dict) -> dict:
+        self._ensure_directories()
+        path = self.bundles_dir / f"{bundle['id']}.json"
+        if path.exists():
+            raise DuplicateReferenceError()
+        self._write_json(path, bundle)
+        self.write_manifest()
+        return bundle
+
+    def get_bundle(self, bundle_id: str) -> dict | None:
+        path = self.bundles_dir / f'{bundle_id}.json'
+        if not path.exists():
+            return None
+        return json.loads(path.read_text(encoding='utf-8'))
+
+    def list_bundles(self) -> list[dict]:
+        if not self.bundles_dir.exists():
+            return []
+        return sorted(
+            (json.loads(path.read_text(encoding='utf-8')) for path in self.bundles_dir.glob('*.json')),
+            key=lambda bundle: bundle['id'],
+        )
+
     def manifest(self) -> dict:
         records = [
             record for record in self._records()
@@ -107,6 +132,7 @@ class ReferenceRepository:
         return {
             'version': 1,
             'records': records,
+            'bundles': self.list_bundles(),
             'specifications': [
                 specification for specification in self.list_specifications()
                 if specification['status'] == 'approved'
