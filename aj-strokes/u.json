@@ -1,0 +1,929 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-23T05:23:46.399Z",
+  "target": "u",
+  "canvas": {
+    "width": 640,
+    "height": 400
+  },
+  "image": "data:image/png;base64,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",
+  "events": [
+    {
+      "type": "down",
+      "x": 223.31288343558282,
+      "y": 79.69325153374233,
+      "timestamp": 376662.9000000004,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 224.29447852760737,
+      "y": 79.69325153374233,
+      "timestamp": 376723,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 225.27607361963192,
+      "y": 78.71165644171779,
+      "timestamp": 376734.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 225.27607361963192,
+      "y": 77.73006134969326,
+      "timestamp": 376741.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 226.25766871165644,
+      "y": 76.74846625766871,
+      "timestamp": 376746.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 228.22085889570553,
+      "y": 76.74846625766871,
+      "timestamp": 376755.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 228.22085889570553,
+      "y": 74.78527607361963,
+      "timestamp": 376761.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 230.1840490797546,
+      "y": 73.8036809815951,
+      "timestamp": 376766.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 231.16564417177915,
+      "y": 73.8036809815951,
+      "timestamp": 376769.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 234.11042944785277,
+      "y": 71.84049079754601,
+      "timestamp": 376778.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 237.05521472392638,
+      "y": 70.85889570552148,
+      "timestamp": 376786,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 240,
+      "y": 69.87730061349693,
+      "timestamp": 376791.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 242.94478527607362,
+      "y": 67.91411042944786,
+      "timestamp": 376797.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 246.87116564417178,
+      "y": 67.91411042944786,
+      "timestamp": 376803.5999999996,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 251.77914110429447,
+      "y": 65.95092024539878,
+      "timestamp": 376809.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 255.70552147239263,
+      "y": 64.96932515337423,
+      "timestamp": 376815.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 260.6134969325153,
+      "y": 64.96932515337423,
+      "timestamp": 376820.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 266.50306748466255,
+      "y": 63.987730061349694,
+      "timestamp": 376827.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 272.39263803680984,
+      "y": 63.00613496932515,
+      "timestamp": 376834.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 278.2822085889571,
+      "y": 63.00613496932515,
+      "timestamp": 376840.9000000004,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 284.1717791411043,
+      "y": 63.00613496932515,
+      "timestamp": 376846.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 289.07975460122697,
+      "y": 63.00613496932515,
+      "timestamp": 376852.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 294.96932515337426,
+      "y": 63.00613496932515,
+      "timestamp": 376858.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 300.8588957055215,
+      "y": 63.00613496932515,
+      "timestamp": 376864.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 306.7484662576687,
+      "y": 63.987730061349694,
+      "timestamp": 376870.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 312.63803680981596,
+      "y": 64.96932515337423,
+      "timestamp": 376876.9000000004,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 318.5276073619632,
+      "y": 65.95092024539878,
+      "timestamp": 376882.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 325.39877300613495,
+      "y": 67.91411042944786,
+      "timestamp": 376888.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 330.30674846625766,
+      "y": 70.85889570552148,
+      "timestamp": 376894.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 335.2147239263804,
+      "y": 72.82208588957056,
+      "timestamp": 376900.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 341.1042944785276,
+      "y": 75.76687116564418,
+      "timestamp": 376906.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 346.0122699386503,
+      "y": 78.71165644171779,
+      "timestamp": 376912.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 351.90184049079755,
+      "y": 82.63803680981596,
+      "timestamp": 376919.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 357.7914110429448,
+      "y": 85.58282208588957,
+      "timestamp": 376925.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 361.7177914110429,
+      "y": 88.52760736196319,
+      "timestamp": 376931.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 365.6441717791411,
+      "y": 91.47239263803681,
+      "timestamp": 376937.5999999996,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 368.58895705521473,
+      "y": 94.41717791411043,
+      "timestamp": 376942.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 372.5153374233129,
+      "y": 97.36196319018404,
+      "timestamp": 376949.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 374.47852760736197,
+      "y": 100.30674846625767,
+      "timestamp": 376955.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 376.44171779141107,
+      "y": 103.25153374233129,
+      "timestamp": 376961.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 378.4049079754601,
+      "y": 106.1963190184049,
+      "timestamp": 376967.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 378.4049079754601,
+      "y": 109.14110429447852,
+      "timestamp": 376972.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 379.3865030674847,
+      "y": 112.08588957055214,
+      "timestamp": 376979.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 379.3865030674847,
+      "y": 115.03067484662577,
+      "timestamp": 376985.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 379.3865030674847,
+      "y": 117.97546012269939,
+      "timestamp": 376991.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 379.3865030674847,
+      "y": 120.920245398773,
+      "timestamp": 376996.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 377.4233128834356,
+      "y": 124.84662576687117,
+      "timestamp": 377004.5999999996,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 375.4601226993865,
+      "y": 126.80981595092024,
+      "timestamp": 377008.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 372.5153374233129,
+      "y": 129.75460122699386,
+      "timestamp": 377015.5999999996,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 368.58895705521473,
+      "y": 133.68098159509202,
+      "timestamp": 377022.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 363.680981595092,
+      "y": 137.6073619631902,
+      "timestamp": 377028.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 358.7730061349693,
+      "y": 140.5521472392638,
+      "timestamp": 377034.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 353.86503067484665,
+      "y": 143.49693251533742,
+      "timestamp": 377040.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 347.97546012269936,
+      "y": 145.46012269938652,
+      "timestamp": 377046.5999999996,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 343.0674846625767,
+      "y": 147.42331288343559,
+      "timestamp": 377051.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 336.1963190184049,
+      "y": 150.3680981595092,
+      "timestamp": 377058.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 330.30674846625766,
+      "y": 151.34969325153375,
+      "timestamp": 377064.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 325.39877300613495,
+      "y": 153.31288343558282,
+      "timestamp": 377069.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 319.5092024539877,
+      "y": 154.29447852760737,
+      "timestamp": 377076.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 313.6196319018405,
+      "y": 156.25766871165644,
+      "timestamp": 377082.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 309.69325153374234,
+      "y": 157.23926380368098,
+      "timestamp": 377088.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 305.76687116564415,
+      "y": 159.20245398773005,
+      "timestamp": 377094.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 301.840490797546,
+      "y": 159.20245398773005,
+      "timestamp": 377100.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 299.8773006134969,
+      "y": 160.1840490797546,
+      "timestamp": 377106.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 298.8957055214724,
+      "y": 161.16564417177915,
+      "timestamp": 377111.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 297.9141104294479,
+      "y": 161.16564417177915,
+      "timestamp": 377115.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 296.9325153374233,
+      "y": 161.16564417177915,
+      "timestamp": 377120.9000000004,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 297.9141104294479,
+      "y": 161.16564417177915,
+      "timestamp": 377287.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 298.8957055214724,
+      "y": 161.16564417177915,
+      "timestamp": 377291.0999999996,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 299.8773006134969,
+      "y": 161.16564417177915,
+      "timestamp": 377296,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 301.840490797546,
+      "y": 161.16564417177915,
+      "timestamp": 377299.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 304.7852760736196,
+      "y": 161.16564417177915,
+      "timestamp": 377306.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 307.73006134969324,
+      "y": 161.16564417177915,
+      "timestamp": 377312.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 311.65644171779144,
+      "y": 161.16564417177915,
+      "timestamp": 377319.5999999996,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 316.5644171779141,
+      "y": 161.16564417177915,
+      "timestamp": 377325.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 319.5092024539877,
+      "y": 162.14723926380367,
+      "timestamp": 377329.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 325.39877300613495,
+      "y": 162.14723926380367,
+      "timestamp": 377337.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 330.30674846625766,
+      "y": 163.12883435582822,
+      "timestamp": 377343.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 336.1963190184049,
+      "y": 165.09202453987731,
+      "timestamp": 377349.5999999996,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 341.1042944785276,
+      "y": 167.05521472392638,
+      "timestamp": 377355.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 346.0122699386503,
+      "y": 168.03680981595093,
+      "timestamp": 377361.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 349.93865030674846,
+      "y": 170.98159509202455,
+      "timestamp": 377367.5999999996,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 354.84662576687117,
+      "y": 173.92638036809817,
+      "timestamp": 377373.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 358.7730061349693,
+      "y": 176.87116564417178,
+      "timestamp": 377379.5999999996,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 362.6993865030675,
+      "y": 181.77914110429447,
+      "timestamp": 377385.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 366.62576687116564,
+      "y": 185.70552147239263,
+      "timestamp": 377390.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 370.55214723926383,
+      "y": 191.59509202453987,
+      "timestamp": 377397.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 374.47852760736197,
+      "y": 197.48466257668713,
+      "timestamp": 377403.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 378.4049079754601,
+      "y": 206.31901840490798,
+      "timestamp": 377410.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 381.3496932515337,
+      "y": 213.19018404907976,
+      "timestamp": 377416.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 383.3128834355828,
+      "y": 221.04294478527606,
+      "timestamp": 377422.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 385.2760736196319,
+      "y": 229.87730061349694,
+      "timestamp": 377428.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 387.23926380368096,
+      "y": 238.7116564417178,
+      "timestamp": 377434.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 387.23926380368096,
+      "y": 247.54601226993864,
+      "timestamp": 377440.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 387.23926380368096,
+      "y": 256.3803680981595,
+      "timestamp": 377446.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 387.23926380368096,
+      "y": 265.2147239263804,
+      "timestamp": 377452.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 385.2760736196319,
+      "y": 271.1042944785276,
+      "timestamp": 377458.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 383.3128834355828,
+      "y": 279.93865030674846,
+      "timestamp": 377464.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 379.3865030674847,
+      "y": 286.80981595092027,
+      "timestamp": 377470.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 375.4601226993865,
+      "y": 293.680981595092,
+      "timestamp": 377476.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 369.57055214723925,
+      "y": 300.55214723926383,
+      "timestamp": 377482.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 363.680981595092,
+      "y": 306.44171779141107,
+      "timestamp": 377488.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 357.7914110429448,
+      "y": 312.3312883435583,
+      "timestamp": 377494.5999999996,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 350.92024539877303,
+      "y": 318.22085889570553,
+      "timestamp": 377500.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 344.0490797546012,
+      "y": 322.14723926380367,
+      "timestamp": 377506.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 337.17791411042947,
+      "y": 327.0552147239264,
+      "timestamp": 377512.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 328.34355828220856,
+      "y": 330,
+      "timestamp": 377518.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 316.5644171779141,
+      "y": 332.9447852760736,
+      "timestamp": 377525.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 306.7484662576687,
+      "y": 333.92638036809814,
+      "timestamp": 377531.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 295.9509202453988,
+      "y": 333.92638036809814,
+      "timestamp": 377537.5999999996,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 284.1717791411043,
+      "y": 333.92638036809814,
+      "timestamp": 377543.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 271.41104294478527,
+      "y": 330.9815950920245,
+      "timestamp": 377549.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 257.6687116564417,
+      "y": 328.0368098159509,
+      "timestamp": 377555.5999999996,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 244.90797546012269,
+      "y": 324.11042944785277,
+      "timestamp": 377561.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 232.14723926380367,
+      "y": 321.16564417177915,
+      "timestamp": 377567.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 221.34969325153375,
+      "y": 317.23926380368096,
+      "timestamp": 377573.7999999998,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 211.53374233128835,
+      "y": 312.3312883435583,
+      "timestamp": 377579.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 204.66257668711657,
+      "y": 308.4049079754601,
+      "timestamp": 377585.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 196.80981595092024,
+      "y": 303.49693251533745,
+      "timestamp": 377591.5999999996,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 189.93865030674846,
+      "y": 297.60736196319016,
+      "timestamp": 377597.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 184.04907975460122,
+      "y": 291.7177914110429,
+      "timestamp": 377604.5999999996,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 180.12269938650306,
+      "y": 286.80981595092027,
+      "timestamp": 377609.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 175.21472392638037,
+      "y": 279.93865030674846,
+      "timestamp": 377616.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 173.25153374233128,
+      "y": 274.0490797546012,
+      "timestamp": 377622.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 172.26993865030676,
+      "y": 270.1226993865031,
+      "timestamp": 377627.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 171.2883435582822,
+      "y": 262.26993865030676,
+      "timestamp": 377634.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 171.2883435582822,
+      "y": 256.3803680981595,
+      "timestamp": 377639.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 171.2883435582822,
+      "y": 249.50920245398774,
+      "timestamp": 377646.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 171.2883435582822,
+      "y": 243.61963190184048,
+      "timestamp": 377652.7000000002,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "move",
+      "x": 171.2883435582822,
+      "y": 238.7116564417178,
+      "timestamp": 377658,
+      "pointerType": "mouse"
+    },
+    {
+      "type": "up",
+      "x": 171.2883435582822,
+      "y": 238.7116564417178,
+      "timestamp": 377658.2000000002,
+      "pointerType": "mouse"
+    }
+  ]
+}
