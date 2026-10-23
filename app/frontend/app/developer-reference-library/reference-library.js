@@ -94,6 +94,8 @@ export default function ReferenceLibrary() {
   }
 
   useEffect(() => {
+    const token = window.sessionStorage.getItem('baybayin-reference-token') || window.prompt('Enter the local reference-library token');
+    if (token) window.sessionStorage.setItem('baybayin-reference-token', token);
     Promise.all([refresh(), apiRequest('/knowledge-graph/catalog')])
       .then(([, graph]) => setCatalog(graph))
       .catch(error => setStatus(error.message));

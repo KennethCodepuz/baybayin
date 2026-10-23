@@ -2,7 +2,7 @@ from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Literal
 
-from fastapi import FastAPI, HTTPException, status
+from fastapi import Depends, FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
@@ -11,15 +11,16 @@ from form_matching import FormMatchError
 from knowledge_graph import KnowledgeGraph, load_knowledge_graph
 from multimodal import FeatureError, combine_validation, unavailable_branch_result, validate_png_data_url
 from reference_bundle import BundleError, build_reference_bundle
-from reference_library import DuplicateReferenceError, ReferenceNotFoundError, ReferenceRepository
+from reference_library import DuplicateReferenceError, InvalidReferenceIdentifierError, ReferenceNotFoundError, ReferenceRepository
+from security import require_reference_token
 from stroke_matching import StrokeMatchError
 from validation_evidence import provisional_bundle_evidence
 
 
 class Canvas(BaseModel):
     model_config = ConfigDict(extra='forbid')
-    width: int = Field(gt=0)
-    height: int = Field(gt=0)
+    width: int = Field(gt=0, le=4096)
+    height: int = Field(gt=0, le=4096)
 
 
 class Event(BaseModel):
@@ -38,7 +39,7 @@ class Sample(BaseModel):
     target: str = Field(min_length=1, max_length=100)
     canvas: Canvas
     image: str = Field(pattern=r'^data:image/png;base64,[A-Za-z0-9+/]+={0,2}$', max_length=10_000_000)
-    events: list[Event] = Field(min_length=2, max_length=100_000)
+    events: list[Event] = Field(min_length=2, max_length=10_000)
 
     @field_validator('target')
     @classmethod
@@ -61,6 +62,8 @@ class Sample(BaseModel):
         active = False
         last_timestamp = -1
         for event in self.events:
+            if event.x < 0 or event.x > self.canvas.width or event.y < 0 or event.y > self.canvas.height:
+                raise ValueError('Event coordinates must be inside the canvas')
             if event.timestamp < last_timestamp:
                 raise ValueError('Event timestamps must be ordered')
             last_timestamp = event.timestamp
@@ -159,7 +162,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=['http://localhost:3000', 'http://127.0.0.1:3000'],
     allow_methods=['GET', 'POST', 'PATCH'],
-    allow_headers=['Content-Type'],
+    allow_headers=['Content-Type', 'Authorization'],
 )
 
 
@@ -193,11 +196,11 @@ def knowledge_graph_target(target_id: str):
 
 
 @app.post('/api/reference-bundles', status_code=status.HTTP_201_CREATED)
-def create_reference_bundle(request: ReferenceBundleCreate):
+def create_reference_bundle(request: ReferenceBundleCreate, _: None = Depends(require_reference_token)):
     repository = reference_repository()
     try:
         record = repository.get_record(request.referenceRecordId)
-    except ReferenceNotFoundError:
+    except (ReferenceNotFoundError, InvalidReferenceIdentifierError):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Reference record not found')
     version = record.get('review', {}).get('specificationVersion')
     specification = repository.get_specification(record['target'], version) if version else None
@@ -214,15 +217,18 @@ def create_reference_bundle(request: ReferenceBundleCreate):
 
 
 @app.get('/api/reference-bundles')
-def list_reference_bundles():
+def list_reference_bundles(_: None = Depends(require_reference_token)):
     repository = reference_repository()
     return {'bundles': repository.list_bundles(), 'activeTargets': repository.active_bundle_registry()['targets']}
 
 
 @app.post('/api/reference-bundles/{bundle_id}/activate')
-def activate_reference_bundle(bundle_id: str, activation: ReferenceBundleActivation):
+def activate_reference_bundle(bundle_id: str, activation: ReferenceBundleActivation, _: None = Depends(require_reference_token)):
     repository = reference_repository()
-    bundle = repository.get_bundle(bundle_id)
+    try:
+        bundle = repository.get_bundle(bundle_id)
+    except InvalidReferenceIdentifierError:
+        bundle = None
     if not bundle:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Reference bundle not found')
     try:
@@ -299,7 +305,7 @@ def public_target(target: dict) -> dict:
 
 
 @app.post('/api/references', status_code=status.HTTP_201_CREATED)
-def create_reference(reference: ReferenceCreate):
+def create_reference(reference: ReferenceCreate, _: None = Depends(require_reference_token)):
     repository = reference_repository()
     if not knowledge_graph().is_current_release_target(reference.sample.target):
         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail='Reference target is not in the current core release')
@@ -330,25 +336,25 @@ def create_reference(reference: ReferenceCreate):
 
 
 @app.get('/api/references')
-def list_references():
+def list_references(_: None = Depends(require_reference_token)):
     return {'records': reference_repository().list_records()}
 
 
 @app.get('/api/references/manifest')
-def export_reference_manifest():
+def export_reference_manifest(_: None = Depends(require_reference_token)):
     return reference_repository().manifest()
 
 
 @app.get('/api/references/{record_id}')
-def get_reference(record_id: str):
+def get_reference(record_id: str, _: None = Depends(require_reference_token)):
     try:
         return {'record': reference_repository().get_record(record_id)}
-    except ReferenceNotFoundError:
+    except (ReferenceNotFoundError, InvalidReferenceIdentifierError):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Reference record not found')
 
 
 @app.post('/api/specifications', status_code=status.HTTP_201_CREATED)
-def create_specification(specification: CharacterSpecification):
+def create_specification(specification: CharacterSpecification, _: None = Depends(require_reference_token)):
     if not knowledge_graph().is_current_release_target(specification.target):
         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail='Specification target is not in the current core release')
     try:
@@ -358,16 +364,16 @@ def create_specification(specification: CharacterSpecification):
 
 
 @app.get('/api/specifications')
-def list_specifications():
+def list_specifications(_: None = Depends(require_reference_token)):
     return {'specifications': reference_repository().list_specifications()}
 
 
 @app.patch('/api/references/{record_id}/review')
-def transition_reference_review(record_id: str, transition: ReviewTransition):
+def transition_reference_review(record_id: str, transition: ReviewTransition, _: None = Depends(require_reference_token)):
     repository = reference_repository()
     try:
         record = repository.get_record(record_id)
-    except ReferenceNotFoundError:
+    except (ReferenceNotFoundError, InvalidReferenceIdentifierError):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Reference record not found')
 
     allowed = {

@@ -24,9 +24,11 @@ export async function readApiError(response) {
 }
 
 export async function apiRequest(path, options = {}, request = fetch) {
+  const token = typeof window === 'undefined' ? null : window.sessionStorage.getItem('baybayin-reference-token');
+  const headers = { ...options.headers, ...(token ? { Authorization: `Bearer ${token}` } : {}) };
   let response;
   try {
-    response = await request(`${API_ROOT}${path}`, options);
+    response = await request(`${API_ROOT}${path}`, { ...options, headers });
   } catch {
     throw new Error('Cannot reach the backend. Make sure FastAPI is running on port 8000.');
   }

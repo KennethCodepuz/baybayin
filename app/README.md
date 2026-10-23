@@ -12,6 +12,7 @@ In the first terminal, start FastAPI:
 cd '.\backend'
 py -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
+$env:BAYBAYIN_REFERENCE_TOKEN = 'choose-a-long-random-local-token'
 .\.venv\Scripts\python.exe -m uvicorn main:app --host 127.0.0.1 --port 8000
 ```
 
@@ -33,6 +34,8 @@ The importer accepts version 1 JSON files up to 32 MiB, with canvas dimensions f
 ## Developer reference library
 
 The local developer workflow is available at **http://127.0.0.1:3000/developer-reference-library** while both services are running. It imports a checked version 1 drawing JSON, attaches source and review metadata, and saves the result as a **candidate** reference. It accepts the knowledge graph's current 24 core targets.
+
+Set `BAYBAYIN_REFERENCE_TOKEN` before starting FastAPI. The developer-library page asks for this local token once per browser session and sends it only to the local API. Keep it private; it protects reference records, bundles, specifications, manifests, and review actions. Capture and knowledge-graph routes do not require it.
 
 Candidate recordings are not validator ground truth. The developer library accepts the current release's 24 core targets from the knowledge graph. A developer can mark a recording approved only after adding a matching expert-approved character specification with a version, reviewer code, and decision date. The library can list and replay stored recordings and produces a graph-ready `manifest.json` for approved reference records.
 

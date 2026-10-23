@@ -60,6 +60,15 @@ def test_rejects_invalid_canvas_and_image():
     payload = sample()
     payload['canvas']['width'] = 0
     assert client.post('/api/samples/check', json=payload).status_code == 422
+
+
+def test_rejects_events_outside_the_bounded_canvas():
+    payload = sample()
+    payload['events'][1]['x'] = 641
+    assert client.post('/api/samples/check', json=payload).status_code == 422
+    payload = sample()
+    payload['canvas']['width'] = 4097
+    assert client.post('/api/samples/check', json=payload).status_code == 422
     payload = sample()
     payload['image'] = 'not an image'
     assert client.post('/api/samples/check', json=payload).status_code == 422
