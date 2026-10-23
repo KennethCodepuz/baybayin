@@ -8,9 +8,12 @@ p { line-height: 1.5; }
 label { display: block; margin-top: 1.5rem; font-weight: 650; }
 input { width: 100%; margin-top: .4rem; padding: .7rem; border: 1px solid #8fa093; border-radius: 6px; font: inherit; }
 .hint { color: #58675d; font-size: .88rem; }
-.canvas-wrap { border: 1px solid #8fa093; border-radius: 8px; overflow: hidden; }
+.canvas-wrap { position: relative; border: 1px solid #8fa093; border-radius: 8px; overflow: hidden; background: white; }
 canvas { display: block; width: 100%; height: auto; touch-action: none; cursor: crosshair; }
-.actions { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: 1rem; }
+.canvas-wrap canvas { position: relative; }
+.canvas-wrap .reference-canvas { position: absolute; inset: 0; pointer-events: none; }
+.actions { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .6rem; margin-top: 1rem; }
+.actions button { min-width: 0; padding-left: .4rem; padding-right: .4rem; }
 button { font: inherit; font-weight: 600; padding: .65rem 1rem; border: 1px solid #9aac9e; border-radius: 6px; color: #243029; background: white; cursor: pointer; }
 button.primary { background: #285d3c; border-color: #285d3c; color: white; }
 button:disabled { opacity: .55; cursor: not-allowed; }

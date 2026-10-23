@@ -10,20 +10,51 @@ const apiUrl = 'http://127.0.0.1:8000';
 
 function blankCanvas(canvas) {
   const ctx = canvas.getContext('2d');
-  ctx.fillStyle = 'white';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.strokeStyle = '#1b2a20';
   ctx.fillStyle = '#1b2a20';
-  ctx.lineWidth = 4;
+  ctx.lineWidth = 6;
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
+}
+
+function blankReferenceCanvas(canvas) {
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = 'white';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+function referenceAssetName(target) {
+  return ['a', 'e', 'i', 'o', 'u'].includes(target) ? target.toUpperCase() : target;
+}
+
+function drawReference(canvas, target) {
+  blankReferenceCanvas(canvas);
+  if (!target) return;
+  const image = new Image();
+  image.onload = () => {
+    const ctx = canvas.getContext('2d');
+    const scale = Math.min(canvas.width / image.width, canvas.height / image.height) * 0.9;
+    const width = image.width * scale;
+    const height = image.height * scale;
+    ctx.globalAlpha = 0.2;
+    ctx.drawImage(image, (canvas.width - width) / 2, (canvas.height - height) / 2, width, height);
+    ctx.globalAlpha = 1;
+  };
+  image.src = `/reference-images/${encodeURIComponent(referenceAssetName(target))}.png`;
+}
+
+function sampleFileName(target) {
+  const safeTarget = target.replace(/[<>:"/\\|?*\u0000-\u001f]/g, '-').trim();
+  return `baybayin-${safeTarget}-drawing-sample.json`;
 }
 
 function drawEvent(canvas, event) {
   const ctx = canvas.getContext('2d');
   if (event.type === 'down') {
     ctx.beginPath();
-    ctx.arc(event.x, event.y, 2, 0, Math.PI * 2);
+    ctx.arc(event.x, event.y, 3, 0, Math.PI * 2);
     ctx.fill();
     ctx.beginPath();
     ctx.moveTo(event.x, event.y);
@@ -45,6 +76,7 @@ function point(canvas, event) {
 
 export default function DrawingCanvas() {
   const canvasRef = useRef(null);
+  const referenceCanvasRef = useRef(null);
   const captureRef = useRef(null);
   const pointerRef = useRef(null);
   const animationRef = useRef(null);
@@ -54,14 +86,22 @@ export default function DrawingCanvas() {
   const [status, setStatus] = useState('Ready to draw.');
   const [playing, setPlaying] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [referenceVisible, setReferenceVisible] = useState(false);
 
   useEffect(() => {
     if (!captureRef.current) captureRef.current = new DrawingCapture(640, 400);
     blankCanvas(canvasRef.current);
+    blankReferenceCanvas(referenceCanvasRef.current);
     return () => {
       if (animationRef.current !== null) cancelAnimationFrame(animationRef.current);
     };
   }, []);
+
+  useEffect(() => {
+    if (referenceCanvasRef.current) {
+      drawReference(referenceCanvasRef.current, referenceVisible ? target : '');
+    }
+  }, [referenceVisible, target]);
 
   useEffect(() => {
     apiRequest('/knowledge-graph/catalog')
@@ -176,7 +216,7 @@ export default function DrawingCanvas() {
       const url = URL.createObjectURL(new Blob([JSON.stringify(result.sample, null, 2)], { type: 'application/json' }));
       const link = document.createElement('a');
       link.href = url;
-      link.download = 'baybayin-drawing-sample.json';
+      link.download = sampleFileName(target);
       link.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
       setStatus('Sample downloaded. Its format was checked; the writing was not validated.');
@@ -203,10 +243,16 @@ export default function DrawingCanvas() {
       </select>
       <p className="hint">{selected ? `${selected.label} is from ${selected.sourceRefs.join(', ')}. Its writing is not scored yet.` : 'Select a source-backed character to identify the sample. Do not enter a participant’s name.'}</p>
       <div className="canvas-wrap">
+        <canvas ref={referenceCanvasRef} className="reference-canvas" width={640} height={400}
+          aria-hidden="true" />
         <canvas ref={canvasRef} width={640} height={400} aria-label="Drawing area. Draw using a mouse, pen, or touch input."
           onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={interrupt} onLostPointerCapture={interrupt} />
       </div>
       <div className="actions">
+        <button type="button" onClick={() => setReferenceVisible(visible => !visible)}
+          disabled={busy || !target} aria-pressed={referenceVisible}>
+          {referenceVisible ? 'Hide image reference' : 'Show image reference'}
+        </button>
         <button type="button" onClick={clear} disabled={busy}>Clear drawing</button>
         <button type="button" onClick={replay} disabled={busy}>{playing ? 'Stop replay' : 'Replay strokes'}</button>
         <button className="primary" type="button" onClick={download} disabled={busy}>Download sample</button>
