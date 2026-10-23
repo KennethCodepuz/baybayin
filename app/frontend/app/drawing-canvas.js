@@ -245,6 +245,13 @@ export default function DrawingCanvas() {
       <div className="canvas-wrap">
         <canvas ref={referenceCanvasRef} className="reference-canvas" width={640} height={400}
           aria-hidden="true" />
+        <svg className="drawing-canvas-grid" viewBox="0 0 640 400" preserveAspectRatio="none" aria-hidden="true">
+          <line x1="160" y1="0" x2="160" y2="400" />
+          <line x1="320" y1="0" x2="320" y2="400" />
+          <line x1="480" y1="0" x2="480" y2="400" />
+          <line x1="0" y1="133.333" x2="640" y2="133.333" />
+          <line x1="0" y1="266.667" x2="640" y2="266.667" />
+        </svg>
         <canvas ref={canvasRef} width={640} height={400} aria-label="Drawing area. Draw using a mouse, pen, or touch input."
           onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={interrupt} onLostPointerCapture={interrupt} />
       </div>
