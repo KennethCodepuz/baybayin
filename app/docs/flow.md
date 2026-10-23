@@ -6,7 +6,7 @@ This document shows how data moves through the Baybayin validator prototype. It 
 
 ```mermaid
 flowchart TD
-    A[Developer selects Baybayin target] --> B[Draws on Next.js canvas]
+    A[Developer selects Baybayin target] --> B[Draws on 600×450 Next.js canvas with visual-only 4×3 grid]
     B --> C[Pointer events: down, move, up]
     B --> D[Final canvas PNG]
     C --> E[Version 1 JSON sample]

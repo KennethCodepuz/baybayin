@@ -37,7 +37,7 @@ The frontend runs on `http://127.0.0.1:3000`. The FastAPI backend runs on `http:
 3. Draw with a pen, mouse, or touch input.
 4. Download the JSON sample.
 
-The downloaded sample contains `version`, `createdAt`, `target`, canvas dimensions, a PNG data URL, and ordered `down`, `move`, and `up` events. The backend verifies PNG bytes and limits image size before accepting it.
+The downloaded sample contains `version`, `createdAt`, `target`, 600×450 canvas dimensions, a PNG data URL, and ordered `down`, `move`, and `up` events. The capture page displays a visual-only 4-column × 3-row grid with 150×150 squares; it is not part of the saved PNG or events. The backend verifies PNG bytes and limits image size before accepting it.
 
 ### 2. Review and replay a saved sample
 

@@ -23,7 +23,7 @@ cd '.\frontend'
 npm.cmd run dev -- --hostname 127.0.0.1
 ```
 
-Open **http://127.0.0.1:3000** in Chrome or Edge. Select a core character such as `ka`; its faint reference image appears behind the drawing canvas for tracing. Draw over the guide and select **Download sample**. The guide is a separate visual layer and is not included in the saved learner image or stroke events. The target comes from the committed knowledge graph but is not a correctness check. Stop each server with Ctrl+C in its terminal.
+Open **http://127.0.0.1:3000** in Chrome or Edge. Select a core character such as `ka`; its faint reference image appears behind the 600×450 drawing canvas for tracing. The canvas includes a 4-column × 3-row grid of twelve equal 150×150 squares. Draw over the guide and select **Download sample**. The grid and image guide are separate visual layers and are not included in the saved learner image or stroke events. The target comes from the committed knowledge graph but is not a correctness check. Stop each server with Ctrl+C in its terminal.
 
 ## Review a saved recording
 
@@ -69,7 +69,7 @@ npm.cmd test
 
 ## Sample format and data handling
 
-The downloaded JSON includes a version, UTC creation time, manually entered target, canvas dimensions, PNG data URL, and ordered events. Event coordinates are in canvas pixels relative to its upper-left corner; timestamps are browser event timestamps in milliseconds relative to the browser's time origin, not wall-clock times. Each event includes its pointer type. Stroke boundaries are preserved. The FastAPI endpoint returns the sample but does not save it. Identifiers and consent handling are not implemented, so use test data only until a research protocol is approved. The browser may rename repeated downloads; manage exported files carefully.
+The downloaded JSON includes a version, UTC creation time, manually entered target, 600×450 canvas dimensions, PNG data URL, and ordered events. Event coordinates are in canvas pixels relative to its upper-left corner; timestamps are browser event timestamps in milliseconds relative to the browser's time origin, not wall-clock times. Each event includes its pointer type. Stroke boundaries are preserved. Use 600×450 for every final expert and learner recording so the evaluation dataset has one consistent capture layout. The FastAPI endpoint returns the sample but does not save it. Identifiers and consent handling are not implemented, so use test data only until a research protocol is approved. The browser may rename repeated downloads; manage exported files carefully.
 
 The prototype listens on localhost and is for development only. Reference sources, permissions, character specifications, and an expert-approved stroke rubric are documented as pending in `research/reference-and-rubric.md`.
 

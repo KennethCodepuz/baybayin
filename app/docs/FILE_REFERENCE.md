@@ -103,7 +103,7 @@ This reference lists maintained project files. It excludes generated folders suc
 | `app/frontend/app/layout.js` | Root page layout and document title. |
 | `app/frontend/app/globals.css` | Shared visual styles for pages, canvas, review cards, and image previews. |
 | `app/frontend/app/page.js` | Home route entry point. |
-| `app/frontend/app/drawing-canvas.js` | Interactive capture canvas, target selection, pointer handling, replay, and JSON download. |
+| `app/frontend/app/drawing-canvas.js` | Interactive 600×450 capture canvas with a visual-only 4×3 square grid, target selection, pointer handling, replay, and JSON download. |
 | `app/frontend/app/recording-review.js` | Opens an imported sample and replays it without changing the active drawing. |
 | `app/frontend/app/developer-reference-library/page.js` | Developer reference-library route entry point. |
 | `app/frontend/app/developer-reference-library/reference-library.js` | Candidate import, replay, review transition, specification creation, bundle creation, and bundle activation interface. |
