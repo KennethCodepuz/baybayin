@@ -4,23 +4,25 @@ This prototype uses a Next.js frontend and a FastAPI backend. It loads the repos
 
 ## Run on this Windows computer
 
-The dependencies have been installed in `frontend/node_modules` and `backend/.venv`. Open **two PowerShell terminals** and leave both running.
+If `backend\.venv` or `frontend\node_modules` is missing, run the first-time setup below before starting the services. Then open **two PowerShell terminals** and leave both running.
 
 In the first terminal, start FastAPI:
 
 ```powershell
-cd 'C:\Users\Kenne\OneDrive\Documents\ChatGPT\Thesis-writing\app\backend'
+cd '.\backend'
+py -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe -m uvicorn main:app --host 127.0.0.1 --port 8000
 ```
 
 In the second terminal, start Next.js:
 
 ```powershell
-cd 'C:\Users\Kenne\OneDrive\Documents\ChatGPT\Thesis-writing\app\frontend'
+cd '.\frontend'
 npm.cmd run dev -- --hostname 127.0.0.1
 ```
 
-Open **http://127.0.0.1:3000** in Chrome or Edge. Select a core character such as `ka`, draw in the white box, and select **Download sample**. The target comes from the committed knowledge graph but is not a correctness check. Stop each server with Ctrl+C in its terminal.
+Open **http://127.0.0.1:3000** in Chrome or Edge. Select a core character such as `ka`; its faint reference image appears behind the drawing canvas for tracing. Draw over the guide and select **Download sample**. The guide is a separate visual layer and is not included in the saved learner image or stroke events. The target comes from the committed knowledge graph but is not a correctness check. Stop each server with Ctrl+C in its terminal.
 
 ## Review a saved recording
 

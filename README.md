@@ -31,10 +31,10 @@ The `ba` and `ka` writing rules remain pending expert review. Until a qualified 
 - Python 3.10 or newer
 - Node.js 20.9 or newer
 
-Dependencies are already installed in this workspace. For a fresh computer, install the requirements first:
+If the backend virtual environment or frontend dependencies are not present, install them from the `baybayin` directory:
 
 ```powershell
-cd 'C:\path\to\Thesis-writing\app\backend'
+cd '.\app\backend'
 py -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 
@@ -49,14 +49,16 @@ Open two PowerShell terminals.
 Start the FastAPI backend in the first terminal:
 
 ```powershell
-cd 'C:\Users\Kenne\OneDrive\Documents\ChatGPT\Thesis-writing\app\backend'
+cd '.\app\backend'
+py -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe -m uvicorn main:app --host 127.0.0.1 --port 8000
 ```
 
 Start the Next.js frontend in the second terminal:
 
 ```powershell
-cd 'C:\Users\Kenne\OneDrive\Documents\ChatGPT\Thesis-writing\app\frontend'
+cd '.\app\frontend'
 npm.cmd run dev -- --hostname 127.0.0.1
 ```
 
@@ -88,14 +90,14 @@ The developer reference route has no authentication, so use it only on a develop
 Run the backend tests:
 
 ```powershell
-cd 'C:\Users\Kenne\OneDrive\Documents\ChatGPT\Thesis-writing\app\backend'
+cd '.\app\backend'
 .\.venv\Scripts\python.exe -m pytest -q
 ```
 
 Run the frontend tests and production build:
 
 ```powershell
-cd 'C:\Users\Kenne\OneDrive\Documents\ChatGPT\Thesis-writing\app\frontend'
+cd '.\app\frontend'
 npm.cmd test
 npm.cmd run build
 ```

@@ -1,0 +1,3120 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-23T08:39:27.603Z",
+  "target": "ja",
+  "canvas": {
+    "width": 640,
+    "height": 400
+  },
+  "image": "data:image/png;base64,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",
+  "events": [
+    {
+      "type": "down",
+      "x": 112.93891755670226,
+      "y": 64.18970814132105,
+      "timestamp": 820867.2000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 112.93891755670226,
+      "y": 61.73195084485407,
+      "timestamp": 820876.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 116.62546501860075,
+      "y": 66.64746543778801,
+      "timestamp": 821078.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 117.8543141725669,
+      "y": 69.105222734255,
+      "timestamp": 821088.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 117.8543141725669,
+      "y": 71.56298003072196,
+      "timestamp": 821098.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 119.08316332653307,
+      "y": 74.02073732718894,
+      "timestamp": 821108.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 120.31201248049922,
+      "y": 76.47849462365592,
+      "timestamp": 821112.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 121.54086163446537,
+      "y": 78.93625192012288,
+      "timestamp": 821122.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 122.76971078843154,
+      "y": 80.16513056835637,
+      "timestamp": 821126.9999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 123.99855994239769,
+      "y": 82.62288786482335,
+      "timestamp": 821132.9999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 125.22740909636386,
+      "y": 85.08064516129032,
+      "timestamp": 821142.9999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 126.45625825033001,
+      "y": 87.5384024577573,
+      "timestamp": 821146.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 127.68510740429618,
+      "y": 89.99615975422427,
+      "timestamp": 821156.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 128.91395655826233,
+      "y": 91.22503840245776,
+      "timestamp": 821160.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 130.1428057122285,
+      "y": 92.45391705069125,
+      "timestamp": 821166.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 131.37165486619466,
+      "y": 94.91167434715821,
+      "timestamp": 821176.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 133.82935317412696,
+      "y": 97.36943164362519,
+      "timestamp": 821184.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 135.05820232809313,
+      "y": 98.59831029185868,
+      "timestamp": 821194.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 136.28705148205927,
+      "y": 101.05606758832565,
+      "timestamp": 821204.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 138.7447497899916,
+      "y": 102.28494623655914,
+      "timestamp": 821214.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 139.97359894395777,
+      "y": 103.51382488479263,
+      "timestamp": 821224.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 141.2024480979239,
+      "y": 104.74270353302612,
+      "timestamp": 821234.2999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 143.66014640585624,
+      "y": 105.9715821812596,
+      "timestamp": 821248.9999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 144.8889955598224,
+      "y": 107.20046082949308,
+      "timestamp": 821258.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 146.11784471378854,
+      "y": 108.42933947772657,
+      "timestamp": 821272.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 148.57554302172088,
+      "y": 109.65821812596006,
+      "timestamp": 821286.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 151.03324132965318,
+      "y": 109.65821812596006,
+      "timestamp": 821310.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 153.4909396375855,
+      "y": 109.65821812596006,
+      "timestamp": 821338.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 157.17748709948398,
+      "y": 108.42933947772657,
+      "timestamp": 821368.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 159.6351854074163,
+      "y": 108.42933947772657,
+      "timestamp": 821382.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 163.3217328693148,
+      "y": 107.20046082949308,
+      "timestamp": 821396.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 164.55058202328092,
+      "y": 105.9715821812596,
+      "timestamp": 821406.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 168.2371294851794,
+      "y": 105.9715821812596,
+      "timestamp": 821416.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 170.69482779311173,
+      "y": 104.74270353302612,
+      "timestamp": 821426.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 171.9236769470779,
+      "y": 103.51382488479263,
+      "timestamp": 821430.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 175.61022440897636,
+      "y": 102.28494623655914,
+      "timestamp": 821440.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 178.06792271690867,
+      "y": 101.05606758832565,
+      "timestamp": 821444.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 180.525621024841,
+      "y": 101.05606758832565,
+      "timestamp": 821452.9999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 181.75447017880714,
+      "y": 99.82718894009217,
+      "timestamp": 821454.9999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 186.66986679467178,
+      "y": 97.36943164362519,
+      "timestamp": 821464.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 190.35641425657028,
+      "y": 96.1405529953917,
+      "timestamp": 821468.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 192.81411256450258,
+      "y": 94.91167434715821,
+      "timestamp": 821474.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 196.50066002640105,
+      "y": 92.45391705069125,
+      "timestamp": 821478.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 202.64490579623185,
+      "y": 89.99615975422427,
+      "timestamp": 821488.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 206.33145325813032,
+      "y": 88.76728110599079,
+      "timestamp": 821494.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 210.0180007200288,
+      "y": 86.30952380952381,
+      "timestamp": 821498.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 212.47569902796113,
+      "y": 85.08064516129032,
+      "timestamp": 821503.1,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 218.6199447977919,
+      "y": 81.39400921658986,
+      "timestamp": 821512.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 222.3064922596904,
+      "y": 80.16513056835637,
+      "timestamp": 821518.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 225.99303972158887,
+      "y": 78.93625192012288,
+      "timestamp": 821522.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 229.67958718348734,
+      "y": 77.7073732718894,
+      "timestamp": 821526.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 235.82383295331815,
+      "y": 76.47849462365592,
+      "timestamp": 821536.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 238.28153126125045,
+      "y": 75.24961597542243,
+      "timestamp": 821542.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 240.73922956918275,
+      "y": 74.02073732718894,
+      "timestamp": 821546.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 244.42577703108125,
+      "y": 72.79185867895545,
+      "timestamp": 821550.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 249.3411736469459,
+      "y": 71.56298003072196,
+      "timestamp": 821560.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 251.7988719548782,
+      "y": 70.33410138248848,
+      "timestamp": 821566.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 254.2565702628105,
+      "y": 69.105222734255,
+      "timestamp": 821570.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 256.71426857074283,
+      "y": 69.105222734255,
+      "timestamp": 821574.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 259.17196687867516,
+      "y": 67.8763440860215,
+      "timestamp": 821580.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 262.8585143405736,
+      "y": 66.64746543778801,
+      "timestamp": 821590.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 264.0873634945398,
+      "y": 66.64746543778801,
+      "timestamp": 821594.9999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 266.5450618024721,
+      "y": 65.41858678955454,
+      "timestamp": 821604.9999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 269.00276011040444,
+      "y": 64.18970814132105,
+      "timestamp": 821614.9999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 271.4604584183367,
+      "y": 64.18970814132105,
+      "timestamp": 821624.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 273.91815672626905,
+      "y": 62.96082949308756,
+      "timestamp": 821638.9999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 275.1470058802352,
+      "y": 62.96082949308756,
+      "timestamp": 821652.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 277.60470418816755,
+      "y": 61.73195084485407,
+      "timestamp": 821676.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "up",
+      "x": 277.60470418816755,
+      "y": 61.73195084485407,
+      "timestamp": 821734.9999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "down",
+      "x": 162.09288371534862,
+      "y": 105.9715821812596,
+      "timestamp": 822626.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 162.09288371534862,
+      "y": 112.11597542242704,
+      "timestamp": 822728.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 162.09288371534862,
+      "y": 115.8026113671275,
+      "timestamp": 822758.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 160.86403456138245,
+      "y": 118.26036866359448,
+      "timestamp": 822772.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 159.6351854074163,
+      "y": 120.71812596006144,
+      "timestamp": 822786.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 159.6351854074163,
+      "y": 123.17588325652842,
+      "timestamp": 822796.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 158.40633625345015,
+      "y": 125.63364055299539,
+      "timestamp": 822806.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 158.40633625345015,
+      "y": 128.09139784946237,
+      "timestamp": 822816.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 157.17748709948398,
+      "y": 130.54915514592935,
+      "timestamp": 822824.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 155.94863794551782,
+      "y": 133.00691244239633,
+      "timestamp": 822834.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 154.71978879155165,
+      "y": 135.46466973886328,
+      "timestamp": 822844.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 154.71978879155165,
+      "y": 137.92242703533026,
+      "timestamp": 822854.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 153.4909396375855,
+      "y": 141.60906298003073,
+      "timestamp": 822864.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 152.26209048361935,
+      "y": 144.0668202764977,
+      "timestamp": 822874.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 152.26209048361935,
+      "y": 145.29569892473117,
+      "timestamp": 822878.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 151.03324132965318,
+      "y": 147.75345622119815,
+      "timestamp": 822888.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 149.804392175687,
+      "y": 150.21121351766513,
+      "timestamp": 822898.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 149.804392175687,
+      "y": 153.8978494623656,
+      "timestamp": 822908.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 148.57554302172088,
+      "y": 156.35560675883258,
+      "timestamp": 822916.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 147.3466938677547,
+      "y": 157.58448540706604,
+      "timestamp": 822922.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 147.3466938677547,
+      "y": 160.04224270353302,
+      "timestamp": 822932.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 146.11784471378854,
+      "y": 163.7288786482335,
+      "timestamp": 822940.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 144.8889955598224,
+      "y": 166.18663594470047,
+      "timestamp": 822950.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 144.8889955598224,
+      "y": 167.41551459293396,
+      "timestamp": 822956.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 143.66014640585624,
+      "y": 171.1021505376344,
+      "timestamp": 822966.9999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 142.43129725189007,
+      "y": 173.55990783410138,
+      "timestamp": 822974.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 142.43129725189007,
+      "y": 177.24654377880185,
+      "timestamp": 822984.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 141.2024480979239,
+      "y": 178.47542242703534,
+      "timestamp": 822990.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 139.97359894395777,
+      "y": 180.9331797235023,
+      "timestamp": 822998.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 139.97359894395777,
+      "y": 184.61981566820276,
+      "timestamp": 823008.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 138.7447497899916,
+      "y": 187.07757296466974,
+      "timestamp": 823018.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 137.51590063602544,
+      "y": 189.53533026113672,
+      "timestamp": 823028.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 137.51590063602544,
+      "y": 191.99308755760367,
+      "timestamp": 823038.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 136.28705148205927,
+      "y": 195.67972350230414,
+      "timestamp": 823048.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 136.28705148205927,
+      "y": 198.13748079877112,
+      "timestamp": 823056.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 135.05820232809313,
+      "y": 200.5952380952381,
+      "timestamp": 823062.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 135.05820232809313,
+      "y": 203.05299539170508,
+      "timestamp": 823072.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 135.05820232809313,
+      "y": 206.73963133640552,
+      "timestamp": 823082.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 133.82935317412696,
+      "y": 207.968509984639,
+      "timestamp": 823086.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 133.82935317412696,
+      "y": 211.65514592933948,
+      "timestamp": 823096.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 133.82935317412696,
+      "y": 215.34178187403995,
+      "timestamp": 823106.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 132.6005040201608,
+      "y": 217.7995391705069,
+      "timestamp": 823114.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 132.6005040201608,
+      "y": 221.48617511520737,
+      "timestamp": 823124.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 132.6005040201608,
+      "y": 225.17281105990784,
+      "timestamp": 823134.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 132.6005040201608,
+      "y": 227.6305683563748,
+      "timestamp": 823144.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 131.37165486619466,
+      "y": 231.31720430107526,
+      "timestamp": 823154.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 132.6005040201608,
+      "y": 233.77496159754224,
+      "timestamp": 823164.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 132.6005040201608,
+      "y": 237.4615975422427,
+      "timestamp": 823172.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 132.6005040201608,
+      "y": 239.91935483870967,
+      "timestamp": 823182.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 131.37165486619466,
+      "y": 243.60599078341014,
+      "timestamp": 823192.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 131.37165486619466,
+      "y": 247.2926267281106,
+      "timestamp": 823202.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 132.6005040201608,
+      "y": 249.75038402457758,
+      "timestamp": 823212.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 132.6005040201608,
+      "y": 252.20814132104454,
+      "timestamp": 823222.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 132.6005040201608,
+      "y": 255.894777265745,
+      "timestamp": 823231.1,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 132.6005040201608,
+      "y": 259.5814132104455,
+      "timestamp": 823240.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 132.6005040201608,
+      "y": 262.03917050691246,
+      "timestamp": 823250.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 132.6005040201608,
+      "y": 265.7258064516129,
+      "timestamp": 823260.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 132.6005040201608,
+      "y": 268.1835637480799,
+      "timestamp": 823270.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 132.6005040201608,
+      "y": 270.6413210445468,
+      "timestamp": 823274.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 132.6005040201608,
+      "y": 273.0990783410138,
+      "timestamp": 823284.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 132.6005040201608,
+      "y": 276.7857142857143,
+      "timestamp": 823294.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 132.6005040201608,
+      "y": 280.47235023041475,
+      "timestamp": 823304.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 132.6005040201608,
+      "y": 282.9301075268817,
+      "timestamp": 823308.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 133.82935317412696,
+      "y": 286.6167434715822,
+      "timestamp": 823318.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 133.82935317412696,
+      "y": 289.0745007680492,
+      "timestamp": 823322.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 133.82935317412696,
+      "y": 291.53225806451616,
+      "timestamp": 823328.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 135.05820232809313,
+      "y": 295.21889400921657,
+      "timestamp": 823336.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 135.05820232809313,
+      "y": 297.67665130568355,
+      "timestamp": 823342.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 136.28705148205927,
+      "y": 302.5921658986175,
+      "timestamp": 823352.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 136.28705148205927,
+      "y": 303.821044546851,
+      "timestamp": 823356.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 137.51590063602544,
+      "y": 307.50768049155147,
+      "timestamp": 823366.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 137.51590063602544,
+      "y": 309.96543778801845,
+      "timestamp": 823370.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 138.7447497899916,
+      "y": 312.4231950844854,
+      "timestamp": 823380.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 139.97359894395777,
+      "y": 314.8809523809524,
+      "timestamp": 823390.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 139.97359894395777,
+      "y": 317.33870967741933,
+      "timestamp": 823400.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 141.2024480979239,
+      "y": 318.5675883256528,
+      "timestamp": 823404.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 141.2024480979239,
+      "y": 321.0253456221198,
+      "timestamp": 823410.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 142.43129725189007,
+      "y": 322.2542242703533,
+      "timestamp": 823414.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 143.66014640585624,
+      "y": 325.94086021505376,
+      "timestamp": 823424.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 144.8889955598224,
+      "y": 328.39861751152074,
+      "timestamp": 823428.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 146.11784471378854,
+      "y": 330.8563748079877,
+      "timestamp": 823434.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 146.11784471378854,
+      "y": 332.0852534562212,
+      "timestamp": 823438.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 147.3466938677547,
+      "y": 334.5430107526882,
+      "timestamp": 823442.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 149.804392175687,
+      "y": 338.22964669738866,
+      "timestamp": 823452.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 149.804392175687,
+      "y": 339.4585253456221,
+      "timestamp": 823458.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 151.03324132965318,
+      "y": 341.9162826420891,
+      "timestamp": 823462.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 152.26209048361935,
+      "y": 343.14516129032256,
+      "timestamp": 823468.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 153.4909396375855,
+      "y": 345.60291858678954,
+      "timestamp": 823476.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 154.71978879155165,
+      "y": 346.83179723502303,
+      "timestamp": 823482.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 157.17748709948398,
+      "y": 349.28955453149,
+      "timestamp": 823492.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 158.40633625345015,
+      "y": 349.28955453149,
+      "timestamp": 823496.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 160.86403456138245,
+      "y": 351.747311827957,
+      "timestamp": 823506.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 162.09288371534862,
+      "y": 351.747311827957,
+      "timestamp": 823510.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 164.55058202328092,
+      "y": 354.20506912442397,
+      "timestamp": 823520.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 167.00828033121326,
+      "y": 354.20506912442397,
+      "timestamp": 823526.9999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 169.46597863914556,
+      "y": 355.43394777265746,
+      "timestamp": 823534.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 171.9236769470779,
+      "y": 356.66282642089095,
+      "timestamp": 823544.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 174.3813752550102,
+      "y": 356.66282642089095,
+      "timestamp": 823554.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 178.06792271690867,
+      "y": 356.66282642089095,
+      "timestamp": 823564.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 181.75447017880714,
+      "y": 355.43394777265746,
+      "timestamp": 823574.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 182.9833193327733,
+      "y": 355.43394777265746,
+      "timestamp": 823578.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 185.44101764070564,
+      "y": 354.20506912442397,
+      "timestamp": 823582.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 186.66986679467178,
+      "y": 352.9761904761905,
+      "timestamp": 823588.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 189.1275651026041,
+      "y": 351.747311827957,
+      "timestamp": 823592.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 192.81411256450258,
+      "y": 350.5184331797235,
+      "timestamp": 823602.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 195.27181087243488,
+      "y": 349.28955453149,
+      "timestamp": 823608.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 196.50066002640105,
+      "y": 348.0606758832565,
+      "timestamp": 823612.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 198.95835833433338,
+      "y": 346.83179723502303,
+      "timestamp": 823616.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 202.64490579623185,
+      "y": 344.37403993855605,
+      "timestamp": 823626.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 203.87375495019802,
+      "y": 343.14516129032256,
+      "timestamp": 823633.1,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 207.5603024120965,
+      "y": 340.6874039938556,
+      "timestamp": 823640.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 208.78915156606266,
+      "y": 338.22964669738866,
+      "timestamp": 823646.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 210.0180007200288,
+      "y": 337.00076804915517,
+      "timestamp": 823650.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 212.47569902796113,
+      "y": 334.5430107526882,
+      "timestamp": 823656.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 213.70454818192727,
+      "y": 333.3141321044547,
+      "timestamp": 823660.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 217.39109564382576,
+      "y": 329.62749615975423,
+      "timestamp": 823670.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 218.6199447977919,
+      "y": 327.16973886328725,
+      "timestamp": 823674.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 221.07764310572423,
+      "y": 324.71198156682027,
+      "timestamp": 823680.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 223.53534141365654,
+      "y": 322.2542242703533,
+      "timestamp": 823684.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 227.221888875555,
+      "y": 318.5675883256528,
+      "timestamp": 823694.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 228.45073802952118,
+      "y": 317.33870967741933,
+      "timestamp": 823698.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 229.67958718348734,
+      "y": 314.8809523809524,
+      "timestamp": 823704.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 232.13728549141965,
+      "y": 312.4231950844854,
+      "timestamp": 823708.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 234.59498379935198,
+      "y": 309.96543778801845,
+      "timestamp": 823718.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 237.05268210728428,
+      "y": 307.50768049155147,
+      "timestamp": 823722.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 238.28153126125045,
+      "y": 306.278801843318,
+      "timestamp": 823728.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 239.51038041521662,
+      "y": 303.821044546851,
+      "timestamp": 823733.1,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 243.1969278771151,
+      "y": 300.13440860215053,
+      "timestamp": 823742.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 244.42577703108125,
+      "y": 297.67665130568355,
+      "timestamp": 823748.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 245.6546261850474,
+      "y": 295.21889400921657,
+      "timestamp": 823752.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 246.88347533901356,
+      "y": 293.9900153609831,
+      "timestamp": 823756.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 250.57002280091203,
+      "y": 289.0745007680492,
+      "timestamp": 823766.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 251.7988719548782,
+      "y": 287.8456221198157,
+      "timestamp": 823772.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 253.02772110884436,
+      "y": 285.3878648233487,
+      "timestamp": 823776.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 254.2565702628105,
+      "y": 282.9301075268817,
+      "timestamp": 823780.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 257.943117724709,
+      "y": 279.24347158218126,
+      "timestamp": 823790.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 259.17196687867516,
+      "y": 276.7857142857143,
+      "timestamp": 823796.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 260.40081603264133,
+      "y": 275.5568356374808,
+      "timestamp": 823800.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 261.62966518660744,
+      "y": 274.3279569892473,
+      "timestamp": 823806.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 264.0873634945398,
+      "y": 270.6413210445468,
+      "timestamp": 823814.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 265.31621264850594,
+      "y": 268.1835637480799,
+      "timestamp": 823820.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 266.5450618024721,
+      "y": 266.9546850998464,
+      "timestamp": 823824.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 267.77391095643827,
+      "y": 265.7258064516129,
+      "timestamp": 823831.1,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 270.23160926437055,
+      "y": 262.03917050691246,
+      "timestamp": 823838.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 271.4604584183367,
+      "y": 259.5814132104455,
+      "timestamp": 823844.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 273.91815672626905,
+      "y": 258.352534562212,
+      "timestamp": 823848.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 276.3758550342014,
+      "y": 253.43701996927803,
+      "timestamp": 823858.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 278.8335533421337,
+      "y": 252.20814132104454,
+      "timestamp": 823862.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 280.0624024960998,
+      "y": 249.75038402457758,
+      "timestamp": 823868.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 282.52010080403215,
+      "y": 247.2926267281106,
+      "timestamp": 823872.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 286.20664826593065,
+      "y": 243.60599078341014,
+      "timestamp": 823882.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 287.4354974198968,
+      "y": 242.37711213517665,
+      "timestamp": 823888.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 288.66434657386293,
+      "y": 239.91935483870967,
+      "timestamp": 823892.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 291.12204488179526,
+      "y": 238.6904761904762,
+      "timestamp": 823896.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 293.5797431897276,
+      "y": 235.00384024577573,
+      "timestamp": 823906.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 294.80859234369376,
+      "y": 233.77496159754224,
+      "timestamp": 823912.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 297.2662906516261,
+      "y": 231.31720430107526,
+      "timestamp": 823916.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 298.4951398055922,
+      "y": 230.08832565284177,
+      "timestamp": 823920.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 302.1816872674907,
+      "y": 226.40168970814133,
+      "timestamp": 823930.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 303.41053642145687,
+      "y": 223.94393241167435,
+      "timestamp": 823936.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 305.8682347293892,
+      "y": 221.48617511520737,
+      "timestamp": 823940.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 308.3259330373215,
+      "y": 220.25729646697388,
+      "timestamp": 823944.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 312.01248049922,
+      "y": 215.34178187403995,
+      "timestamp": 823954.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 313.24132965318614,
+      "y": 212.88402457757297,
+      "timestamp": 823960.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 315.6990279611184,
+      "y": 210.426267281106,
+      "timestamp": 823964.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 318.15672626905075,
+      "y": 209.1973886328725,
+      "timestamp": 823968.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 320.6144245769831,
+      "y": 204.28187403993854,
+      "timestamp": 823978.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 323.0721228849154,
+      "y": 203.05299539170508,
+      "timestamp": 823984.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 325.5298211928477,
+      "y": 200.5952380952381,
+      "timestamp": 823988.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 326.75867034681386,
+      "y": 199.3663594470046,
+      "timestamp": 823994.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 329.2163686547462,
+      "y": 195.67972350230414,
+      "timestamp": 824002.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 331.6740669626785,
+      "y": 194.45084485407065,
+      "timestamp": 824008.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 332.9029161166447,
+      "y": 191.99308755760367,
+      "timestamp": 824012.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 334.1317652706108,
+      "y": 190.7642089093702,
+      "timestamp": 824018.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 337.8183127325093,
+      "y": 187.07757296466974,
+      "timestamp": 824026.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 339.04716188647546,
+      "y": 185.84869431643625,
+      "timestamp": 824032.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 341.5048601944078,
+      "y": 184.61981566820276,
+      "timestamp": 824036.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 343.9625585023401,
+      "y": 180.9331797235023,
+      "timestamp": 824046.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 346.4202568102724,
+      "y": 178.47542242703534,
+      "timestamp": 824050.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 347.6491059642386,
+      "y": 177.24654377880185,
+      "timestamp": 824056.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 350.1068042721709,
+      "y": 174.78878648233487,
+      "timestamp": 824061.1,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 353.79335173406935,
+      "y": 171.1021505376344,
+      "timestamp": 824070.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 356.2510500420017,
+      "y": 168.64439324116742,
+      "timestamp": 824076.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 358.708748349934,
+      "y": 167.41551459293396,
+      "timestamp": 824080.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 361.1664466578663,
+      "y": 164.95775729646698,
+      "timestamp": 824084.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 364.8529941197648,
+      "y": 161.2711213517665,
+      "timestamp": 824094.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 366.08184327373095,
+      "y": 158.81336405529953,
+      "timestamp": 824100.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 368.5395415816633,
+      "y": 156.35560675883258,
+      "timestamp": 824104.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 369.76839073562945,
+      "y": 155.1267281105991,
+      "timestamp": 824108.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 373.4549381975279,
+      "y": 150.21121351766513,
+      "timestamp": 824118.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 375.9126365054602,
+      "y": 148.98233486943164,
+      "timestamp": 824124.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 377.1414856594264,
+      "y": 147.75345622119815,
+      "timestamp": 824128.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 379.59918396735867,
+      "y": 145.29569892473117,
+      "timestamp": 824132.9999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 383.28573142925717,
+      "y": 140.38018433179724,
+      "timestamp": 824142.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 385.7434297371895,
+      "y": 139.15130568356375,
+      "timestamp": 824148.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 386.97227889115567,
+      "y": 136.69354838709677,
+      "timestamp": 824152.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 389.42997719908794,
+      "y": 134.2357910906298,
+      "timestamp": 824156.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 393.11652466098644,
+      "y": 130.54915514592935,
+      "timestamp": 824166.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 395.5742229689188,
+      "y": 128.09139784946237,
+      "timestamp": 824172.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 398.03192127685105,
+      "y": 125.63364055299539,
+      "timestamp": 824176.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 399.2607704308172,
+      "y": 124.4047619047619,
+      "timestamp": 824182.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 402.9473178927157,
+      "y": 119.48924731182795,
+      "timestamp": 824190.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 405.40501620064805,
+      "y": 118.26036866359448,
+      "timestamp": 824196.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 406.63386535461416,
+      "y": 115.8026113671275,
+      "timestamp": 824200.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 407.8627145085803,
+      "y": 114.57373271889401,
+      "timestamp": 824206.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 411.5492619704788,
+      "y": 110.88709677419355,
+      "timestamp": 824214.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 412.778111124445,
+      "y": 109.65821812596006,
+      "timestamp": 824220.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 414.00696027841116,
+      "y": 107.20046082949308,
+      "timestamp": 824224.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 417.6935077403096,
+      "y": 103.51382488479263,
+      "timestamp": 824234.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 418.92235689427577,
+      "y": 102.28494623655914,
+      "timestamp": 824238.9999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 421.3800552022081,
+      "y": 99.82718894009217,
+      "timestamp": 824244.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 423.83775351014043,
+      "y": 98.59831029185868,
+      "timestamp": 824248.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 426.2954518180727,
+      "y": 94.91167434715821,
+      "timestamp": 824258.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 427.5243009720389,
+      "y": 92.45391705069125,
+      "timestamp": 824264.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 429.9819992799712,
+      "y": 91.22503840245776,
+      "timestamp": 824268.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 431.2108484339374,
+      "y": 89.99615975422427,
+      "timestamp": 824272.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 434.8973958958358,
+      "y": 86.30952380952381,
+      "timestamp": 824282.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 436.126245049802,
+      "y": 83.85176651305683,
+      "timestamp": 824288.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 437.35509420376815,
+      "y": 82.62288786482335,
+      "timestamp": 824292.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 439.8127925117005,
+      "y": 81.39400921658986,
+      "timestamp": 824296.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 442.2704908196328,
+      "y": 77.7073732718894,
+      "timestamp": 824306.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 443.4993399735989,
+      "y": 76.47849462365592,
+      "timestamp": 824312.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 445.95703828153125,
+      "y": 75.24961597542243,
+      "timestamp": 824317.2000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 447.1858874354974,
+      "y": 74.02073732718894,
+      "timestamp": 824320.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 450.8724348973959,
+      "y": 70.33410138248848,
+      "timestamp": 824330.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 452.10128405136203,
+      "y": 69.105222734255,
+      "timestamp": 824336.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 454.55898235929436,
+      "y": 67.8763440860215,
+      "timestamp": 824340.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 455.7878315132605,
+      "y": 66.64746543778801,
+      "timestamp": 824344.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 460.7032281291252,
+      "y": 62.96082949308756,
+      "timestamp": 824354.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 461.9320772830913,
+      "y": 61.73195084485407,
+      "timestamp": 824360.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 464.38977559102364,
+      "y": 60.503072196620586,
+      "timestamp": 824364.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 465.6186247449898,
+      "y": 59.274193548387096,
+      "timestamp": 824370.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 469.3051722068883,
+      "y": 58.04531490015361,
+      "timestamp": 824378.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 471.7628705148206,
+      "y": 56.81643625192012,
+      "timestamp": 824384.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 474.2205688227529,
+      "y": 55.58755760368663,
+      "timestamp": 824394.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 476.67826713068524,
+      "y": 54.35867895545315,
+      "timestamp": 824398.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 479.1359654386175,
+      "y": 53.12980030721966,
+      "timestamp": 824408.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 481.59366374654985,
+      "y": 51.90092165898618,
+      "timestamp": 824418.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 484.0513620544822,
+      "y": 51.90092165898618,
+      "timestamp": 824426.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 486.5090603624145,
+      "y": 50.67204301075269,
+      "timestamp": 824436.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 488.9667586703468,
+      "y": 50.67204301075269,
+      "timestamp": 824446.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 491.4244569782791,
+      "y": 50.67204301075269,
+      "timestamp": 824456.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 493.88215528621146,
+      "y": 50.67204301075269,
+      "timestamp": 824470.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 496.3398535941438,
+      "y": 50.67204301075269,
+      "timestamp": 824480.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 498.79755190207607,
+      "y": 51.90092165898618,
+      "timestamp": 824490.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 501.2552502100084,
+      "y": 51.90092165898618,
+      "timestamp": 824500.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 503.71294851794073,
+      "y": 53.12980030721966,
+      "timestamp": 824508.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 504.9417976719069,
+      "y": 54.35867895545315,
+      "timestamp": 824518.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 507.3994959798392,
+      "y": 55.58755760368663,
+      "timestamp": 824528.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 509.8571942877715,
+      "y": 58.04531490015361,
+      "timestamp": 824538.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 511.0860434417377,
+      "y": 59.274193548387096,
+      "timestamp": 824548.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 512.3148925957038,
+      "y": 60.503072196620586,
+      "timestamp": 824552.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 513.54374174967,
+      "y": 62.96082949308756,
+      "timestamp": 824562.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 514.7725909036361,
+      "y": 66.64746543778801,
+      "timestamp": 824572.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 516.0014400576023,
+      "y": 67.8763440860215,
+      "timestamp": 824576.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 516.0014400576023,
+      "y": 70.33410138248848,
+      "timestamp": 824586.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 516.0014400576023,
+      "y": 72.79185867895545,
+      "timestamp": 824590.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 517.2302892115684,
+      "y": 75.24961597542243,
+      "timestamp": 824600.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 517.2302892115684,
+      "y": 77.7073732718894,
+      "timestamp": 824606.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 518.4591383655346,
+      "y": 80.16513056835637,
+      "timestamp": 824614.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 518.4591383655346,
+      "y": 82.62288786482335,
+      "timestamp": 824620.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 519.6879875195008,
+      "y": 87.5384024577573,
+      "timestamp": 824634.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 520.916836673467,
+      "y": 91.22503840245776,
+      "timestamp": 824644.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 520.916836673467,
+      "y": 93.68279569892474,
+      "timestamp": 824648.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 522.1456858274331,
+      "y": 96.1405529953917,
+      "timestamp": 824658.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 522.1456858274331,
+      "y": 98.59831029185868,
+      "timestamp": 824664.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 522.1456858274331,
+      "y": 102.28494623655914,
+      "timestamp": 824672.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 523.3745349813993,
+      "y": 103.51382488479263,
+      "timestamp": 824678.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 523.3745349813993,
+      "y": 107.20046082949308,
+      "timestamp": 824688.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 523.3745349813993,
+      "y": 109.65821812596006,
+      "timestamp": 824692.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 523.3745349813993,
+      "y": 113.34485407066052,
+      "timestamp": 824702.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 524.6033841353654,
+      "y": 115.8026113671275,
+      "timestamp": 824706.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 524.6033841353654,
+      "y": 119.48924731182795,
+      "timestamp": 824716.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 524.6033841353654,
+      "y": 121.94700460829493,
+      "timestamp": 824720.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 524.6033841353654,
+      "y": 125.63364055299539,
+      "timestamp": 824730.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 524.6033841353654,
+      "y": 128.09139784946237,
+      "timestamp": 824737.2000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 524.6033841353654,
+      "y": 131.77803379416284,
+      "timestamp": 824744.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 524.6033841353654,
+      "y": 133.00691244239633,
+      "timestamp": 824750.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 524.6033841353654,
+      "y": 136.69354838709677,
+      "timestamp": 824760.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 524.6033841353654,
+      "y": 140.38018433179724,
+      "timestamp": 824770.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 524.6033841353654,
+      "y": 142.83794162826422,
+      "timestamp": 824774.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 524.6033841353654,
+      "y": 146.52457757296466,
+      "timestamp": 824784.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 523.3745349813993,
+      "y": 150.21121351766513,
+      "timestamp": 824794.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 523.3745349813993,
+      "y": 151.44009216589862,
+      "timestamp": 824799.1,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 522.1456858274331,
+      "y": 155.1267281105991,
+      "timestamp": 824808.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 522.1456858274331,
+      "y": 157.58448540706604,
+      "timestamp": 824812.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 520.916836673467,
+      "y": 158.81336405529953,
+      "timestamp": 824818.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 520.916836673467,
+      "y": 162.5,
+      "timestamp": 824826.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 519.6879875195008,
+      "y": 163.7288786482335,
+      "timestamp": 824832.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 518.4591383655346,
+      "y": 167.41551459293396,
+      "timestamp": 824842.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 518.4591383655346,
+      "y": 171.1021505376344,
+      "timestamp": 824852.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 517.2302892115684,
+      "y": 172.3310291858679,
+      "timestamp": 824856.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 516.0014400576023,
+      "y": 174.78878648233487,
+      "timestamp": 824866.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 516.0014400576023,
+      "y": 176.01766513056836,
+      "timestamp": 824870.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 514.7725909036361,
+      "y": 179.70430107526883,
+      "timestamp": 824880.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 513.54374174967,
+      "y": 180.9331797235023,
+      "timestamp": 824884.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 512.3148925957038,
+      "y": 183.39093701996927,
+      "timestamp": 824894.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 511.0860434417377,
+      "y": 185.84869431643625,
+      "timestamp": 824900.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 509.8571942877715,
+      "y": 187.07757296466974,
+      "timestamp": 824904.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 508.62834513380534,
+      "y": 188.30645161290323,
+      "timestamp": 824908.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 506.170646825873,
+      "y": 191.99308755760367,
+      "timestamp": 824918.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 504.9417976719069,
+      "y": 193.22196620583716,
+      "timestamp": 824924.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 503.71294851794073,
+      "y": 195.67972350230414,
+      "timestamp": 824928.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 502.48409936397456,
+      "y": 196.90860215053763,
+      "timestamp": 824933.1,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 500.02640105604223,
+      "y": 200.5952380952381,
+      "timestamp": 824942.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 498.79755190207607,
+      "y": 201.8241167434716,
+      "timestamp": 824948.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 497.5687027481099,
+      "y": 203.05299539170508,
+      "timestamp": 824952.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 495.1110044401776,
+      "y": 205.51075268817203,
+      "timestamp": 824962.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 493.88215528621146,
+      "y": 206.73963133640552,
+      "timestamp": 824966.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 492.6533061322453,
+      "y": 209.1973886328725,
+      "timestamp": 824976.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 491.4244569782791,
+      "y": 210.426267281106,
+      "timestamp": 824982.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 488.9667586703468,
+      "y": 211.65514592933948,
+      "timestamp": 824990.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 487.7379095163807,
+      "y": 212.88402457757297,
+      "timestamp": 824996.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 485.28021120844835,
+      "y": 214.11290322580646,
+      "timestamp": 825006.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 484.0513620544822,
+      "y": 215.34178187403995,
+      "timestamp": 825010.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 481.59366374654985,
+      "y": 217.7995391705069,
+      "timestamp": 825020.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 480.3648145925837,
+      "y": 217.7995391705069,
+      "timestamp": 825024.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 476.67826713068524,
+      "y": 220.25729646697388,
+      "timestamp": 825034.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 475.4494179767191,
+      "y": 221.48617511520737,
+      "timestamp": 825044.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 474.2205688227529,
+      "y": 222.71505376344086,
+      "timestamp": 825048.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 469.3051722068883,
+      "y": 225.17281105990784,
+      "timestamp": 825064.9999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 466.84747389895597,
+      "y": 226.40168970814133,
+      "timestamp": 825072.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 465.6186247449898,
+      "y": 227.6305683563748,
+      "timestamp": 825078.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 463.16092643705747,
+      "y": 228.85944700460828,
+      "timestamp": 825088.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 460.7032281291252,
+      "y": 230.08832565284177,
+      "timestamp": 825092.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 458.24552982119286,
+      "y": 231.31720430107526,
+      "timestamp": 825102.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 455.7878315132605,
+      "y": 232.54608294930875,
+      "timestamp": 825112.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 454.55898235929436,
+      "y": 233.77496159754224,
+      "timestamp": 825122.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 452.10128405136203,
+      "y": 235.00384024577573,
+      "timestamp": 825130.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 449.64358574342975,
+      "y": 235.00384024577573,
+      "timestamp": 825140.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 447.1858874354974,
+      "y": 236.23271889400922,
+      "timestamp": 825154.9999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 443.4993399735989,
+      "y": 236.23271889400922,
+      "timestamp": 825170.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 439.8127925117005,
+      "y": 236.23271889400922,
+      "timestamp": 825184.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 437.35509420376815,
+      "y": 236.23271889400922,
+      "timestamp": 825194.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 434.8973958958358,
+      "y": 236.23271889400922,
+      "timestamp": 825204.9999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 431.2108484339374,
+      "y": 236.23271889400922,
+      "timestamp": 825212.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 428.75315012600504,
+      "y": 236.23271889400922,
+      "timestamp": 825222.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 425.06660266410654,
+      "y": 236.23271889400922,
+      "timestamp": 825236.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 421.3800552022081,
+      "y": 235.00384024577573,
+      "timestamp": 825246.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 418.92235689427577,
+      "y": 235.00384024577573,
+      "timestamp": 825256.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 415.2358094323773,
+      "y": 233.77496159754224,
+      "timestamp": 825266.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 412.778111124445,
+      "y": 233.77496159754224,
+      "timestamp": 825276.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 411.5492619704788,
+      "y": 232.54608294930875,
+      "timestamp": 825280.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 407.8627145085803,
+      "y": 231.31720430107526,
+      "timestamp": 825290.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 405.40501620064805,
+      "y": 231.31720430107526,
+      "timestamp": 825300.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 401.71846873874955,
+      "y": 230.08832565284177,
+      "timestamp": 825310.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 399.2607704308172,
+      "y": 228.85944700460828,
+      "timestamp": 825318.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 396.80307212288494,
+      "y": 227.6305683563748,
+      "timestamp": 825324.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 394.3453738149526,
+      "y": 226.40168970814133,
+      "timestamp": 825334.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 391.8876755070203,
+      "y": 225.17281105990784,
+      "timestamp": 825338.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 389.42997719908794,
+      "y": 223.94393241167435,
+      "timestamp": 825348.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 386.97227889115567,
+      "y": 222.71505376344086,
+      "timestamp": 825352.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 385.7434297371895,
+      "y": 221.48617511520737,
+      "timestamp": 825358.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 382.056882275291,
+      "y": 220.25729646697388,
+      "timestamp": 825369.1,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 380.82803312132484,
+      "y": 219.0284178187404,
+      "timestamp": 825372.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 377.1414856594264,
+      "y": 216.5706605222734,
+      "timestamp": 825382.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 375.9126365054602,
+      "y": 216.5706605222734,
+      "timestamp": 825386.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 373.4549381975279,
+      "y": 214.11290322580646,
+      "timestamp": 825396.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 372.22608904356173,
+      "y": 212.88402457757297,
+      "timestamp": 825400.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 370.99723988959556,
+      "y": 211.65514592933948,
+      "timestamp": 825406.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 367.3106924276971,
+      "y": 206.73963133640552,
+      "timestamp": 825420.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 366.08184327373095,
+      "y": 205.51075268817203,
+      "timestamp": 825424.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 364.8529941197648,
+      "y": 203.05299539170508,
+      "timestamp": 825430.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 363.6241449657986,
+      "y": 201.8241167434716,
+      "timestamp": 825434.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 361.1664466578663,
+      "y": 198.13748079877112,
+      "timestamp": 825444.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 361.1664466578663,
+      "y": 196.90860215053763,
+      "timestamp": 825448.7999999999,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 358.708748349934,
+      "y": 194.45084485407065,
+      "timestamp": 825458.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 357.47989919596785,
+      "y": 191.99308755760367,
+      "timestamp": 825468.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 356.2510500420017,
+      "y": 190.7642089093702,
+      "timestamp": 825478.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 355.0222008880355,
+      "y": 189.53533026113672,
+      "timestamp": 825488.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 352.5645025801032,
+      "y": 187.07757296466974,
+      "timestamp": 825502.9,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 351.33565342613707,
+      "y": 185.84869431643625,
+      "timestamp": 825522.7000000001,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 350.1068042721709,
+      "y": 183.39093701996927,
+      "timestamp": 825546.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "move",
+      "x": 347.6491059642386,
+      "y": 183.39093701996927,
+      "timestamp": 825588.6,
+      "pointerType": "pen"
+    },
+    {
+      "type": "up",
+      "x": 347.6491059642386,
+      "y": 183.39093701996927,
+      "timestamp": 825604.9,
+      "pointerType": "pen"
+    }
+  ]
+}
