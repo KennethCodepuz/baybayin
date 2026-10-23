@@ -7,10 +7,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from feedback import deterministic_feedback, retrieve_feedback_context
+from form_matching import FormMatchError
 from knowledge_graph import KnowledgeGraph, load_knowledge_graph
-from multimodal import combine_validation, unavailable_branch_result
+from multimodal import FeatureError, combine_validation, unavailable_branch_result, validate_png_data_url
 from reference_bundle import BundleError, build_reference_bundle
 from reference_library import DuplicateReferenceError, ReferenceNotFoundError, ReferenceRepository
+from stroke_matching import StrokeMatchError
+from validation_evidence import provisional_bundle_evidence
 
 
 class Canvas(BaseModel):
@@ -42,6 +45,15 @@ class Sample(BaseModel):
     def target_must_not_be_blank(cls, value):
         if not value.strip():
             raise ValueError('Target character must not be blank')
+        return value
+
+    @field_validator('image')
+    @classmethod
+    def image_must_be_a_safe_png(cls, value):
+        try:
+            validate_png_data_url(value)
+        except FeatureError as error:
+            raise ValueError(str(error)) from error
         return value
 
     @model_validator(mode='after')
@@ -121,6 +133,13 @@ class ReferenceBundleCreate(BaseModel):
     referenceRecordId: str = Field(min_length=1, max_length=100)
 
 
+class ReferenceBundleActivation(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    reviewerCode: str = Field(min_length=1, max_length=100)
+    decisionDate: date
+    reason: str = Field(min_length=1, max_length=2_000)
+
+
 class BranchFeedback(BaseModel):
     model_config = ConfigDict(extra='forbid')
     errors: list[str] = Field(default_factory=list, max_length=20)
@@ -196,7 +215,24 @@ def create_reference_bundle(request: ReferenceBundleCreate):
 
 @app.get('/api/reference-bundles')
 def list_reference_bundles():
-    return {'bundles': reference_repository().list_bundles()}
+    repository = reference_repository()
+    return {'bundles': repository.list_bundles(), 'activeTargets': repository.active_bundle_registry()['targets']}
+
+
+@app.post('/api/reference-bundles/{bundle_id}/activate')
+def activate_reference_bundle(bundle_id: str, activation: ReferenceBundleActivation):
+    repository = reference_repository()
+    bundle = repository.get_bundle(bundle_id)
+    if not bundle:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Reference bundle not found')
+    try:
+        active = repository.activate_bundle(
+            bundle['targetId'], bundle_id, activation.reviewerCode,
+            activation.decisionDate.isoformat(), activation.reason,
+        )
+        return {'activeBundle': active}
+    except ReferenceNotFoundError:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail='Only an approved bundle with an approved reference record can become active')
 
 
 @app.post('/api/validation/preview')
@@ -204,11 +240,20 @@ def validation_preview(sample: Sample):
     target = knowledge_graph().find_target(sample.target)
     if not target:
         raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail='Sample target is not in the current core release')
-    bundle = next((item for item in reference_repository().list_bundles() if item['targetId'] == sample.target), None)
-    reason = 'expert_thresholds_pending' if bundle else 'reference_bundle_missing'
+    repository = reference_repository()
+    canonical_target_id = target['targetId']
+    bundle = repository.get_active_bundle(canonical_target_id)
+    if bundle:
+        try:
+            evidence = provisional_bundle_evidence(sample.model_dump(), bundle, target['sourceRefs'])
+        except (FeatureError, FormMatchError, StrokeMatchError) as error:
+            raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail=str(error))
+        return combine_validation(canonical_target_id, evidence['form'], evidence['stroke'], bundle['id'])
+    has_inactive_bundle = any(item['targetId'] == canonical_target_id for item in repository.list_bundles())
+    reason = 'reference_bundle_activation_pending' if has_inactive_bundle else 'reference_bundle_missing'
     form = unavailable_branch_result('form', reason, target['sourceRefs'])
     stroke = unavailable_branch_result('stroke', reason, target['sourceRefs'])
-    return combine_validation(sample.target, form, stroke, bundle['id'] if bundle else None)
+    return combine_validation(canonical_target_id, form, stroke, None)
 
 
 @app.post('/api/feedback')

@@ -78,17 +78,19 @@ export default function ReferenceLibrary() {
   const [metadata, setMetadata] = useState(initialMetadata);
   const [records, setRecords] = useState([]);
   const [specifications, setSpecifications] = useState([]);
+  const [bundles, setBundles] = useState([]);
   const [catalog, setCatalog] = useState(null);
   const [selected, setSelected] = useState(null);
   const [status, setStatus] = useState('Load a saved JSON drawing to create a candidate reference.');
   const [busy, setBusy] = useState(false);
 
   async function refresh() {
-    const [recordResult, specificationResult] = await Promise.all([
-      apiRequest('/references'), apiRequest('/specifications'),
+    const [recordResult, specificationResult, bundleResult] = await Promise.all([
+      apiRequest('/references'), apiRequest('/specifications'), apiRequest('/reference-bundles'),
     ]);
     setRecords(recordResult.records);
     setSpecifications(specificationResult.specifications);
+    setBundles(bundleResult.bundles);
   }
 
   useEffect(() => {
@@ -174,7 +176,28 @@ export default function ReferenceLibrary() {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ referenceRecordId: record.id }),
       });
-      setStatus(`Created multimodal bundle ${result.bundle.id}. It is reference data, not an active learner scorer.`);
+      setStatus(`Created multimodal bundle ${result.bundle.id}. An expert reviewer must activate it before preview can use it.`);
+      await refresh();
+    } catch (error) {
+      setStatus(error.message);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function activateBundle(bundle) {
+    const reviewerCode = window.prompt('Expert reviewer code for activation');
+    if (!reviewerCode) return;
+    const reason = window.prompt('Reason for selecting this bundle');
+    if (!reason) return;
+    setBusy(true);
+    try {
+      await apiRequest(`/reference-bundles/${bundle.id}/activate`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reviewerCode, decisionDate: new Date().toISOString().slice(0, 10), reason }),
+      });
+      setStatus(`Activated ${bundle.id}. Preview may now show provisional measurements, never a learner score.`);
+      await refresh();
     } catch (error) {
       setStatus(error.message);
     } finally {
@@ -236,6 +259,7 @@ export default function ReferenceLibrary() {
       </div>}
       {selected?.status === 'approved' && <div className="actions">
         <button type="button" disabled={busy} onClick={() => createBundle(selected)}>Create multimodal reference bundle</button>
+        {bundles.filter(bundle => bundle.referenceRecordId === selected.id).map(bundle => <button key={bundle.id} type="button" disabled={busy} onClick={() => activateBundle(bundle)}>Activate {bundle.id.slice(0, 18)}</button>)}
       </div>}
     </section>}
 

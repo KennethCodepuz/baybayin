@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "example-not-approved",
+  "targetId": "ka",
+  "referenceBundleId": "bundle-example",
+  "status": "provisional",
+  "approval": {
+    "reviewerCode": "required-for-approved-calibration",
+    "decisionDate": "YYYY-MM-DD"
+  },
+  "algorithms": {
+    "stroke": {
+      "version": "dtw-v1",
+      "pointCount": 32,
+      "bandRatio": 0.25,
+      "maximumNormalizedDistance": 0.0
+    },
+    "form": {
+      "version": "mask-v1",
+      "minimumIou": 0.0
+    }
+  }
+}

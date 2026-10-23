@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { apiRequest } from '../../lib/reference-library.js';
 import { loadRecording } from '../../lib/review.js';
+import { imagePreviewSource, provisionalMeasurements } from '../../lib/validation-preview.js';
 
 export default function DeveloperValidation() {
   const [sample, setSample] = useState(null);
@@ -58,12 +59,18 @@ export default function DeveloperValidation() {
     <p id="validation-status" role="status" aria-live="polite">{status}</p>
     {result && <section className="review">
       <h2>{sample.target} validation preview</h2>
+      {imagePreviewSource(sample) && <figure className="image-preview">
+        <img src={imagePreviewSource(sample)} alt={`Recorded ${sample.target} drawing`} />
+        <figcaption>Recorded final PNG. This is the image the future form branch compares after normalization.</figcaption>
+      </figure>}
       <dl className="sample-details">
         <div><dt>Form branch</dt><dd>{result.form.available ? 'available' : result.form.evidence[0]?.code}</dd></div>
         <div><dt>Stroke branch</dt><dd>{result.stroke.available ? 'available' : result.stroke.evidence[0]?.code}</dd></div>
         <div><dt>Hybrid result</dt><dd>{result.overall.available ? String(result.overall.passed) : 'scoring unavailable'}</dd></div>
         <div><dt>Policy</dt><dd>{result.overall.policyVersion}</dd></div>
       </dl>
+      {provisionalMeasurements(result.form) && <p className="hint">Provisional form evidence: mask overlap {provisionalMeasurements(result.form).maskIou?.toFixed(3)}. This is a measurement, not a correctness score.</p>}
+      {provisionalMeasurements(result.stroke) && <p className="hint">Provisional stroke evidence: {provisionalMeasurements(result.stroke).comparisons?.length || 0} matched stroke path(s). This is a measurement, not a correctness score.</p>}
       <div className="actions"><button type="button" onClick={explain} disabled={busy}>Generate grounded feedback preview</button></div>
     </section>}
     {feedback && <section className="review">

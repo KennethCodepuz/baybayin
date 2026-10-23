@@ -27,4 +27,7 @@ select { width: 100%; margin-top: .4rem; padding: .7rem; border: 1px solid #8fa0
 .library-form h2 { margin-bottom: 0; }
 .record-list { padding-left: 0; list-style: none; }
 .record-list li { margin: .5rem 0; }
+.image-preview { margin: 1rem 0; }
+.image-preview img { display: block; max-width: min(100%, 320px); max-height: 320px; border: 1px solid #8fa093; border-radius: 8px; background: white; image-rendering: auto; }
+.image-preview figcaption { margin-top: .45rem; color: #58675d; font-size: .88rem; line-height: 1.4; }
 @media (max-width: 480px) { main { padding: 1.2rem; } h1 { font-size: 1.6rem; } }

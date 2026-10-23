@@ -85,3 +85,19 @@ Open **http://127.0.0.1:3000/developer-validation** to load a checked sample and
 An expert recording already includes both modalities: the sample's `image` is the final PNG and `events` are the ordered stroke events. Once an approved reference recording and matching specification exist, `POST /api/reference-bundles` can create a versioned bundle with a normalized canonical image and reproducible stroke features. `POST /api/validation/preview` returns the safe unavailable-state contract, while `POST /api/feedback` returns source-grounded fallback feedback from supplied validator error codes.
 
 The current feedback implementation is deterministic. It is the safety boundary for a future AI provider: any model must receive only structured validator errors and retrieved source references, and it may explain those errors but cannot change validation outcomes.
+
+## Algorithm and evaluation readiness
+
+The backend now includes developer-only, pure algorithm modules for the next validation phase. `stroke_matching.py` normalizes and resamples ordered strokes, then produces constrained Dynamic Time Warping (DTW) distance and alignment evidence. `stroke_rules.py` evaluates stroke-count, direction, and start/end-region rules only when an approved annotation is supplied. `form_matching.py` produces normalized PNG mask-overlap and centroid measurements. Preview can show their provisional evidence for an active bundle, but they do not independently decide whether a learner is correct.
+
+Recorded PNG data is decoded and bounded before the backend accepts it. The local developer library keeps new bundles inactive until an expert reviewer explicitly activates one; preview uses only that active bundle. Existing legacy bundles remain inactive and require review before they can provide comparison evidence.
+
+`validation_config.py` only accepts a matching, expert-approved calibration configuration before `scoring.py` can turn measurements into form or stroke outcomes. The tracked [configuration example](config/calibration.schema.example.json) is deliberately provisional and cannot enable scoring.
+
+For the later Chapter 3/4 dataset, use the schemas and separation procedure in [evaluation](evaluation/README.md). The metric utility calculates accuracy, precision, recall, F1-score, and per-error confusion-matrix counts once expert-labeled held-out samples exist. Actual evaluation results belong in Chapter 4.
+
+## Documentation
+
+- [System documentation](docs/SYSTEM_DOCUMENTATION.md)
+- [File reference](docs/FILE_REFERENCE.md)
+- [System flow](docs/flow.md)

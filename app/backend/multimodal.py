@@ -6,6 +6,7 @@ import base64
 import hashlib
 import io
 import math
+import warnings
 from typing import Literal
 
 from PIL import Image, ImageChops, ImageOps
@@ -15,19 +16,39 @@ class FeatureError(ValueError):
     pass
 
 
+MAX_ENCODED_PNG_BYTES = 8 * 1024 * 1024
+MAX_PNG_WIDTH = 4096
+MAX_PNG_HEIGHT = 4096
+MAX_PNG_PIXELS = 12_000_000
+
+
 def _decode_png_data_url(data_url: str) -> Image.Image:
     prefix = 'data:image/png;base64,'
     if not isinstance(data_url, str) or not data_url.startswith(prefix):
         raise FeatureError('Image must be a PNG data URL')
     try:
         binary = base64.b64decode(data_url.removeprefix(prefix), validate=True)
-        image = Image.open(io.BytesIO(binary))
+        if len(binary) > MAX_ENCODED_PNG_BYTES:
+            raise FeatureError('Image data exceeds the safe encoded size limit')
+        with warnings.catch_warnings():
+            warnings.simplefilter('error', Image.DecompressionBombWarning)
+            image = Image.open(io.BytesIO(binary))
+        if image.format != 'PNG':
+            raise FeatureError('Image must contain valid PNG data')
+        if image.width > MAX_PNG_WIDTH or image.height > MAX_PNG_HEIGHT or image.width * image.height > MAX_PNG_PIXELS:
+            raise FeatureError('Image dimensions exceed the safe processing limit')
         image.load()
     except Exception as error:
+        if isinstance(error, FeatureError):
+            raise
         raise FeatureError('Image must contain valid PNG data') from error
-    if image.format != 'PNG':
-        raise FeatureError('Image must contain valid PNG data')
     return image
+
+
+def validate_png_data_url(data_url: str) -> dict:
+    """Decode a bounded PNG before any record or preview processing uses it."""
+    image = _decode_png_data_url(data_url)
+    return {'width': image.width, 'height': image.height, 'format': 'PNG'}
 
 
 def normalize_png_data_url(data_url: str, size: int = 256) -> dict:
@@ -138,7 +159,7 @@ def unavailable_branch_result(branch: Literal['form', 'stroke'], reason: str, so
 
 def combine_validation(target_id: str, form: dict, stroke: dict, reference_bundle_id: str | None = None) -> dict:
     """Preserve branch outcomes; do not score until both approved branches are available."""
-    available = bool(form.get('available')) and bool(stroke.get('available'))
+    available = bool(form.get('available')) and bool(stroke.get('available')) and type(form.get('passed')) is bool and type(stroke.get('passed')) is bool
     passed = form.get('passed') is True and stroke.get('passed') is True if available else None
     source_refs = list(dict.fromkeys([*form.get('sourceRefs', []), *stroke.get('sourceRefs', [])]))
     return {
@@ -150,7 +171,7 @@ def combine_validation(target_id: str, form: dict, stroke: dict, reference_bundl
         'overall': {
             'available': available,
             'passed': passed,
-            'policyVersion': 'pending-expert-thresholds' if not available else 'expert-approved-policy-required',
+            'policyVersion': 'expert-approved-policy-required' if available else ('needs-expert-review' if form.get('available') and stroke.get('available') else 'pending-expert-thresholds'),
         },
         'sourceRefs': source_refs,
     }

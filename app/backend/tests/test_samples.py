@@ -1,8 +1,19 @@
+import base64
+import io
+
+from PIL import Image
 from fastapi.testclient import TestClient
 import pytest
 from main import app
 
 client = TestClient(app)
+
+
+def png_data_url():
+    image = Image.new('RGB', (2, 2), 'white')
+    output = io.BytesIO()
+    image.save(output, format='PNG')
+    return 'data:image/png;base64,' + base64.b64encode(output.getvalue()).decode('ascii')
 
 
 def sample():
@@ -11,7 +22,7 @@ def sample():
         "createdAt": "2026-10-18T00:00:00.000Z",
         "target": "ka",
         "canvas": {"width": 640, "height": 400},
-        "image": "data:image/png;base64,aGVsbG8=",
+        "image": png_data_url(),
         "events": [
             {"type": "down", "x": 10, "y": 20, "timestamp": 100, "pointerType": "pen"},
             {"type": "move", "x": 20, "y": 30, "timestamp": 110, "pointerType": "pen"},
@@ -51,6 +62,9 @@ def test_rejects_invalid_canvas_and_image():
     assert client.post('/api/samples/check', json=payload).status_code == 422
     payload = sample()
     payload['image'] = 'not an image'
+    assert client.post('/api/samples/check', json=payload).status_code == 422
+    payload = sample()
+    payload['image'] = 'data:image/png;base64,aGVsbG8='
     assert client.post('/api/samples/check', json=payload).status_code == 422
 
 

@@ -1,8 +1,18 @@
+import base64
+import io
 from fastapi.testclient import TestClient
 from datetime import date
+from PIL import Image
 
 from main import app
 from reference_library import ReferenceRepository
+
+
+def png_data_url():
+    image = Image.new('RGB', (2, 2), 'white')
+    output = io.BytesIO()
+    image.save(output, format='PNG')
+    return 'data:image/png;base64,' + base64.b64encode(output.getvalue()).decode('ascii')
 
 
 def sample(target):
@@ -11,7 +21,7 @@ def sample(target):
         'createdAt': '2026-10-22T00:00:00.000Z',
         'target': target,
         'canvas': {'width': 640, 'height': 400},
-        'image': 'data:image/png;base64,aGVsbG8=',
+        'image': png_data_url(),
         'events': [
             {'type': 'down', 'x': 10, 'y': 20, 'timestamp': 100, 'pointerType': 'pen'},
             {'type': 'up', 'x': 10, 'y': 20, 'timestamp': 110, 'pointerType': 'pen'},

@@ -10,6 +10,7 @@ from multimodal import (
     extract_stroke_features,
     normalize_png_data_url,
     unavailable_branch_result,
+    validate_png_data_url,
 )
 
 
@@ -52,6 +53,19 @@ def test_rejects_blank_or_non_png_image_data():
         normalize_png_data_url('data:image/jpeg;base64,aGVsbG8=')
 
 
+def test_validates_actual_png_bytes_and_safe_dimensions_before_processing():
+    assert validate_png_data_url(png_data_url(draw=True))['width'] == 80
+    with pytest.raises(FeatureError, match='valid PNG'):
+        validate_png_data_url('data:image/png;base64,aGVsbG8=')
+
+    oversized = Image.new('RGB', (4097, 1), 'white')
+    output = io.BytesIO()
+    oversized.save(output, format='PNG')
+    data_url = 'data:image/png;base64,' + base64.b64encode(output.getvalue()).decode('ascii')
+    with pytest.raises(FeatureError, match='dimensions'):
+        validate_png_data_url(data_url)
+
+
 def test_segments_strokes_without_mutating_recorded_events():
     recording = sample()
     original_events = [event.copy() for event in recording['events']]
@@ -75,3 +89,14 @@ def test_branch_and_hybrid_results_remain_unavailable_without_approved_threshold
     assert result['stroke']['passed'] is None
     assert result['overall']['available'] is False
     assert result['overall']['passed'] is None
+
+
+def test_hybrid_result_requires_boolean_results_from_both_available_branches():
+    form = {'available': True, 'passed': True, 'errors': [], 'evidence': [], 'sourceRefs': []}
+    stroke = {'available': True, 'passed': None, 'errors': [], 'evidence': [], 'sourceRefs': []}
+
+    result = combine_validation('ka', form, stroke)
+
+    assert result['overall']['available'] is False
+    assert result['overall']['passed'] is None
+    assert result['overall']['policyVersion'] == 'needs-expert-review'

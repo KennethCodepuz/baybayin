@@ -20,6 +20,7 @@ class ReferenceRepository:
         self.records_dir = self.root / 'records'
         self.specifications_dir = self.root / 'specifications'
         self.bundles_dir = self.root / 'bundles'
+        self.active_bundles_path = self.root / 'active-bundles.json'
 
     @staticmethod
     def checksum(sample: dict) -> str:
@@ -106,6 +107,44 @@ class ReferenceRepository:
         if not path.exists():
             return None
         return json.loads(path.read_text(encoding='utf-8'))
+
+    def active_bundle_registry(self) -> dict:
+        if not self.active_bundles_path.exists():
+            return {'schemaVersion': 1, 'targets': {}}
+        return json.loads(self.active_bundles_path.read_text(encoding='utf-8'))
+
+    def activate_bundle(self, target_id: str, bundle_id: str, reviewer_code: str, decision_date: str, reason: str) -> dict:
+        self._ensure_directories()
+        bundle = self.get_bundle(bundle_id)
+        if not bundle or bundle.get('targetId') != target_id or bundle.get('status') != 'approved':
+            raise ReferenceNotFoundError()
+        record = self.get_record(bundle['referenceRecordId'])
+        if record.get('status') != 'approved':
+            raise ReferenceNotFoundError()
+        registry = self.active_bundle_registry()
+        current = registry['targets'].get(target_id, {'history': []})
+        history = [*current.get('history', []), {
+            'bundleId': bundle_id,
+            'reviewerCode': reviewer_code,
+            'decisionDate': decision_date,
+            'reason': reason,
+        }]
+        registry['targets'][target_id] = {'bundleId': bundle_id, 'history': history}
+        self._write_json(self.active_bundles_path, registry)
+        return registry['targets'][target_id]
+
+    def get_active_bundle(self, target_id: str) -> dict | None:
+        active = self.active_bundle_registry()['targets'].get(target_id)
+        if not active:
+            return None
+        bundle = self.get_bundle(active.get('bundleId'))
+        if not bundle or bundle.get('targetId') != target_id or bundle.get('status') != 'approved':
+            return None
+        try:
+            record = self.get_record(bundle['referenceRecordId'])
+        except ReferenceNotFoundError:
+            return None
+        return bundle if record.get('status') == 'approved' else None
 
     def list_bundles(self) -> list[dict]:
         if not self.bundles_dir.exists():

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "partition": "held_out_evaluation",
+  "sampleId": "sample-anonymous-001",
+  "anonymousWriterId": "writer-001",
+  "targetId": "ka",
+  "groundTruth": {
+    "reviewerCode": "expert-01",
+    "decisionDate": "YYYY-MM-DD",
+    "formPassed": true,
+    "strokePassed": true,
+    "hybridPassed": true,
+    "errors": []
+  },
+  "prediction": {
+    "referenceBundleId": "bundle-example",
+    "calibrationId": "approved-calibration-id",
+    "formPassed": true,
+    "strokePassed": true,
+    "hybridPassed": true,
+    "formErrors": [],
+    "strokeErrors": [],
+    "retrievedSourceRefs": [],
+    "feedbackMode": "deterministic",
+    "responseTimeMs": 0
+  },
+  "feedbackEvaluation": {
+    "sourceCorrect": null,
+    "feedbackRelevant": null,
+    "raterCode": null
+  }
+}
