@@ -168,7 +168,12 @@ app.add_middleware(
 
 @app.post('/api/samples/check')
 def check_sample(sample: Sample):
-    # Checks capture structure only; this does not validate Baybayin writing.
+    # Checks capture structure and current target eligibility; this does not validate Baybayin writing.
+    if not knowledge_graph().is_current_release_target(sample.target):
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+            detail='Sample target is not in the current release',
+        )
     return {'sample': sample}
 
 

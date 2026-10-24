@@ -32,7 +32,7 @@ def retrieve_feedback_context(graph: KnowledgeGraph, target_id: str, errors: lis
         'target': target,
         'errors': supported_errors,
         'sourceRefs': target['sourceRefs'],
-        'imageReferenceIds': ['core-character-chart-part-1' if target_id in {'a', 'e', 'i', 'o', 'u', 'ba', 'da'} else 'core-character-chart-part-2'],
+        'imageReferenceIds': (['core-character-chart-part-1', 'kudlit-pamalit-placement-chart'] if target_id in {'be', 'bi', 'bo', 'bu'} else ['core-character-chart-part-1']),
     }
 
 

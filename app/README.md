@@ -23,7 +23,7 @@ cd '.\frontend'
 npm.cmd run dev -- --hostname 127.0.0.1
 ```
 
-Open **http://127.0.0.1:3000** in Chrome or Edge. Select a core character such as `ka`; its faint reference image appears behind the 600×450 drawing canvas for tracing. The canvas includes a 4-column × 3-row grid of twelve equal 150×150 squares. Draw over the guide and select **Download sample**. The grid and image guide are separate visual layers and are not included in the saved learner image or stroke events. The target comes from the committed knowledge graph but is not a correctness check. Stop each server with Ctrl+C in its terminal.
+Open **http://127.0.0.1:3000** in Chrome or Edge. Select a target such as `ba`; its faint reference image appears behind the 600×450 drawing canvas for tracing. The canvas includes a 4-column × 3-row grid of twelve equal 150×150 squares. Draw over the guide and select **Download sample**. The grid and image guide are separate visual layers and are not included in the saved learner image or stroke events. The target comes from the committed knowledge graph but is not a correctness check. Stop each server with Ctrl+C in its terminal.
 
 ## Review a saved recording
 
@@ -33,11 +33,11 @@ The importer accepts version 1 JSON files up to 32 MiB, with canvas dimensions f
 
 ## Developer reference library
 
-The local developer workflow is available at **http://127.0.0.1:3000/developer-reference-library** while both services are running. It imports a checked version 1 drawing JSON, attaches source and review metadata, and saves the result as a **candidate** reference. It accepts the knowledge graph's current 24 core targets.
+The local developer workflow is available at **http://127.0.0.1:3000/developer-reference-library** while both services are running. It imports a checked version 1 drawing JSON, attaches source and review metadata, and saves the result as a **candidate** reference. It accepts the knowledge graph's current 12 selected targets: **A, E, I, O, U, ba, be, bi, bo, bu, b, b_**.
 
 Set `BAYBAYIN_REFERENCE_TOKEN` before starting FastAPI. The developer-library page asks for this local token once per browser session and sends it only to the local API. Keep it private; it protects reference records, bundles, specifications, manifests, and review actions. Capture and knowledge-graph routes do not require it.
 
-Candidate recordings are not validator ground truth. The developer library accepts the current release's 24 core targets from the knowledge graph. A developer can mark a recording approved only after adding a matching expert-approved character specification with a version, reviewer code, and decision date. The library can list and replay stored recordings and produces a graph-ready `manifest.json` for approved reference records.
+Candidate recordings are not validator ground truth. The developer library accepts the current release's 12 selected targets from the knowledge graph. A developer can mark a recording approved only after adding a matching expert-approved character specification with a version, reviewer code, and decision date. The library can list and replay stored recordings and produces a graph-ready `manifest.json` for approved reference records.
 
 The library stores recordings and its manifest in `app/data/reference-library/`, which Git ignores. Back up that directory using the team’s approved private storage; do not commit real recordings, non-public reviewer details, or the generated manifest. This local route has no authentication and is for a developer-controlled computer only. A deployed research or learner system will need authenticated storage and an approved retention policy.
 
@@ -77,7 +77,7 @@ The prototype listens on localhost and is for development only. Reference source
 
 The curated source data lives in `../knowledge-graph/` and is loaded by FastAPI as read-only data. It exposes these local endpoints:
 
-- `GET /api/knowledge-graph/catalog` for the 24 current-release targets;
+- `GET /api/knowledge-graph/catalog` for the 12 current-release targets;
 - `GET /api/knowledge-graph/targets/{id}` for a target's source-backed details; and
 - `GET /api/knowledge-graph/readiness` for the evidence state of every target.
 

@@ -54,9 +54,9 @@ def load_knowledge_graph(root: Path) -> KnowledgeGraph:
     if not isinstance(source_id, str) or not source_id:
         raise KnowledgeGraphError('Primary source must have an id')
 
-    base = characters.get('baseGraphemes')
-    if not isinstance(base, list) or len(base) != 24:
-        raise KnowledgeGraphError('characters.json must contain exactly 24 base graphemes')
+    base = characters.get('currentReleaseTargets')
+    if not isinstance(base, list) or len(base) != 12:
+        raise KnowledgeGraphError('characters.json must contain exactly 12 current release targets')
 
     graph_nodes = graph.get('nodes')
     graph_edges = graph.get('edges')
@@ -87,7 +87,10 @@ def load_knowledge_graph(root: Path) -> KnowledgeGraph:
         target = {
             'id': identifier,
             'targetId': key,
-            'label': key,
+            'label': record.get('label', key),
+            'baseGraphemeId': record.get('baseGraphemeId'),
+            'markForm': record.get('markForm'),
+            'markPosition': record.get('markPosition'),
             'phoneme': record.get('phoneme'),
             'class': record.get('class'),
             'sourceRefs': refs,

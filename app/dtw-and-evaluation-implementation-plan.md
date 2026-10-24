@@ -20,7 +20,7 @@ canvas drawing
        - source references
 ```
 
-The knowledge graph provides 24 core character targets and source-traceable material from *Pinagyamang Baybayin* (Lopez/KWF, 2025). It is a source layer, not a set of unapproved scoring rules.
+The knowledge graph provides the 12 selected character targets (A, E, I, O, U, ba, be, bi, bo, bu, b, and b_) and source-traceable material from *Pinagyamang Baybayin* (Lopez/KWF, 2025). It is a source layer, not a set of unapproved scoring rules.
 
 The current preview endpoint safely reports that scoring is unavailable. This behavior must remain until experts approve reference bundles, annotations, and thresholds.
 

@@ -5,7 +5,8 @@ This directory is the curated, machine-readable foundation for the validator. It
 ## What is here
 
 - `source-register.json` identifies the supplied primary source and citation format.
-- `characters.json` contains the 24 base graphemes, six optional extension symbols, and five source-defined phonetic extensions.
+- The current selectable scope is **A, E, I, O, U, ba, be, bi, bo, bu, b, b_**, in that order. Vowel storage IDs remain lowercase for compatibility. `b` uses the cancellation mark below; `b_` uses it above (workbook PDF pages 15 and 104). The kudlit vowel variants follow the KWF book, PDF page 80.
+- `characters.json` defines these 12 `currentReleaseTargets` and retains the source inventory. It contains the 24 base graphemes, six optional extension symbols, and five source-defined phonetic extensions.
 - `diacritics.json` describes vowel replacement, vowel cancellation, repetition, and special marks at a semantic level.
 - `orthography-rules.json` contains the source-backed rules that connect those records.
 - `graph.json` exposes the same core facts as explicit nodes and edges for graph import.

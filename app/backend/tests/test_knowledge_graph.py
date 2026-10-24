@@ -1,5 +1,6 @@
 import base64
 import io
+import pytest
 from fastapi.testclient import TestClient
 from datetime import date
 from PIL import Image
@@ -39,14 +40,14 @@ def candidate_payload(target):
     }
 
 
-def test_catalog_serves_only_the_24_core_targets_with_source_references():
+def test_catalog_serves_only_the_12_core_targets_with_source_references():
     with TestClient(app) as client:
         response = client.get('/api/knowledge-graph/catalog')
 
     assert response.status_code == 200
     catalog = response.json()
     assert catalog['sourceId'] == 'lopez-2025-pdf'
-    assert len(catalog['targets']) == 24
+    assert [target['label'] for target in catalog['targets']] == ['A', 'E', 'I', 'O', 'U', 'ba', 'be', 'bi', 'bo', 'bu', 'b', 'b_']
     assert catalog['targets'][0]['id'] == 'vowel-a'
     assert catalog['targets'][5]['id'] == 'consonant-ba'
     assert catalog['targets'][5]['sourceRefs'] == ['lopez-2025-pdf#pdf-page=56']
@@ -63,28 +64,29 @@ def test_target_and_readiness_are_read_only_and_unknown_targets_are_not_found(tm
     assert target.status_code == 200
     assert target.json()['target']['readiness'] == 'awaiting_candidate'
     assert unknown.status_code == 404
-    assert len(readiness.json()['targets']) == 24
+    assert len(readiness.json()['targets']) == 12
     assert all(item['scoringAvailable'] is False for item in readiness.json()['targets'])
 
 
-def test_reference_library_accepts_core_graph_targets_but_not_out_of_release_extensions(tmp_path):
+@pytest.mark.parametrize('target', ['be', 'bi', 'bo', 'bu', 'b', 'b_'])
+def test_reference_library_accepts_core_graph_targets_but_not_out_of_release_extensions(tmp_path, target):
     app.state.reference_repository = ReferenceRepository(tmp_path / 'reference-library')
     with TestClient(app) as client:
-        core = client.post('/api/references', json=candidate_payload('nga'))
-        extension = client.post('/api/references', json=candidate_payload('phonetic-sha'))
+        core = client.post('/api/references', json=candidate_payload(target))
+        extension = client.post('/api/references', json=candidate_payload('ka'))
 
     assert core.status_code == 201
-    assert core.json()['record']['target'] == 'nga'
+    assert core.json()['record']['target'] == target
     assert extension.status_code == 422
 
 
 def test_test_data_does_not_count_toward_reference_readiness(tmp_path):
     app.state.reference_repository = ReferenceRepository(tmp_path / 'reference-library')
-    payload = candidate_payload('nga')
+    payload = candidate_payload('bu')
     payload['dataClass'] = 'test'
     with TestClient(app) as client:
         assert client.post('/api/references', json=payload).status_code == 201
-        readiness = client.get('/api/knowledge-graph/targets/nga').json()['target']['readiness']
+        readiness = client.get('/api/knowledge-graph/targets/bu').json()['target']['readiness']
 
     assert readiness == 'awaiting_candidate'
 
@@ -92,19 +94,19 @@ def test_test_data_does_not_count_toward_reference_readiness(tmp_path):
 def test_readiness_requires_an_approved_record_and_matching_specification(tmp_path):
     app.state.reference_repository = ReferenceRepository(tmp_path / 'reference-library')
     with TestClient(app) as client:
-        record = client.post('/api/references', json=candidate_payload('nga')).json()['record']
-        assert client.get('/api/knowledge-graph/targets/nga').json()['target']['readiness'] == 'awaiting_expert_approval'
+        record = client.post('/api/references', json=candidate_payload('bu')).json()['record']
+        assert client.get('/api/knowledge-graph/targets/bu').json()['target']['readiness'] == 'awaiting_expert_approval'
         client.post('/api/specifications', json={
-            'target': 'nga', 'version': 'nga-1.0', 'status': 'approved',
+            'target': 'bu', 'version': 'bu-1.0', 'status': 'approved',
             'source': {'title': 'Lopez 2025', 'pages': ['56'], 'convention': 'pinagyamang-baybayin'},
             'reviewerCode': 'expert-01', 'decisionDate': str(date.today()),
         })
         client.patch(f"/api/references/{record['id']}/review", json={
             'status': 'approved', 'reviewerCode': 'expert-01', 'decisionDate': str(date.today()),
-            'notes': 'Approved.', 'specificationVersion': 'nga-1.0',
+            'notes': 'Approved.', 'specificationVersion': 'bu-1.0',
         })
 
-        result = client.get('/api/knowledge-graph/targets/nga')
+        result = client.get('/api/knowledge-graph/targets/bu')
 
     assert result.json()['target']['readiness'] == 'reference_ready'
     assert result.json()['target']['scoringAvailable'] is False

@@ -336,5 +336,151 @@
         "lopez-2025-pdf#pdf-page=77"
       ]
     }
+  ],
+  "currentReleaseTargets": [
+    {
+      "id": "vowel-a",
+      "romanization": "a",
+      "phoneme": "/a/",
+      "class": "vowel",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ],
+      "label": "A"
+    },
+    {
+      "id": "vowel-e",
+      "romanization": "e",
+      "phoneme": "/e/",
+      "class": "vowel",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ],
+      "label": "E"
+    },
+    {
+      "id": "vowel-i",
+      "romanization": "i",
+      "phoneme": "/i/",
+      "class": "vowel",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ],
+      "label": "I"
+    },
+    {
+      "id": "vowel-o",
+      "romanization": "o",
+      "phoneme": "/o/",
+      "class": "vowel",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ],
+      "label": "O"
+    },
+    {
+      "id": "vowel-u",
+      "romanization": "u",
+      "phoneme": "/u/",
+      "class": "vowel",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ],
+      "label": "U"
+    },
+    {
+      "id": "consonant-ba",
+      "romanization": "ba",
+      "phoneme": "/b/",
+      "class": "consonant_a",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56"
+      ],
+      "label": "ba"
+    },
+    {
+      "id": "consonant-be",
+      "romanization": "be",
+      "label": "be",
+      "phoneme": "/be/",
+      "class": "consonant_modified",
+      "baseGraphemeId": "consonant-ba",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56",
+        "lopez-2025-pdf#pdf-page=80"
+      ],
+      "markForm": "small_horizontal_line",
+      "markPosition": "above"
+    },
+    {
+      "id": "consonant-bi",
+      "romanization": "bi",
+      "label": "bi",
+      "phoneme": "/bi/",
+      "class": "consonant_modified",
+      "baseGraphemeId": "consonant-ba",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56",
+        "lopez-2025-pdf#pdf-page=80"
+      ],
+      "markForm": "large_dot",
+      "markPosition": "above"
+    },
+    {
+      "id": "consonant-bo",
+      "romanization": "bo",
+      "label": "bo",
+      "phoneme": "/bo/",
+      "class": "consonant_modified",
+      "baseGraphemeId": "consonant-ba",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56",
+        "lopez-2025-pdf#pdf-page=80"
+      ],
+      "markForm": "small_horizontal_line",
+      "markPosition": "below"
+    },
+    {
+      "id": "consonant-bu",
+      "romanization": "bu",
+      "label": "bu",
+      "phoneme": "/bu/",
+      "class": "consonant_modified",
+      "baseGraphemeId": "consonant-ba",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56",
+        "lopez-2025-pdf#pdf-page=80"
+      ],
+      "markForm": "large_dot",
+      "markPosition": "below"
+    },
+    {
+      "id": "consonant-b",
+      "romanization": "b",
+      "label": "b",
+      "phoneme": "/b/",
+      "class": "consonant_modified",
+      "baseGraphemeId": "consonant-ba",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56",
+        "lopez-2025-pdf#pdf-page=84"
+      ],
+      "markForm": "slanted_vertical_line",
+      "markPosition": "below"
+    },
+    {
+      "id": "consonant-b_",
+      "romanization": "b_",
+      "label": "b_",
+      "phoneme": "/b/",
+      "class": "consonant_modified",
+      "baseGraphemeId": "consonant-ba",
+      "sourceRefs": [
+        "lopez-2025-pdf#pdf-page=56",
+        "lopez-2025-pdf#pdf-page=84"
+      ],
+      "markForm": "slanted_vertical_line",
+      "markPosition": "above"
+    }
   ]
 }

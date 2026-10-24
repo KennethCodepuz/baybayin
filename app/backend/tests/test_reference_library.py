@@ -66,7 +66,7 @@ def test_creates_and_lists_a_candidate_without_changing_the_sample(client):
 def test_rejects_duplicates_and_accepts_core_graph_targets(client):
     assert client.post('/api/references', json=candidate_payload()).status_code == 201
     assert client.post('/api/references', json=candidate_payload()).status_code == 409
-    assert client.post('/api/references', json=candidate_payload('nga')).status_code == 201
+    assert client.post('/api/references', json=candidate_payload('be')).status_code == 201
 
 
 def test_requires_an_approved_matching_specification_before_approval(client):
@@ -101,7 +101,7 @@ def test_manifest_excludes_test_and_rejected_records_by_default(client):
         'notes': 'Approved.', 'specificationVersion': 'ba-1.0',
     })
 
-    test_record = client.post('/api/references', json={**candidate_payload('ka'), 'dataClass': 'test'}).json()['record']
+    test_record = client.post('/api/references', json={**candidate_payload('bi'), 'dataClass': 'test'}).json()['record']
     client.patch(f"/api/references/{test_record['id']}/review", json={
         'status': 'rejected', 'reviewerCode': 'developer-01', 'decisionDate': str(date.today()), 'notes': 'Fixture only.',
     })

@@ -29,17 +29,49 @@ function referenceAssetName(target) {
   return ['a', 'e', 'i', 'o', 'u'].includes(target) ? target.toUpperCase() : target;
 }
 
+function referenceBounds(image) {
+  const source = document.createElement('canvas');
+  source.width = image.width;
+  source.height = image.height;
+  const context = source.getContext('2d');
+  context.drawImage(image, 0, 0);
+  const pixels = context.getImageData(0, 0, image.width, image.height).data;
+  let left = image.width;
+  let top = image.height;
+  let right = -1;
+  let bottom = -1;
+  for (let y = 0; y < image.height; y += 1) {
+    for (let x = 0; x < image.width; x += 1) {
+      const index = (y * image.width + x) * 4;
+      if (pixels[index] < 245 || pixels[index + 1] < 245 || pixels[index + 2] < 245) {
+        left = Math.min(left, x);
+        top = Math.min(top, y);
+        right = Math.max(right, x);
+        bottom = Math.max(bottom, y);
+      }
+    }
+  }
+  return right < 0 ? { x: 0, y: 0, width: image.width, height: image.height } : {
+    x: left,
+    y: top,
+    width: right - left + 1,
+    height: bottom - top + 1,
+  };
+}
+
 function drawReference(canvas, target) {
   blankReferenceCanvas(canvas);
   if (!target) return;
   const image = new Image();
   image.onload = () => {
     const ctx = canvas.getContext('2d');
-    const scale = Math.min(canvas.width / image.width, canvas.height / image.height) * 0.9;
-    const width = image.width * scale;
-    const height = image.height * scale;
+    const bounds = referenceBounds(image);
+    const scale = Math.min(canvas.width / bounds.width, canvas.height / bounds.height);
+    const width = bounds.width * scale;
+    const height = bounds.height * scale;
     ctx.globalAlpha = 0.2;
-    ctx.drawImage(image, (canvas.width - width) / 2, (canvas.height - height) / 2, width, height);
+    ctx.drawImage(image, bounds.x, bounds.y, bounds.width, bounds.height,
+      (canvas.width - width) / 2, (canvas.height - height) / 2, width, height);
     ctx.globalAlpha = 1;
   };
   image.src = `/reference-images/${encodeURIComponent(referenceAssetName(target))}.png`;

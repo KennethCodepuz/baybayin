@@ -20,7 +20,7 @@ def sample():
     return {
         "version": 1,
         "createdAt": "2026-10-18T00:00:00.000Z",
-        "target": "ka",
+        "target": "ba",
         "canvas": {"width": 640, "height": 400},
         "image": png_data_url(),
         "events": [
@@ -33,9 +33,16 @@ def sample():
 
 def test_accepts_and_returns_a_complete_capture():
     payload = sample()
+    payload['target'] = 'ba'
     response = client.post('/api/samples/check', json=payload)
     assert response.status_code == 200
     assert response.json() == {"sample": payload}
+
+
+def test_rejects_a_target_outside_the_current_release():
+    payload = sample()
+    payload['target'] = 'ka'
+    assert client.post('/api/samples/check', json=payload).status_code == 422
 
 
 def test_rejects_a_blank_target_and_incomplete_stroke():

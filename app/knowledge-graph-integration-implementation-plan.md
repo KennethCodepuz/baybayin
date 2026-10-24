@@ -1,7 +1,7 @@
 # Implementation plan: knowledge-graph integration and expert reference expansion
 
 **Status:** Proposed; this document contains no application implementation.  
-**Goal:** Make the curated `knowledge-graph/` directory the read-only source of selectable Baybáyin targets, then expand the developer reference workflow from the `ba`/`ka` pilot to expert-approved templates for the 24 core characters.  
+**Goal:** Make the curated `knowledge-graph/` directory the read-only source of selectable Baybáyin targets, then expand the developer reference workflow from the `ba`/`ka` pilot to expert-approved templates for the 12 selected targets.
 **Method:** Test-driven development. For every step, write a failing test first, make the smallest implementation that passes it, then run the relevant suite.
 
 ## 1. Starting point
@@ -36,7 +36,7 @@ This phase does not deliver learner correctness scoring, automatic image recogni
 
 ### Target groups and release order
 
-- **Release 1:** 24 base graphemes. These are the first targets eligible for expert template collection.
+- **Release 1:** A, E, I, O, U, ba, be, bi, bo, bu, b, and b_. These are the first targets eligible for expert template collection.
 - **Release 2:** six optional extension symbols, after the team explicitly chooses their research need and obtains templates.
 - **Release 3:** five phonetic extensions, after the team confirms their inclusion criteria and obtains templates.
 - Keep `proposed_not_accepted` rules excluded from all target-selection and validation paths.
@@ -73,7 +73,7 @@ For the library, replace the `Literal['ba', 'ka']` restriction with a backend ch
 1. Add backend test fixtures containing a minimal valid graph, malformed JSON, duplicate grapheme IDs, missing required fields, unknown edge endpoints, and a source reference with an invalid format.
 2. Write failing tests for a loader that returns a typed catalog and preserves source references.
 3. Implement a small `knowledge_graph` module that reads the root graph files and produces typed internal records.
-4. Write tests that the full committed graph loads successfully and has 24 base graphemes, six optional extensions, and five phonetic extensions.
+4. Write tests that the full committed graph loads successfully and has 12 current-release targets, while retaining the 24 base graphemes, six optional extensions, and five phonetic extensions in the source inventory.
 
 **Done when:** Invalid graph data cannot be served, and the committed graph is loaded from one controlled backend boundary.
 
