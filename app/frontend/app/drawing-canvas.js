@@ -119,33 +119,17 @@ function sampleFileName(target) {
   return `baybayin-${safeTarget}-drawing-sample.json`;
 }
 
-let lastPoint = null;
-
-const NIB_ANGLE = (-40 * Math.PI) / 180;
-const NIB_LENGTH = 14;
-
 function drawEvent(canvas, event) {
   const ctx = canvas.getContext('2d');
   if (event.type === 'down') {
-    lastPoint = { x: event.x, y: event.y };
     ctx.beginPath();
     ctx.arc(event.x, event.y, 3, 0, Math.PI * 2);
     ctx.fill();
-  } else if ((event.type === 'move' || event.type === 'up') && lastPoint) {
-    const hx = Math.cos(NIB_ANGLE) * NIB_LENGTH / 2;
-    const hy = Math.sin(NIB_ANGLE) * NIB_LENGTH / 2;
     ctx.beginPath();
-    ctx.moveTo(lastPoint.x + hx, lastPoint.y + hy);
-    ctx.lineTo(event.x + hx, event.y + hy);
-    ctx.lineTo(event.x - hx, event.y - hy);
-    ctx.lineTo(lastPoint.x - hx, lastPoint.y - hy);
-    ctx.closePath();
-    ctx.fill();
-    ctx.beginPath();
-    ctx.moveTo(lastPoint.x, lastPoint.y);
+    ctx.moveTo(event.x, event.y);
+  } else if (event.type === 'move' || event.type === 'up') {
     ctx.lineTo(event.x, event.y);
     ctx.stroke();
-    lastPoint = event.type === 'up' ? null : { x: event.x, y: event.y };
   }
 }
 
