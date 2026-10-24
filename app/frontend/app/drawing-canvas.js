@@ -7,6 +7,12 @@ import { apiRequest } from '../lib/reference-library.js';
 import RecordingReview from './recording-review.js';
 
 const apiUrl = 'http://127.0.0.1:8000';
+const CANVAS_WIDTH = 800;
+const CANVAS_HEIGHT = 600;
+const GRID_LEFT = 100;
+const GRID_TOP = 100;
+const GRID_WIDTH = 600;
+const GRID_HEIGHT = 400;
 
 function blankCanvas(canvas) {
   const ctx = canvas.getContext('2d');
@@ -26,6 +32,7 @@ function blankReferenceCanvas(canvas) {
 }
 
 function referenceAssetName(target) {
+  if (['be', 'bi', 'bo', 'bu', 'b', 'b_'].includes(target)) return 'ba';
   return ['a', 'e', 'i', 'o', 'u'].includes(target) ? target.toUpperCase() : target;
 }
 
@@ -59,19 +66,49 @@ function referenceBounds(image) {
   };
 }
 
-function drawReference(canvas, target) {
+function drawReference(canvas, target, setGridLayout) {
   blankReferenceCanvas(canvas);
-  if (!target) return;
+  if (!target) {
+    setGridLayout({ left: GRID_LEFT, top: GRID_TOP, width: GRID_WIDTH, height: GRID_HEIGHT });
+    return;
+  }
   const image = new Image();
   image.onload = () => {
     const ctx = canvas.getContext('2d');
     const bounds = referenceBounds(image);
-    const scale = Math.min(canvas.width / bounds.width, canvas.height / bounds.height);
-    const width = bounds.width * scale;
-    const height = bounds.height * scale;
+    const aspectRatio = bounds.width / bounds.height;
+    const width = Math.min(GRID_WIDTH, GRID_HEIGHT * aspectRatio);
+    const height = width / aspectRatio;
+    const layout = {
+      left: (CANVAS_WIDTH - width) / 2,
+      top: (CANVAS_HEIGHT - height) / 2,
+      width,
+      height,
+    };
+    setGridLayout(layout);
+    const scale = width / bounds.width;
     ctx.globalAlpha = 0.2;
     ctx.drawImage(image, bounds.x, bounds.y, bounds.width, bounds.height,
-      (canvas.width - width) / 2, (canvas.height - height) / 2, width, height);
+      layout.left, layout.top, layout.width, layout.height);
+    if (['be', 'bi', 'bo', 'bu', 'b', 'b_'].includes(target)) {
+      const x = canvas.width / 2;
+      const above = ['be', 'bi', 'b_'].includes(target);
+      const y = above ? GRID_TOP / 2 : GRID_TOP + GRID_HEIGHT + GRID_TOP / 2;
+      ctx.strokeStyle = 'black';
+      ctx.fillStyle = 'black';
+      ctx.lineWidth = 8 * scale;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      if (['bi', 'bu'].includes(target)) {
+        ctx.arc(x, y, 8 * scale, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        const cancellation = ['b', 'b_'].includes(target);
+        ctx.moveTo(x - (cancellation ? 5 : 14) * scale, y - (cancellation ? 12 : 0) * scale);
+        ctx.lineTo(x + (cancellation ? 5 : 14) * scale, y + (cancellation ? 12 : 0) * scale);
+        ctx.stroke();
+      }
+    }
     ctx.globalAlpha = 1;
   };
   image.src = `/reference-images/${encodeURIComponent(referenceAssetName(target))}.png`;
@@ -119,9 +156,15 @@ export default function DrawingCanvas() {
   const [playing, setPlaying] = useState(false);
   const [busy, setBusy] = useState(false);
   const [referenceVisible, setReferenceVisible] = useState(false);
+  const [gridLayout, setGridLayout] = useState({
+    left: GRID_LEFT,
+    top: GRID_TOP,
+    width: GRID_WIDTH,
+    height: GRID_HEIGHT,
+  });
 
   useEffect(() => {
-    if (!captureRef.current) captureRef.current = new DrawingCapture(600, 450);
+    if (!captureRef.current) captureRef.current = new DrawingCapture(CANVAS_WIDTH, CANVAS_HEIGHT);
     blankCanvas(canvasRef.current);
     blankReferenceCanvas(referenceCanvasRef.current);
     return () => {
@@ -131,7 +174,7 @@ export default function DrawingCanvas() {
 
   useEffect(() => {
     if (referenceCanvasRef.current) {
-      drawReference(referenceCanvasRef.current, referenceVisible ? target : '');
+      drawReference(referenceCanvasRef.current, referenceVisible ? target : '', setGridLayout);
     }
   }, [referenceVisible, target]);
 
@@ -275,16 +318,22 @@ export default function DrawingCanvas() {
       </select>
       <p className="hint">{selected ? `${selected.label} is from ${selected.sourceRefs.join(', ')}. Its writing is not scored yet.` : 'Select a source-backed character to identify the sample. Do not enter a participant’s name.'}</p>
       <div className="canvas-wrap">
-        <canvas ref={referenceCanvasRef} className="reference-canvas" width={600} height={450}
+        <canvas ref={referenceCanvasRef} className="reference-canvas" width={CANVAS_WIDTH} height={CANVAS_HEIGHT}
           aria-hidden="true" />
-        <svg className="drawing-canvas-grid" viewBox="0 0 600 450" preserveAspectRatio="none" aria-hidden="true">
-          <line x1="150" y1="0" x2="150" y2="450" />
-          <line x1="300" y1="0" x2="300" y2="450" />
-          <line x1="450" y1="0" x2="450" y2="450" />
-          <line x1="0" y1="150" x2="600" y2="150" />
-          <line x1="0" y1="300" x2="600" y2="300" />
+        <svg className="drawing-canvas-grid" viewBox={`0 0 ${CANVAS_WIDTH} ${CANVAS_HEIGHT}`} preserveAspectRatio="none" aria-hidden="true">
+          <line x1={gridLayout.left + gridLayout.width / 4} y1={gridLayout.top}
+            x2={gridLayout.left + gridLayout.width / 4} y2={gridLayout.top + gridLayout.height} />
+          <line x1={gridLayout.left + gridLayout.width / 2} y1={gridLayout.top}
+            x2={gridLayout.left + gridLayout.width / 2} y2={gridLayout.top + gridLayout.height} />
+          <line x1={gridLayout.left + gridLayout.width * 3 / 4} y1={gridLayout.top}
+            x2={gridLayout.left + gridLayout.width * 3 / 4} y2={gridLayout.top + gridLayout.height} />
+          <line x1={gridLayout.left} y1={gridLayout.top + gridLayout.height / 3}
+            x2={gridLayout.left + gridLayout.width} y2={gridLayout.top + gridLayout.height / 3} />
+          <line x1={gridLayout.left} y1={gridLayout.top + gridLayout.height * 2 / 3}
+            x2={gridLayout.left + gridLayout.width} y2={gridLayout.top + gridLayout.height * 2 / 3} />
+          <rect x={gridLayout.left} y={gridLayout.top} width={gridLayout.width} height={gridLayout.height} />
         </svg>
-        <canvas ref={canvasRef} width={600} height={450} aria-label="Drawing area. Draw using a mouse, pen, or touch input."
+        <canvas ref={canvasRef} width={CANVAS_WIDTH} height={CANVAS_HEIGHT} aria-label="Drawing area. Draw using a mouse, pen, or touch input."
           onPointerDown={down} onPointerMove={move} onPointerUp={up} onPointerCancel={interrupt} onLostPointerCapture={interrupt} />
       </div>
       <div className="actions">
