@@ -39,7 +39,13 @@ Set `BAYBAYIN_REFERENCE_TOKEN` before starting FastAPI. The developer-library pa
 
 Candidate recordings are not validator ground truth. The developer library accepts the current release's 12 selected targets from the knowledge graph. A developer can mark a recording approved only after adding a matching expert-approved character specification with a version, reviewer code, and decision date. The library can list and replay stored recordings and produces a graph-ready `manifest.json` for approved reference records.
 
-The library stores recordings and its manifest in `app/data/reference-library/`, which Git ignores. Back up that directory using the team’s approved private storage; do not commit real recordings, non-public reviewer details, or the generated manifest. This local route has no authentication and is for a developer-controlled computer only. A deployed research or learner system will need authenticated storage and an approved retention policy.
+### Import the supplied expert batch
+
+The repository includes a reviewed, checksum-backed manifest at `app/research/expert-reference-batch-2026-10-24.json` for the 12 originals in the private top-level `expert reference/` directory. On `/developer-reference-library`, select **Preflight 12 expert recordings** first. Every file must have the expected SHA-256 fingerprint, target, safe PNG, complete events, and current-release target before importing is enabled. Then select **Import verified candidates** and enter a non-identifying developer/importer code.
+
+Import copies the recordings into the Git-ignored local library with immutable filename, original-file checksum, source-canvas, collection-date, and batch provenance. It does not alter the originals, approve a reference, create a bundle, activate validation, or produce learner scores. Select an imported record to replay it and review its provenance; then use the existing specification → approval → bundle → activation workflow.
+
+The library stores recordings and its manifest in `app/data/reference-library/`, which Git ignores. Back up that directory using the team’s approved private storage; do not commit real recordings, non-public reviewer details, or the generated manifest. The developer endpoints require the local token but are still intended only for a developer-controlled computer. A deployed research or learner system will need user authentication, secure storage, and an approved retention policy.
 
 ## First-time setup on another computer
 

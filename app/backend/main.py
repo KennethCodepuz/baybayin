@@ -11,6 +11,7 @@ from form_matching import FormMatchError
 from knowledge_graph import KnowledgeGraph, load_knowledge_graph
 from multimodal import FeatureError, combine_validation, unavailable_branch_result, validate_png_data_url
 from reference_bundle import BundleError, build_reference_bundle
+from expert_reference_batch import import_batch, preflight_batch
 from reference_library import DuplicateReferenceError, InvalidReferenceIdentifierError, ReferenceNotFoundError, ReferenceRepository
 from security import require_reference_token
 from stroke_matching import StrokeMatchError
@@ -143,6 +144,11 @@ class ReferenceBundleActivation(BaseModel):
     reason: str = Field(min_length=1, max_length=2_000)
 
 
+class ExpertBatchImport(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    importerCode: str = Field(min_length=1, max_length=100)
+
+
 class BranchFeedback(BaseModel):
     model_config = ConfigDict(extra='forbid')
     errors: list[str] = Field(default_factory=list, max_length=20)
@@ -158,6 +164,8 @@ class FeedbackRequest(BaseModel):
 app = FastAPI(title='Baybayin capture API')
 app.state.reference_repository = ReferenceRepository(Path(__file__).resolve().parent.parent / 'data' / 'reference-library')
 app.state.knowledge_graph = load_knowledge_graph(Path(__file__).resolve().parents[2] / 'knowledge-graph')
+app.state.expert_reference_root = Path(__file__).resolve().parents[2] / 'expert reference'
+app.state.expert_batch_manifest = Path(__file__).resolve().parent.parent / 'research' / 'expert-reference-batch-2026-10-24.json'
 app.add_middleware(
     CORSMiddleware,
     allow_origins=['http://localhost:3000', 'http://127.0.0.1:3000'],
@@ -287,6 +295,49 @@ def reference_repository() -> ReferenceRepository:
 
 def knowledge_graph() -> KnowledgeGraph:
     return app.state.knowledge_graph
+
+
+def expert_batch_manifest() -> dict:
+    try:
+        import json
+        return json.loads(app.state.expert_batch_manifest.read_text(encoding='utf-8'))
+    except (OSError, ValueError) as error:
+        raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail='Expert batch manifest is unavailable') from error
+
+
+def expert_batch_report() -> dict:
+    return preflight_batch(
+        expert_batch_manifest(), app.state.expert_reference_root, Sample.model_validate,
+        knowledge_graph().is_current_release_target,
+    )
+
+
+@app.get('/api/reference-batches/expert-2026-10-24/preflight')
+def preflight_expert_batch(_: None = Depends(require_reference_token)):
+    return expert_batch_report()
+
+
+@app.post('/api/reference-batches/expert-2026-10-24/import')
+def import_expert_batch(request: ExpertBatchImport, _: None = Depends(require_reference_token)):
+    return import_batch(
+        expert_batch_manifest(), app.state.expert_reference_root, reference_repository(), Sample.model_validate,
+        knowledge_graph().is_current_release_target, request.importerCode,
+    )
+
+
+@app.get('/api/reference-batches/expert-2026-10-24/coverage')
+def expert_batch_coverage(_: None = Depends(require_reference_token)):
+    records = reference_repository().list_records()
+    active = reference_repository().active_bundle_registry()['targets']
+    result = []
+    for target in knowledge_graph().current_release_targets():
+        target_id = target['targetId']
+        target_records = [record for record in records if record['target'] == target_id and record['dataClass'] == 'reference']
+        result.append({
+            'target': target_id,
+            'status': 'active' if target_id in active else ('candidate' if any(record['status'] == 'candidate' for record in target_records) else ('approved_inactive' if any(record['status'] == 'approved' for record in target_records) else 'missing')),
+        })
+    return {'batchId': expert_batch_manifest()['batchId'], 'targets': result}
 
 
 def target_readiness(target_id: str) -> str:

@@ -45,6 +45,7 @@ This reference lists maintained project files. It excludes generated folders suc
 | `app/research/reference-and-rubric.md` | Research notes on sources, references, and pending rubric decisions. |
 | `app/research/expert-validator-outreach-task.md` | Task description for locating and coordinating an expert validator. |
 | `app/research/ba-ka-pilot-character-specifications.md` | Pilot specification notes for `ba` and `ka`. |
+| `app/research/expert-reference-batch-2026-10-24.json` | Reviewed allow-list and SHA-256 provenance manifest for the supplied private expert batch; it is not validator input. |
 | `app/config/calibration.schema.example.json` | Deliberately provisional example of a calibration file. It cannot enable scoring. |
 | `app/evaluation/README.md` | Data separation and metric-reporting guidance. |
 | `app/evaluation/evaluation-record.schema.example.json` | Example schema for future held-out evaluation records. |
@@ -58,6 +59,7 @@ This reference lists maintained project files. It excludes generated folders suc
 | `app/backend/main.py` | FastAPI entry point, Pydantic request models, local API routes, CORS configuration, sample validation, reference workflow, active-bundle activation, preview, and feedback endpoints. |
 | `app/backend/knowledge_graph.py` | Loads and validates the committed knowledge graph, then resolves current-release targets. |
 | `app/backend/reference_library.py` | Local Git-ignored JSON repository for records, specifications, bundles, manifests, and active-bundle registry/history. |
+| `app/backend/expert_reference_batch.py` | Validates the declared private expert batch before import and creates checksum-linked candidate copies without changing source files. |
 | `app/backend/reference_bundle.py` | Builds immutable multimodal bundles from an approved reference record and matching approved specification. |
 | `app/backend/multimodal.py` | Safe PNG decoder, image normalization, stroke-feature extraction, and hybrid unavailable-state contract. |
 | `app/backend/stroke_matching.py` | Translation/scale normalization, arc-length resampling, constrained DTW, and separate dot-position comparison. |
@@ -78,6 +80,7 @@ This reference lists maintained project files. It excludes generated folders suc
 | `tests/test_samples.py` | API-level capture-schema validation tests. |
 | `tests/test_knowledge_graph.py` | Catalog, target-release, and readiness tests. |
 | `tests/test_reference_library.py` | Candidate/reference/specification workflow tests. |
+| `tests/test_expert_reference_batch.py` | Batch preflight, immutable-source provenance, candidate import, and idempotency tests. |
 | `tests/test_reference_bundle.py` | Bundle creation and approval-matching tests. |
 | `tests/test_active_bundles.py` | Explicit bundle activation, history, and superseded-reference tests. |
 | `tests/test_multimodal.py` | PNG normalization, PNG safety, feature extraction, and hybrid-state tests. |
@@ -106,7 +109,7 @@ This reference lists maintained project files. It excludes generated folders suc
 | `app/frontend/app/drawing-canvas.js` | Interactive 600×450 capture canvas with a visual-only 4×3 square grid, target selection, pointer handling, replay, and JSON download. |
 | `app/frontend/app/recording-review.js` | Opens an imported sample and replays it without changing the active drawing. |
 | `app/frontend/app/developer-reference-library/page.js` | Developer reference-library route entry point. |
-| `app/frontend/app/developer-reference-library/reference-library.js` | Candidate import, replay, review transition, specification creation, bundle creation, and bundle activation interface. |
+| `app/frontend/app/developer-reference-library/reference-library.js` | Candidate import, expert-batch preflight/import, provenance review, replay, review transition, specification creation, bundle creation, and bundle activation interface. |
 | `app/frontend/app/developer-validation/page.js` | Developer-validation route entry point. |
 | `app/frontend/app/developer-validation/validator.js` | Loads samples, displays PNG preview and provisional branch evidence, and requests constrained feedback. |
 

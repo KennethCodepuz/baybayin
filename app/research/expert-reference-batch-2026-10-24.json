@@ -1,0 +1,23 @@
+{
+  "batchId": "expert-reference-2026-10-24",
+  "expertCode": "expert-2026-01",
+  "collectionDate": "2026-10-24",
+  "source": {
+    "title": "Pinagyamang Baybayin: Gabay sa Episyente, Modernisado, at Estandardisadong Pagsulat",
+    "convention": "pinagyamang-baybayin"
+  },
+  "entries": [
+    {"file": "expert_.A.json", "target": "a", "sha256": "3e1fc314b2fb64ab03a93026d84be9333beb65983408ac6be8b0ac59ae801ee4", "inputMethod": "mouse", "sourceRefs": ["lopez-2025-pdf#pdf-page=56"]},
+    {"file": "expert_.E.json", "target": "e", "sha256": "5f7f83ea97ec8378fecb039aa722f6ae7f1cb416914e247580455f9cb00af4b8", "inputMethod": "mouse", "sourceRefs": ["lopez-2025-pdf#pdf-page=56"]},
+    {"file": "expert_.I.json", "target": "i", "sha256": "76ee3f7cf0693c018b7bff13b01a6aca36d25def35399e737eabfb4b723946d6", "inputMethod": "mouse", "sourceRefs": ["lopez-2025-pdf#pdf-page=56"]},
+    {"file": "expert_.O.json", "target": "o", "sha256": "5e977269e1f81e99ecc997904d706a999d5fe5d4cbc1a045c9fff54389e8fa54", "inputMethod": "mouse", "sourceRefs": ["lopez-2025-pdf#pdf-page=56"]},
+    {"file": "expert_.U.json", "target": "u", "sha256": "0923664c4992748c8501aa350a892d7af895922a5679875989df6dcfbc854b61", "inputMethod": "mouse", "sourceRefs": ["lopez-2025-pdf#pdf-page=56"]},
+    {"file": "expert_ba.json", "target": "ba", "sha256": "fa41ecf9d6c12cb08d4aade83b7e6955728356f3a0e2c67824d804e67af480a3", "inputMethod": "mouse", "sourceRefs": ["lopez-2025-pdf#pdf-page=56"]},
+    {"file": "expert_be.json", "target": "be", "sha256": "e9cc389a2a12eb509d67493c8d1cf08abf73158690762b23caff60457b7f38c2", "inputMethod": "mouse", "sourceRefs": ["lopez-2025-pdf#pdf-page=56", "lopez-2025-pdf#pdf-page=80"]},
+    {"file": "expert_bi.json", "target": "bi", "sha256": "61bb158e5fe700b84c1773365779691dc8339f23b790628f4d56db8e8bbacb8f", "inputMethod": "mouse", "sourceRefs": ["lopez-2025-pdf#pdf-page=56", "lopez-2025-pdf#pdf-page=80"]},
+    {"file": "expert_bo.json", "target": "bo", "sha256": "19ab335fac8f481326441225c628f3df04cf0706962d4b912ab8100b11495472", "inputMethod": "mouse", "sourceRefs": ["lopez-2025-pdf#pdf-page=56", "lopez-2025-pdf#pdf-page=80"]},
+    {"file": "expert_bu.json", "target": "bu", "sha256": "0cd7565f4bac45b4744637eaf0c8e54e5de1aec414b622f6ba0845351a41b561", "inputMethod": "mouse", "sourceRefs": ["lopez-2025-pdf#pdf-page=56", "lopez-2025-pdf#pdf-page=80"]},
+    {"file": "expert_b.json", "target": "b", "sha256": "da42b4d884712541982a73aeabac5e99421717ecb8aeca04fef5f8261748d703", "inputMethod": "mouse", "sourceRefs": ["lopez-2025-pdf#pdf-page=56", "lopez-2025-pdf#pdf-page=84"]},
+    {"file": "expert_b_.json", "target": "b_", "sha256": "0a22ecd692950df6cce4e8a6f88d2ff2dc7290e942d47b4d28e0473bec0cf058", "inputMethod": "mouse", "sourceRefs": ["lopez-2025-pdf#pdf-page=56", "lopez-2025-pdf#pdf-page=84"]}
+  ]
+}

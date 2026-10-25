@@ -79,18 +79,21 @@ export default function ReferenceLibrary() {
   const [records, setRecords] = useState([]);
   const [specifications, setSpecifications] = useState([]);
   const [bundles, setBundles] = useState([]);
+  const [batchReport, setBatchReport] = useState(null);
+  const [coverage, setCoverage] = useState([]);
   const [catalog, setCatalog] = useState(null);
   const [selected, setSelected] = useState(null);
   const [status, setStatus] = useState('Load a saved JSON drawing to create a candidate reference.');
   const [busy, setBusy] = useState(false);
 
   async function refresh() {
-    const [recordResult, specificationResult, bundleResult] = await Promise.all([
-      apiRequest('/references'), apiRequest('/specifications'), apiRequest('/reference-bundles'),
+    const [recordResult, specificationResult, bundleResult, coverageResult] = await Promise.all([
+      apiRequest('/references'), apiRequest('/specifications'), apiRequest('/reference-bundles'), apiRequest('/reference-batches/expert-2026-10-24/coverage'),
     ]);
     setRecords(recordResult.records);
     setSpecifications(specificationResult.specifications);
     setBundles(bundleResult.bundles);
+    setCoverage(coverageResult.targets);
   }
 
   useEffect(() => {
@@ -137,6 +140,37 @@ export default function ReferenceLibrary() {
       setCandidate(null);
       setSelected(result.record);
       setStatus(`Saved ${result.record.id} as a candidate reference.`);
+      await refresh();
+    } catch (error) {
+      setStatus(error.message);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function preflightExpertBatch() {
+    setBusy(true);
+    try {
+      const result = await apiRequest('/reference-batches/expert-2026-10-24/preflight');
+      setBatchReport(result);
+      setStatus(result.ready ? `Expert batch preflight passed for ${result.entries.length} recordings. Review the file list, then import candidates.` : 'Expert batch preflight is blocked. Review the listed file errors.');
+    } catch (error) {
+      setStatus(error.message);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function importExpertBatch() {
+    const importerCode = window.prompt('Developer/importer code for this audit entry');
+    if (!importerCode) return;
+    setBusy(true);
+    try {
+      const result = await apiRequest('/reference-batches/expert-2026-10-24/import', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ importerCode }),
+      });
+      setBatchReport(result);
+      setStatus(result.ready ? `Imported ${result.imported} expert candidates; ${result.duplicates} were already present. They still require reviewer approval and bundle activation.` : 'Import was blocked because the expert batch did not pass preflight.');
       await refresh();
     } catch (error) {
       setStatus(error.message);
@@ -232,6 +266,7 @@ export default function ReferenceLibrary() {
 
   const shown = selected || candidate;
   const targets = catalogTargets(catalog);
+  const shownTarget = shown ? selectedTarget(catalog, shown.target) : null;
   return <main>
     <p className="eyebrow">Developer-only · Reference library</p>
     <h1>Baybayin reference library</h1>
@@ -254,6 +289,8 @@ export default function ReferenceLibrary() {
 
     {shown && <section className="review"><h2>{selected ? `Record ${selected.id}` : 'Candidate preview'}</h2>
       <p><strong>Status:</strong> {selected?.status || 'unsaved candidate'} · <strong>Target:</strong> {shown.target}</p>
+      {shownTarget && <p className="hint"><strong>Source references:</strong> {shownTarget.sourceRefs.join(', ')}{shownTarget.markForm ? ` · Kudlit: ${shownTarget.markForm.replaceAll('_', ' ')} (${shownTarget.markPosition})` : ''}.</p>}
+      {selected?.provenance?.expertBatchId && <p className="hint"><strong>Expert batch:</strong> {selected.provenance.expertBatchId} · {selected.provenance.sourceFile} · SHA-256 {selected.provenance.sourceFileSha256.slice(0, 12)}… · collected {selected.provenance.collectionDate}. This provenance is immutable; approving this record is a separate reviewer decision.</p>}
       <RecordingPreview sample={shown.sample || shown} />
       {selected?.status === 'candidate' && <div className="actions">
         <button type="button" disabled={busy} onClick={() => transition(selected, 'approved')}>Approve with specification</button>
@@ -265,10 +302,17 @@ export default function ReferenceLibrary() {
       </div>}
     </section>}
 
+    <section className="review"><h2>Verified expert batch</h2>
+      <p>Checks the private originals against the reviewed manifest before creating candidate copies. Importing does not approve, bundle, activate, or score any recording.</p>
+      <div className="actions"><button type="button" onClick={preflightExpertBatch} disabled={busy}>Preflight 12 expert recordings</button><button type="button" className="primary" onClick={importExpertBatch} disabled={busy || !batchReport?.ready}>Import verified candidates</button></div>
+      {batchReport && <ul className="record-list">{batchReport.entries.map(entry => <li key={entry.file}><strong>{entry.target || 'unknown'}</strong> · {entry.file || 'unknown file'} · {entry.status}{entry.detail ? ` — ${entry.detail}` : ''}</li>)}</ul>}
+      <p className="hint">Coverage: {coverage.map(item => `${item.target}: ${item.status}`).join(' · ') || 'loading…'}</p>
+    </section>
+
     <section className="review"><h2>Stored records</h2>
       <div className="actions"><button type="button" onClick={createSpecification} disabled={busy}>Add approved specification</button><button type="button" onClick={() => refresh().catch(error => setStatus(error.message))} disabled={busy}>Refresh library</button></div>
       <p className="hint">Approved specifications: {specifications.map(specification => `${specification.target} ${specification.version}`).join(', ') || 'none yet'}.</p>
-      {records.length ? <ul className="record-list">{records.map(record => <li key={record.id}><button type="button" onClick={() => setSelected(record)}>{record.target} - {record.status} - {record.id.slice(0, 12)}</button></li>)}</ul> : <p>No stored records yet.</p>}
+      {records.length ? <ul className="record-list">{records.map(record => <li key={record.id}><button type="button" onClick={() => setSelected(record)}>{record.target} - {record.status} - {record.id.slice(0, 12)}{record.provenance?.expertBatchId ? ' - verified expert batch' : ''}</button></li>)}</ul> : <p>No stored records yet.</p>}
     </section>
   </main>;
 }

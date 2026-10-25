@@ -55,6 +55,14 @@ Use **Open saved sample** on the capture page. The system validates the JSON wit
 
 A bundle preserves the original approved sample and derived data: normalized image, stroke features, target/source links, and review data. Bundles are immutable. Activation is stored separately so old bundles remain auditable and cannot be selected accidentally.
 
+### 3a. Import the supplied expert batch
+
+The `expert reference/` directory is treated as private source material. The committed `research/expert-reference-batch-2026-10-24.json` contains the allowed filenames, expected target IDs, non-identifying expert code, source references, and SHA-256 fingerprints. The developer page exposes protected preflight and import actions for this one declared batch.
+
+Preflight validates **all** entries with the same `Sample` schema as the API before a record is written: filename containment, bytes checksum, JSON, PNG safety, stroke order/bounds, manifest target match, and current knowledge-graph eligibility. Import makes a candidate copy only when the full batch passes. Every saved record carries immutable batch provenance, including its original filename and checksum. Re-importing is idempotent by sample checksum.
+
+The batch is not automatically trusted: each candidate still needs a matching approved specification, an explicit review decision, a bundle, and explicit activation before developer preview can compare against it.
+
 ### 4. Inspect provisional validation evidence
 
 Open `/developer-validation` and load a checked sample.
@@ -113,6 +121,9 @@ The visual reference pages are source material from the Lopez/KWF publication. T
 | `POST /api/specifications` | Save a character specification. |
 | `POST /api/reference-bundles` | Create an immutable bundle from approved evidence. |
 | `POST /api/reference-bundles/{id}/activate` | Select the single active expert bundle for its target. |
+| `GET /api/reference-batches/expert-2026-10-24/preflight` | Verify every declared private expert source before any import. |
+| `POST /api/reference-batches/expert-2026-10-24/import` | Copy the verified batch into candidate records; requires an importer code. |
+| `GET /api/reference-batches/expert-2026-10-24/coverage` | Show `active`, `approved_inactive`, `candidate`, or `missing` for each core target. |
 | `POST /api/validation/preview` | Return unavailable or provisional form/stroke evidence. |
 | `POST /api/feedback` | Produce deterministic, source-constrained feedback. |
 
