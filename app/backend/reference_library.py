@@ -26,6 +26,8 @@ class ReferenceRepository:
         self.records_dir = self.root / 'records'
         self.specifications_dir = self.root / 'specifications'
         self.bundles_dir = self.root / 'bundles'
+        self.annotations_dir = self.root / 'annotations'
+        self.calibrations_dir = self.root / 'calibrations'
         self.active_bundles_path = self.root / 'active-bundles.json'
         self._lock = threading.RLock()
 
@@ -51,6 +53,8 @@ class ReferenceRepository:
         self.records_dir.mkdir(parents=True, exist_ok=True)
         self.specifications_dir.mkdir(parents=True, exist_ok=True)
         self.bundles_dir.mkdir(parents=True, exist_ok=True)
+        self.annotations_dir.mkdir(parents=True, exist_ok=True)
+        self.calibrations_dir.mkdir(parents=True, exist_ok=True)
 
     @staticmethod
     def _write_json(path: Path, value: dict):
@@ -175,6 +179,41 @@ class ReferenceRepository:
             (json.loads(path.read_text(encoding='utf-8')) for path in self.bundles_dir.glob('*.json')),
             key=lambda bundle: bundle['id'],
         )
+
+    def create_annotation(self, annotation: dict) -> dict:
+        self._ensure_directories()
+        path = self._path(self.annotations_dir, annotation['id'], r'annotation-[A-Za-z0-9._-]+')
+        if path.exists():
+            raise DuplicateReferenceError()
+        self._write_json(path, annotation)
+        return annotation
+
+    def get_annotation(self, target_id: str, bundle_id: str) -> dict | None:
+        if not self.annotations_dir.exists():
+            return None
+        matches = [json.loads(path.read_text(encoding='utf-8')) for path in self.annotations_dir.glob('*.json')]
+        approved = [item for item in matches if item.get('targetId') == target_id and item.get('referenceBundleId') == bundle_id and item.get('status') == 'approved']
+        return approved[0] if len(approved) == 1 else None
+
+    def list_annotations(self) -> list[dict]:
+        if not self.annotations_dir.exists():
+            return []
+        return sorted((json.loads(path.read_text(encoding='utf-8')) for path in self.annotations_dir.glob('*.json')), key=lambda item: item['id'])
+
+    def create_calibration(self, calibration: dict) -> dict:
+        self._ensure_directories()
+        path = self._path(self.calibrations_dir, calibration['id'], r'calibration-[A-Za-z0-9._-]+')
+        if path.exists():
+            raise DuplicateReferenceError()
+        self._write_json(path, calibration)
+        return calibration
+
+    def get_calibration(self, target_id: str, bundle_id: str) -> dict | None:
+        if not self.calibrations_dir.exists():
+            return None
+        matches = [json.loads(path.read_text(encoding='utf-8')) for path in self.calibrations_dir.glob('*.json')]
+        approved = [item for item in matches if item.get('targetId') == target_id and item.get('referenceBundleId') == bundle_id and item.get('status') == 'approved']
+        return approved[0] if len(approved) == 1 else None
 
     def manifest(self) -> dict:
         records = [

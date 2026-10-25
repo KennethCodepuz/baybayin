@@ -38,6 +38,8 @@ This reference lists maintained project files. It excludes generated folders suc
 | `app/docs/FILE_REFERENCE.md` | This file-by-file reference. |
 | `app/validation-correctness-hardening-implementation-plan.md` | Plan for fixing the five validation safety issues. |
 | `app/dtw-and-evaluation-implementation-plan.md` | Plan for DTW, form comparison, calibration, and evaluation readiness. |
+| `app/deterministic-validator-implementation-plan.md` | Deterministic validation plan for form, stroke, full-canvas kudlit, calibration, and hybrid results. |
+| `app/learner-experience-implementation-plan.md` | Plan for learner practice, safe validation states, deterministic feedback, calibration, and Chapter 3 evaluation. |
 | `app/multimodal-validator-infrastructure-implementation-plan.md` | Plan for initial multimodal-validator infrastructure. |
 | `app/knowledge-graph-integration-implementation-plan.md` | Plan for loading the committed knowledge graph into the application. |
 | `app/reference-knowledge-base-implementation-plan.md` | Plan for source and reference-library work. |
@@ -64,11 +66,15 @@ This reference lists maintained project files. It excludes generated folders suc
 | `app/backend/multimodal.py` | Safe PNG decoder, image normalization, stroke-feature extraction, and hybrid unavailable-state contract. |
 | `app/backend/stroke_matching.py` | Translation/scale normalization, arc-length resampling, constrained DTW, and separate dot-position comparison. |
 | `app/backend/stroke_rules.py` | Validates approved structural annotations and returns count/direction/start/end findings. |
+| `app/backend/kudlit_rules.py` | Validates approved full-canvas kudlit annotations and evaluates outside-grid mark placement. |
 | `app/backend/form_matching.py` | Produces normalized image-mask IoU, centroid distance, ink bounds, and image checksums. |
 | `app/backend/validation_evidence.py` | Combines active-bundle image and stroke measurements into explicitly provisional branch evidence. |
 | `app/backend/validation_config.py` | Validates approved calibration configuration shape, provenance, and finite numeric thresholds. |
 | `app/backend/scoring.py` | Converts complete evidence into branch results only when a matching approved calibration is supplied. |
 | `app/backend/feedback.py` | Retrieves target sources and produces deterministic feedback constrained to actual error codes. |
+| `app/backend/learner_validation.py` | Converts internal validation evidence into a minimal learner-safe unavailable/practice response without exposing templates or scores. |
+| `app/backend/promote_expert_references.py` | Explicit local promotion utility that designates the verified expert batch as approved active provisional reference bundles. |
+| `app/backend/prototype_calibration.py` | Derives clearly labeled local prototype form/DTW calibration records from supplied accepted practice recordings. |
 | `app/backend/ai_feedback.py` | Defines and validates a future AI-feedback adapter; no AI provider is currently connected. |
 | `app/backend/evaluation_metrics.py` | Calculates binary accuracy, precision, recall, F1, and per-error confusion-matrix counts. |
 | `app/backend/requirements.txt` | Python dependency ranges for FastAPI, Uvicorn, HTTPX, pytest, and Pillow. |
@@ -86,11 +92,13 @@ This reference lists maintained project files. It excludes generated folders suc
 | `tests/test_multimodal.py` | PNG normalization, PNG safety, feature extraction, and hybrid-state tests. |
 | `tests/test_stroke_matching.py` | Resampling, normalization, DTW, count mismatch, and dot-stroke tests. |
 | `tests/test_stroke_rules.py` | Approved annotation provenance and structural-rule tests. |
+| `tests/test_kudlit_rules.py` | Full-canvas above/below kudlit-placement rule tests. |
 | `tests/test_form_matching.py` | Form-measurement and image-mask tests. |
 | `tests/test_validation_evidence.py` | Provisional active-bundle evidence tests. |
 | `tests/test_validation_config.py` | Calibration-schema validation tests. |
 | `tests/test_scoring.py` | Calibration-gated form/stroke scoring and incomplete-evidence tests. |
 | `tests/test_feedback.py` | Deterministic source-constrained feedback tests. |
+| `tests/test_learner_validation.py` | Learner-safe state and no-private-reference/no-score response tests. |
 | `tests/test_ai_feedback.py` | Future AI feedback request/response safety tests. |
 | `tests/test_evaluation_metrics.py` | Metric and confusion-matrix tests. |
 
@@ -112,6 +120,8 @@ This reference lists maintained project files. It excludes generated folders suc
 | `app/frontend/app/developer-reference-library/reference-library.js` | Candidate import, expert-batch preflight/import, provenance review, replay, review transition, specification creation, bundle creation, and bundle activation interface. |
 | `app/frontend/app/developer-validation/page.js` | Developer-validation route entry point. |
 | `app/frontend/app/developer-validation/validator.js` | Loads samples, displays PNG preview and provisional branch evidence, and requests constrained feedback. |
+| `app/frontend/app/learn/page.js` | Learner-practice route entry point. |
+| `app/frontend/app/learn/learner-practice.js` | Guided learner capture, undo/clear controls, non-persisting practice submission, and learner-safe result display. |
 
 ### Frontend libraries
 

@@ -36,6 +36,15 @@ export class DrawingCapture {
     this.interrupted = true;
   }
 
+  undoStroke() {
+    if (this.active || !this.events.length) return false;
+    const lastStart = this.events.map(event => event.type).lastIndexOf('down');
+    if (lastStart < 0) return false;
+    this.events.splice(lastStart);
+    this.strokeCount = Math.max(0, this.strokeCount - 1);
+    return true;
+  }
+
   sample(target, image) {
     if (!target.trim()) throw new Error('Enter the target character or label.');
     if (!this.events.length) throw new Error('Draw a sample first.');

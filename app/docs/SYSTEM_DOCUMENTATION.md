@@ -43,6 +43,12 @@ The downloaded sample contains `version`, `createdAt`, `target`, 600×450 canvas
 
 Use **Open saved sample** on the capture page. The system validates the JSON with FastAPI, displays recording metadata, and replays the ordered events. Replay demonstrates what was recorded; it is not handwriting validation.
 
+### 2a. Learner practice
+
+`/learn` is separate from developer capture and reference-review pages. A learner selects a source-backed target and draws on the same 800×600 canvas and centered visual-only 4×3 grid used by developer capture. The surrounding area remains drawable for kudlit and other marks outside the base-character grid. Learners may show/hide the guide, undo the latest completed stroke, clear the drawing, and select **Check my practice**. The browser sends the in-memory sample to `POST /api/learner-validation`; it does not persist the sample or reveal expert recordings, bundle IDs, measurements, tokens, or developer metadata.
+
+The learner response has one explicit state: `unavailable` when no active expert bundle exists, `practice_comparison` when a bundle exists without calibration, or `prototype_result` for a local prototype calibration. The verified expert batch is active locally for the 12 current targets. The supplied `ajstrokes/` and `hurry-strokes/` recordings derive prototype-only form/DTW limits for `a`, `ba`, `e`, `i`, `o`, and `u`; this is explicitly not an expert-approved research result. All other targets remain practice comparison until separately calibrated, particularly kudlit targets requiring outside-grid mark data.
+
 ### 3. Create an expert reference
 
 1. Open `/developer-reference-library`.
@@ -103,6 +109,10 @@ Future structural checks require a complete, approved annotation that identifies
 
 Future scoring requires a matching approved calibration configuration. It rejects empty, malformed, non-finite, or incomplete comparison evidence. A scorer cannot pass a stroke without comparing every required stroke.
 
+### Kudlit placement rules
+
+For an approved modified-target annotation, the deterministic mark evaluator uses the learner event stream’s full canvas-normalized coordinates. It checks the annotation’s chosen mark stroke against its approved above/below region; an outside-grid mark is therefore retained rather than cropped away by full-image normalization. The evaluator can return provisional `misplaced_kudlit` evidence, but a learner verdict still requires the associated calibration record.
+
 ## Knowledge graph and sources
 
 `knowledge-graph/` is committed, source-traceable research data. It contains the core character catalog, source-register metadata, relationship graph, orthography rules, diacritics, and visual-source manifest. It is read-only from the browser.
@@ -125,6 +135,8 @@ The visual reference pages are source material from the Lopez/KWF publication. T
 | `POST /api/reference-batches/expert-2026-10-24/import` | Copy the verified batch into candidate records; requires an importer code. |
 | `GET /api/reference-batches/expert-2026-10-24/coverage` | Show `active`, `approved_inactive`, `candidate`, or `missing` for each core target. |
 | `POST /api/validation/preview` | Return unavailable or provisional form/stroke evidence. |
+| `POST /api/learner-validation` | Return a learner-safe, non-persisting unavailable or practice-comparison result. |
+| `POST /api/stroke-annotations` | Save a protected, approved stroke/kudlit annotation tied to an existing reference bundle. |
 | `POST /api/feedback` | Produce deterministic, source-constrained feedback. |
 
 ## Data locations and privacy

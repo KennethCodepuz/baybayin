@@ -44,3 +44,14 @@ test('ignores stray pointer events and extra starts', () => {
   assert.equal(capture.strokeCount, 1);
   assert.deepEqual(capture.events.map(event => event.type), ['down', 'up']);
 });
+
+test('undo removes only the latest completed stroke', () => {
+  const capture = new DrawingCapture(600, 450);
+  capture.start(point(1, 2, 1));
+  capture.end(point(3, 4, 2));
+  capture.start(point(5, 6, 3));
+  capture.end(point(7, 8, 4));
+  capture.undoStroke();
+  assert.equal(capture.strokeCount, 1);
+  assert.deepEqual(capture.events.map(event => event.type), ['down', 'up']);
+});

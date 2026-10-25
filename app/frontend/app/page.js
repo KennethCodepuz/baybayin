@@ -1,5 +1,5 @@
-import DrawingCanvas from './drawing-canvas';
+import LearnerPractice from './learn/learner-practice';
 
 export default function Home() {
-  return <DrawingCanvas />;
+  return <LearnerPractice />;
 }

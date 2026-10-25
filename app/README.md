@@ -25,6 +25,22 @@ npm.cmd run dev -- --hostname 127.0.0.1
 
 Open **http://127.0.0.1:3000** in Chrome or Edge. Select a target such as `ba`; its faint reference image appears behind the 600×450 drawing canvas for tracing. The canvas includes a 4-column × 3-row grid of twelve equal 150×150 squares. Draw over the guide and select **Download sample**. The grid and image guide are separate visual layers and are not included in the saved learner image or stroke events. The target comes from the committed knowledge graph but is not a correctness check. Stop each server with Ctrl+C in its terminal.
 
+## Learner practice
+
+Open **http://127.0.0.1:3000/learn** for the learner-facing practice page. It uses the same 800×600 canvas and centered 4×3 developer grid, including clear space above and below the grid for kudlit and other marks. It has an optional guide, Undo stroke, Try again, and **Check my practice**. The page sends the current drawing to the local backend but does not save it or expose expert recordings, reference IDs, developer controls, or JSON downloads.
+
+The root URL, **http://127.0.0.1:3000/**, now opens this learner page. Select **Go to developer tools**, enter `ganbatte`, then use `/developer` to reach the protected reference-library and validation-inspector links. This is a local prototype access gate; the separate `BAYBAYIN_REFERENCE_TOKEN` remains required for reference-record API actions and a deployed system needs real user authentication.
+
+Developers use the protected **Record calibration sample** link (`/developer/capture`) to collect grid-based JSON recordings for threshold/calibration work. Do not automatically treat learner practice attempts as calibration data: an expert must review and label any sample before it may influence prototype or research thresholds.
+
+The verified expert batch is now the active local reference set for all 12 current targets. The learner page therefore performs a clearly labeled **practice comparison** against the matching expert image and ordered stroke recording. For prototype-only testing, local calibration configurations were derived from the supplied `ajstrokes/` and `hurry-strokes/` samples for `a`, `ba`, `e`, `i`, `o`, and `u`; these targets show a **Prototype match** or **Prototype result: needs more practice**. Those thresholds are not expert-approved research thresholds and must be replaced by expert-labeled calibration before thesis evaluation.
+
+## Deterministic validator preparation
+
+The backend now supports protected, expert-approved stroke annotations at `POST /api/stroke-annotations`. An annotation binds a target and reference bundle to explicit expected stroke data and, for modified characters, an outside-grid kudlit/cancellation-mark stroke and normalized full-canvas region. The validator can therefore distinguish an approved above-grid mark from the same mark below the grid during a practice comparison. It does not make a learner verdict until calibration is approved.
+
+Use [the deterministic validator plan](deterministic-validator-implementation-plan.md) when preparing the first `ba`, `be`, and `bo` reviewer annotations. Store annotations locally in `app/data/reference-library/annotations/`; they are Git-ignored research records.
+
 ## Review a saved recording
 
 With both servers running, use **Open saved sample** to select a JSON file previously downloaded by the prototype. The review area shows its label, recording time, original canvas dimensions, and number of pen contacts. Select **Replay saved strokes** to watch the recorded events in order; you can stop the replay or close the sample. The review canvas is separate from the current drawing, which remains available while you review.
@@ -86,6 +102,7 @@ The curated source data lives in `../knowledge-graph/` and is loaded by FastAPI 
 - `GET /api/knowledge-graph/catalog` for the 12 current-release targets;
 - `GET /api/knowledge-graph/targets/{id}` for a target's source-backed details; and
 - `GET /api/knowledge-graph/readiness` for the evidence state of every target.
+- `POST /api/learner-validation` for a learner-safe, non-persisting practice result.
 
 Readiness means whether a candidate and approved expert reference exist. It never enables learner scoring in this version; `scoringAvailable` remains `false` for every target. Graph changes are repository changes and must be reviewed with their source references. Do not edit the graph through the browser or store private review data in it.
 

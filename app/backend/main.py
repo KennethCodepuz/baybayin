@@ -9,12 +9,15 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 from feedback import deterministic_feedback, retrieve_feedback_context
 from form_matching import FormMatchError
 from knowledge_graph import KnowledgeGraph, load_knowledge_graph
+from kudlit_rules import KudlitRuleError, validate_kudlit_annotation
+from learner_validation import learner_result
 from multimodal import FeatureError, combine_validation, unavailable_branch_result, validate_png_data_url
 from reference_bundle import BundleError, build_reference_bundle
 from expert_reference_batch import import_batch, preflight_batch
 from reference_library import DuplicateReferenceError, InvalidReferenceIdentifierError, ReferenceNotFoundError, ReferenceRepository
 from security import require_reference_token
 from stroke_matching import StrokeMatchError
+from scoring import score_form_measurements, score_stroke_measurements
 from validation_evidence import provisional_bundle_evidence
 
 
@@ -149,6 +152,11 @@ class ExpertBatchImport(BaseModel):
     importerCode: str = Field(min_length=1, max_length=100)
 
 
+class StrokeAnnotationCreate(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    annotation: dict
+
+
 class BranchFeedback(BaseModel):
     model_config = ConfigDict(extra='forbid')
     errors: list[str] = Field(default_factory=list, max_length=20)
@@ -264,15 +272,29 @@ def validation_preview(sample: Sample):
     bundle = repository.get_active_bundle(canonical_target_id)
     if bundle:
         try:
-            evidence = provisional_bundle_evidence(sample.model_dump(), bundle, target['sourceRefs'])
-        except (FeatureError, FormMatchError, StrokeMatchError) as error:
+            annotation = repository.get_annotation(canonical_target_id, bundle['id'])
+            evidence = provisional_bundle_evidence(sample.model_dump(), bundle, target['sourceRefs'], annotation)
+        except (FeatureError, FormMatchError, StrokeMatchError, KudlitRuleError) as error:
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail=str(error))
+        calibration = repository.get_calibration(canonical_target_id, bundle['id'])
+        if calibration:
+            form = score_form_measurements(evidence['form']['evidence'][1]['measurements'], calibration, target_id=canonical_target_id, reference_bundle_id=bundle['id'])
+            stroke = score_stroke_measurements(evidence['stroke']['evidence'][1]['measurements'], calibration, target_id=canonical_target_id, reference_bundle_id=bundle['id'])
+            form['sourceRefs'] = target['sourceRefs']
+            stroke['sourceRefs'] = target['sourceRefs']
+            return combine_validation(canonical_target_id, form, stroke, bundle['id'])
         return combine_validation(canonical_target_id, evidence['form'], evidence['stroke'], bundle['id'])
     has_inactive_bundle = any(item['targetId'] == canonical_target_id for item in repository.list_bundles())
     reason = 'reference_bundle_activation_pending' if has_inactive_bundle else 'reference_bundle_missing'
     form = unavailable_branch_result('form', reason, target['sourceRefs'])
     stroke = unavailable_branch_result('stroke', reason, target['sourceRefs'])
     return combine_validation(canonical_target_id, form, stroke, None)
+
+
+@app.post('/api/learner-validation')
+def validate_learner_practice(sample: Sample):
+    """Public, write-free learner endpoint that hides private reference evidence."""
+    return learner_result(validation_preview(sample))
 
 
 @app.post('/api/feedback')
@@ -394,6 +416,25 @@ def create_reference(reference: ReferenceCreate, _: None = Depends(require_refer
 @app.get('/api/references')
 def list_references(_: None = Depends(require_reference_token)):
     return {'records': reference_repository().list_records()}
+
+
+@app.post('/api/stroke-annotations', status_code=status.HTTP_201_CREATED)
+def create_stroke_annotation(request: StrokeAnnotationCreate, _: None = Depends(require_reference_token)):
+    annotation = request.annotation
+    target_id, bundle_id = annotation.get('targetId'), annotation.get('referenceBundleId')
+    bundle = reference_repository().get_bundle(bundle_id) if isinstance(bundle_id, str) else None
+    if not bundle or bundle.get('targetId') != target_id:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail='Annotation must reference an existing matching bundle')
+    try:
+        validate_kudlit_annotation(annotation, target_id=target_id, reference_bundle_id=bundle_id)
+        return {'annotation': reference_repository().create_annotation(annotation)}
+    except (KudlitRuleError, DuplicateReferenceError) as error:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_CONTENT, detail=str(error))
+
+
+@app.get('/api/stroke-annotations')
+def list_stroke_annotations(_: None = Depends(require_reference_token)):
+    return {'annotations': reference_repository().list_annotations()}
 
 
 @app.get('/api/references/manifest')
