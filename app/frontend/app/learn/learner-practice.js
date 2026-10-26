@@ -4,6 +4,12 @@ import { useEffect, useRef, useState } from 'react';
 import { DrawingCapture } from '../../lib/capture.js';
 import { catalogTargets, selectedTarget } from '../../lib/knowledge-graph.js';
 import { apiRequest } from '../../lib/reference-library.js';
+import {
+  drawReferenceMark,
+  referenceAssetName,
+  referenceBounds,
+  referenceMarkPosition,
+} from '../../lib/reference-guide.js';
 import Link from 'next/link';
 
 const WIDTH = 800;
@@ -54,38 +60,6 @@ function point(canvas, event) {
   };
 }
 
-function guideAsset(target) {
-  if (['be', 'bi', 'bo', 'bu', 'b', 'b_'].includes(target)) return 'ba';
-  return ['a', 'e', 'i', 'o', 'u'].includes(target) ? target.toUpperCase() : target;
-}
-
-function referenceBounds(image) {
-  const source = document.createElement('canvas');
-  source.width = image.width;
-  source.height = image.height;
-  const context = source.getContext('2d');
-  context.drawImage(image, 0, 0);
-  const pixels = context.getImageData(0, 0, image.width, image.height).data;
-  let left = image.width;
-  let top = image.height;
-  let right = -1;
-  let bottom = -1;
-  for (let y = 0; y < image.height; y += 1) {
-    for (let x = 0; x < image.width; x += 1) {
-      const index = (y * image.width + x) * 4;
-      if (pixels[index] < 245 || pixels[index + 1] < 245 || pixels[index + 2] < 245) {
-        left = Math.min(left, x);
-        top = Math.min(top, y);
-        right = Math.max(right, x);
-        bottom = Math.max(bottom, y);
-      }
-    }
-  }
-  return right < 0 ? { x: 0, y: 0, width: image.width, height: image.height } : {
-    x: left, y: top, width: right - left + 1, height: bottom - top + 1,
-  };
-}
-
 function drawGuide(canvas, target, visible) {
   const context = canvas.getContext('2d');
   context.clearRect(0, 0, canvas.width, canvas.height);
@@ -100,29 +74,11 @@ function drawGuide(canvas, target, visible) {
     const top = (HEIGHT - height) / 2;
     context.globalAlpha = 0.18;
     context.drawImage(image, bounds.x, bounds.y, bounds.width, bounds.height, left, top, width, height);
-    if (['be', 'bi', 'bo', 'bu', 'b', 'b_'].includes(target)) {
-      const above = ['be', 'bi', 'b_'].includes(target);
-      const x = WIDTH / 2;
-      const y = above ? GRID_TOP / 2 : GRID_TOP + GRID_HEIGHT + GRID_TOP / 2;
-      const scale = width / bounds.width;
-      context.strokeStyle = '#1b2a20';
-      context.fillStyle = '#1b2a20';
-      context.lineWidth = 8 * scale;
-      context.lineCap = 'round';
-      context.beginPath();
-      if (['bi', 'bu'].includes(target)) {
-        context.arc(x, y, 8 * scale, 0, Math.PI * 2);
-        context.fill();
-      } else {
-        const cancellation = ['b', 'b_'].includes(target);
-        context.moveTo(x - (cancellation ? 5 : 14) * scale, y - (cancellation ? 12 : 0) * scale);
-        context.lineTo(x + (cancellation ? 5 : 14) * scale, y + (cancellation ? 12 : 0) * scale);
-        context.stroke();
-      }
-    }
+    const mark = referenceMarkPosition(target, GRID_TOP, GRID_HEIGHT, WIDTH);
+    drawReferenceMark(context, target, mark.x, mark.y, width / bounds.width);
     context.globalAlpha = 1;
   };
-  image.src = `/reference-images/${encodeURIComponent(guideAsset(target))}.png`;
+  image.src = `/reference-images/${encodeURIComponent(referenceAssetName(target))}.png`;
 }
 
 function feedbackText(item) {

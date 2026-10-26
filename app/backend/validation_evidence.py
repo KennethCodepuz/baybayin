@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 from form_matching import compare_form_images
-from multimodal import extract_stroke_features, unavailable_branch_result
 from kudlit_rules import evaluate_kudlit
+from multimodal import extract_stroke_features, unavailable_branch_result
 from stroke_matching import compare_stroke_sequences
 
 

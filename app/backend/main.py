@@ -1,4 +1,5 @@
 from datetime import date, datetime, timezone
+import json
 from pathlib import Path
 from typing import Literal
 
@@ -356,7 +357,6 @@ def knowledge_graph() -> KnowledgeGraph:
 
 def expert_batch_manifest() -> dict:
     try:
-        import json
         return json.loads(app.state.expert_batch_manifest.read_text(encoding='utf-8'))
     except (OSError, ValueError) as error:
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail='Expert batch manifest is unavailable') from error

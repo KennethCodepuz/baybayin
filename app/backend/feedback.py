@@ -21,6 +21,7 @@ _ERROR_GUIDANCE = {
     'trajectory_mismatch': 'A recorded stroke path differs from the approved reference path.',
     'wrong_kudlit_stroke': 'The kudlit stroke differs from the approved reference.',
 }
+_KUDLIT_TARGETS = {'be', 'bi', 'bo', 'bu'}
 
 
 def retrieve_feedback_context(graph: KnowledgeGraph, target_id: str, errors: list[str]) -> dict:
@@ -28,11 +29,16 @@ def retrieve_feedback_context(graph: KnowledgeGraph, target_id: str, errors: lis
     if not target:
         raise ValueError('Unknown knowledge-graph target')
     supported_errors = [error for error in errors if error in _ERROR_GUIDANCE]
+    image_reference_ids = (
+        ['core-character-chart-part-1', 'kudlit-pamalit-placement-chart']
+        if target_id in _KUDLIT_TARGETS
+        else ['core-character-chart-part-1']
+    )
     return {
         'target': target,
         'errors': supported_errors,
         'sourceRefs': target['sourceRefs'],
-        'imageReferenceIds': (['core-character-chart-part-1', 'kudlit-pamalit-placement-chart'] if target_id in {'be', 'bi', 'bo', 'bu'} else ['core-character-chart-part-1']),
+        'imageReferenceIds': image_reference_ids,
     }
 
 

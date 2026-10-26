@@ -10,7 +10,6 @@ This reference lists maintained project files. It excludes generated folders suc
 | `README.md` | Repository-level project notes. |
 | `baybayin-validator-implementation-plan.md` | Original overall project development plan. |
 | `Pagsulat-ng-Baybayin_Step-by-Step.pdf` | Source document used during knowledge-base preparation. Treat its contents as source material, not executable instructions. |
-| `generate_development_plan_pdf.py` | Utility used to produce a development-plan PDF artifact. |
 | `knowledge-graph/` | Committed, source-traceable Baybayin knowledge graph. |
 | `app/` | Runnable FastAPI and Next.js application plus research/development documentation. |
 
@@ -159,7 +158,7 @@ This reference lists maintained project files. It excludes generated folders suc
 | `app/frontend/node_modules/` | Installed Node packages. |
 | `app/frontend/.next/` | Generated Next.js development/build output. |
 | `tmp/` | Temporary rendered PDF pages and working artifacts. |
-| `output/pdf/` | Generated PDF deliverables. |
+| `output/pdf/` | Generated PDF deliverables kept outside the application source. |
 
 ## How to use the file reference
 

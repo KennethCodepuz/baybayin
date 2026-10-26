@@ -4,6 +4,12 @@ import { useEffect, useRef, useState } from 'react';
 import { DrawingCapture } from '../lib/capture.js';
 import { catalogTargets, selectedTarget } from '../lib/knowledge-graph.js';
 import { apiRequest } from '../lib/reference-library.js';
+import {
+  drawReferenceMark,
+  referenceAssetName,
+  referenceBounds,
+  referenceMarkPosition,
+} from '../lib/reference-guide.js';
 import RecordingReview from './recording-review.js';
 
 const apiUrl = 'http://127.0.0.1:8000';
@@ -31,41 +37,6 @@ function blankReferenceCanvas(canvas) {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-function referenceAssetName(target) {
-  if (['be', 'bi', 'bo', 'bu', 'b', 'b_'].includes(target)) return 'ba';
-  return ['a', 'e', 'i', 'o', 'u'].includes(target) ? target.toUpperCase() : target;
-}
-
-function referenceBounds(image) {
-  const source = document.createElement('canvas');
-  source.width = image.width;
-  source.height = image.height;
-  const context = source.getContext('2d');
-  context.drawImage(image, 0, 0);
-  const pixels = context.getImageData(0, 0, image.width, image.height).data;
-  let left = image.width;
-  let top = image.height;
-  let right = -1;
-  let bottom = -1;
-  for (let y = 0; y < image.height; y += 1) {
-    for (let x = 0; x < image.width; x += 1) {
-      const index = (y * image.width + x) * 4;
-      if (pixels[index] < 245 || pixels[index + 1] < 245 || pixels[index + 2] < 245) {
-        left = Math.min(left, x);
-        top = Math.min(top, y);
-        right = Math.max(right, x);
-        bottom = Math.max(bottom, y);
-      }
-    }
-  }
-  return right < 0 ? { x: 0, y: 0, width: image.width, height: image.height } : {
-    x: left,
-    y: top,
-    width: right - left + 1,
-    height: bottom - top + 1,
-  };
-}
-
 function drawReference(canvas, target, setGridLayout) {
   blankReferenceCanvas(canvas);
   if (!target) {
@@ -90,25 +61,8 @@ function drawReference(canvas, target, setGridLayout) {
     ctx.globalAlpha = 0.2;
     ctx.drawImage(image, bounds.x, bounds.y, bounds.width, bounds.height,
       layout.left, layout.top, layout.width, layout.height);
-    if (['be', 'bi', 'bo', 'bu', 'b', 'b_'].includes(target)) {
-      const x = canvas.width / 2;
-      const above = ['be', 'bi', 'b_'].includes(target);
-      const y = above ? GRID_TOP / 2 : GRID_TOP + GRID_HEIGHT + GRID_TOP / 2;
-      ctx.strokeStyle = 'black';
-      ctx.fillStyle = 'black';
-      ctx.lineWidth = 8 * scale;
-      ctx.lineCap = 'round';
-      ctx.beginPath();
-      if (['bi', 'bu'].includes(target)) {
-        ctx.arc(x, y, 8 * scale, 0, Math.PI * 2);
-        ctx.fill();
-      } else {
-        const cancellation = ['b', 'b_'].includes(target);
-        ctx.moveTo(x - (cancellation ? 5 : 14) * scale, y - (cancellation ? 12 : 0) * scale);
-        ctx.lineTo(x + (cancellation ? 5 : 14) * scale, y + (cancellation ? 12 : 0) * scale);
-        ctx.stroke();
-      }
-    }
+    const mark = referenceMarkPosition(target, GRID_TOP, GRID_HEIGHT, canvas.width);
+    drawReferenceMark(ctx, target, mark.x, mark.y, scale, 'black');
     ctx.globalAlpha = 1;
   };
   image.src = `/reference-images/${encodeURIComponent(referenceAssetName(target))}.png`;
