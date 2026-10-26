@@ -1,5 +1,7 @@
 # Task: Find an expert Baybayin validator for the pilot
 
+> Historical outreach task. An expert recording batch is now in the local reference workflow; formal rubric and calibration review remain the next research need. See [CURRENT_SYSTEM_STATUS.md](../docs/CURRENT_SYSTEM_STATUS.md).
+
 ## Goal
 
 Identify and contact a qualified person who can review and approve the writing rules used for the first Baybayin validator pilot. The initial scope is the unmodified characters `ba` and `ka` under the intended Pinagyamang Baybayin convention.

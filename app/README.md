@@ -1,6 +1,6 @@
-# Baybayin drawing capture prototype
+# Baybayin handwriting-validator prototype
 
-This prototype uses a Next.js frontend and a FastAPI backend. It loads the repository's source-traceable knowledge graph, records a selected target, a final image, and ordered pointer events, and can reopen and replay saved recordings. The backend checks that recordings are structurally complete; neither component validates Baybayin characters or stroke rules yet.
+This local prototype uses a Next.js frontend and a FastAPI backend. It records a selected target, final image, and ordered pointer events; it also compares learner practice with active expert reference recordings. Read [the current system status](docs/CURRENT_SYSTEM_STATUS.md) for the exact target coverage and research limits.
 
 ## Run on this Windows computer
 
@@ -23,7 +23,7 @@ cd '.\frontend'
 npm.cmd run dev -- --hostname 127.0.0.1
 ```
 
-Open **http://127.0.0.1:3000** in Chrome or Edge. Select a target such as `ba`; its faint reference image appears behind the 600×450 drawing canvas for tracing. The canvas includes a 4-column × 3-row grid of twelve equal 150×150 squares. Draw over the guide and select **Download sample**. The grid and image guide are separate visual layers and are not included in the saved learner image or stroke events. The target comes from the committed knowledge graph but is not a correctness check. Stop each server with Ctrl+C in its terminal.
+Open **http://127.0.0.1:3000** in Chrome or Edge. The home page is learner practice. It uses an 800×600 drawing canvas with a centered visual-only 4-column × 3-row grid and outside-grid space for kudlit. Developer capture can download recordings. The grid and guide are separate visual layers and are not included in the saved PNG or stroke events. Stop each server with Ctrl+C in its terminal.
 
 ## Learner practice
 
@@ -91,7 +91,7 @@ npm.cmd test
 
 ## Sample format and data handling
 
-The downloaded JSON includes a version, UTC creation time, manually entered target, 600×450 canvas dimensions, PNG data URL, and ordered events. Event coordinates are in canvas pixels relative to its upper-left corner; timestamps are browser event timestamps in milliseconds relative to the browser's time origin, not wall-clock times. Each event includes its pointer type. Stroke boundaries are preserved. Use 600×450 for every final expert and learner recording so the evaluation dataset has one consistent capture layout. The FastAPI endpoint returns the sample but does not save it. Identifiers and consent handling are not implemented, so use test data only until a research protocol is approved. The browser may rename repeated downloads; manage exported files carefully.
+The downloaded JSON includes a version, UTC creation time, manually entered target, 800×600 canvas dimensions, PNG data URL, and ordered events. Event coordinates are in canvas pixels relative to its upper-left corner; timestamps are browser event timestamps in milliseconds relative to the browser's time origin, not wall-clock times. Each event includes its pointer type. Stroke boundaries are preserved. Use the same capture layout for any calibration or evaluation dataset, document its version, and do not silently mix layouts. The FastAPI endpoint returns the sample but does not save it. Identifiers and consent handling are not implemented, so use test data only until a research protocol is approved. The browser may rename repeated downloads; manage exported files carefully.
 
 The prototype listens on localhost and is for development only. Reference sources, permissions, character specifications, and an expert-approved stroke rubric are documented as pending in `research/reference-and-rubric.md`.
 
@@ -108,7 +108,7 @@ Readiness means whether a candidate and approved expert reference exist. It neve
 
 ## Multimodal validation infrastructure
 
-Open **http://127.0.0.1:3000/developer-validation** to load a checked sample and inspect the separate image-form, JSON-stroke, and hybrid response contracts. It deliberately reports `scoring unavailable` until an expert has approved a matching reference bundle and thresholds.
+Open **http://127.0.0.1:3000/developer-validation** to load a checked sample and inspect separate image-form, JSON-stroke, and hybrid response contracts. An active expert bundle produces comparison evidence for all 12 targets. Only the local prototype calibrations for `a`, `ba`, `e`, `i`, `o`, and `u` can produce a practice score; all other targets remain comparison-only until calibration is added.
 
 An expert recording already includes both modalities: the sample's `image` is the final PNG and `events` are the ordered stroke events. Once an approved reference recording and matching specification exist, `POST /api/reference-bundles` can create a versioned bundle with a normalized canonical image and reproducible stroke features. `POST /api/validation/preview` returns the safe unavailable-state contract, while `POST /api/feedback` returns source-grounded fallback feedback from supplied validator error codes.
 

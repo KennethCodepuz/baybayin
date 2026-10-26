@@ -10,7 +10,7 @@
 - [~] **Partial** — some supporting infrastructure exists, but it does not satisfy the methodology.
 - [x] **Implemented** — the current repository provides the required behavior. This does not mean it has been experimentally validated.
 
-The current application is a capture, replay, reference-curation, and structural-validation prototype. It must not be presented as satisfying the methodology's validator or evaluation requirements until the items below are completed.
+The current application is a local learner-practice, capture/replay, expert-reference, and limited deterministic-validation prototype. It has active expert comparison bundles for 12 targets and prototype practice scoring for `a`, `ba`, `e`, `i`, `o`, and `u`. The other six targets remain comparison-only, and no held-out evaluation metrics may be claimed. Read [app/docs/CURRENT_SYSTEM_STATUS.md](app/docs/CURRENT_SYSTEM_STATUS.md) for the live capability boundary; this checklist records gaps against the methodology, not feature release notes.
 
 ## 3.1 Research design and research process
 
@@ -20,12 +20,12 @@ The current application is a capture, replay, reference-curation, and structural
 - [ ] Implement the experimental performance evaluation under identical data, writer-level splits, fixed metrics, and fixed evaluation conditions.
 - [~] Keep the two connected versions separate:
   - [x] The capture stores a final image and ordered pointer events.
-  - [ ] Version 1 must perform final-form validation using only the final image.
-  - [ ] Version 2 must validate count, order, direction, trajectory/shape, and kudlit placement.
+  - [~] Version 1 prototype comparison uses only the final image for form measurements and six local practice thresholds; it is not evaluation-validated.
+  - [~] Version 2 prototype comparison uses stroke count and DTW/point-distance trajectories. Order, direction, and kudlit coverage remain target-specific and incomplete.
   - [ ] Report Version 1 and Version 2 independently as well as together.
 - [~] Keep the knowledge graph and retrieval layer explanatory only:
-  - [x] The current feedback boundary is designed not to change validation outcomes.
-  - [ ] The actual measurable validators must exist before the retrieval layer can explain their results.
+  - [x] The current feedback boundary cannot change validation outcomes.
+  - [~] Measurable prototype validators exist for comparison and six practice-scored targets; expert-labeled evaluation is still required before methodology claims.
 - [ ] Implement the four research phases end to end:
   - [ ] Data collection producing character specifications, knowledge-base records, and labeled data.
   - [ ] Preprocessing cleaning, normalization, segmentation, and resampling.
@@ -114,8 +114,8 @@ The current application is a capture, replay, reference-curation, and structural
 
 ### Evaluation scripts
 
-- [ ] Implement scripts for accuracy, precision, recall, F1, confusion matrices, error-specific results, response time, and statistical testing.
-- [ ] Make scripts consume a frozen test-set manifest and versioned validator outputs.
+- [~] `evaluation_metrics.py` calculates accuracy, precision, recall, F1, and per-error confusion-matrix counts; it has no frozen expert-labeled test manifest or reported study results.
+- [ ] Add response-time and statistical testing, and make scripts consume a frozen test-set manifest and versioned validator outputs.
 
 ### Consent form
 

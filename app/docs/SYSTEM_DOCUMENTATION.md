@@ -2,12 +2,12 @@
 
 ## Purpose and current scope
 
-This project is a **developer-only Baybayin handwriting-reference system**. It collects a drawing as two connected forms of evidence:
+This project is a **local learner-practice and developer-reference Baybayin handwriting prototype**. It collects a drawing as two connected forms of evidence:
 
 - an ordered sequence of pen events for stroke analysis; and
 - a PNG image of the completed character for form analysis.
 
-It helps the research team collect, review, preserve, and prepare expert references. It does **not** currently tell a learner that a Baybayin drawing is correct or incorrect. Scoring requires real expert-approved references, annotations, and calibration thresholds.
+It lets learners submit a practice drawing and preserves separate developer workflows for creating and reviewing references. Expert comparison bundles are active for the 12 current-release targets. Prototype scoring is available only for `a`, `ba`, `e`, `i`, `o`, and `u`; `be`, `bi`, `bo`, `bu`, `b`, and `b_` remain comparison-only until calibration thresholds are reviewed. See [CURRENT_SYSTEM_STATUS.md](CURRENT_SYSTEM_STATUS.md) for the authoritative capability boundary.
 
 ## Architecture
 
@@ -37,7 +37,7 @@ The frontend runs on `http://127.0.0.1:3000`. The FastAPI backend runs on `http:
 3. Draw with a pen, mouse, or touch input.
 4. Download the JSON sample.
 
-The downloaded sample contains `version`, `createdAt`, `target`, 600×450 canvas dimensions, a PNG data URL, and ordered `down`, `move`, and `up` events. The capture page displays a visual-only 4-column × 3-row grid with 150×150 squares; it is not part of the saved PNG or events. The backend verifies PNG bytes and limits image size before accepting it.
+The downloaded sample contains `version`, `createdAt`, `target`, 800×600 canvas dimensions, a PNG data URL, and ordered `down`, `move`, and `up` events. The capture page displays a centered visual-only 4-column × 3-row grid; it is not part of the saved PNG or events. The backend verifies PNG bytes and limits image size before accepting it.
 
 ### 2. Review and replay a saved sample
 
@@ -47,7 +47,9 @@ Use **Open saved sample** on the capture page. The system validates the JSON wit
 
 `/learn` is separate from developer capture and reference-review pages. A learner selects a source-backed target and draws on the same 800×600 canvas and centered visual-only 4×3 grid used by developer capture. The surrounding area remains drawable for kudlit and other marks outside the base-character grid. Learners may show/hide the guide, undo the latest completed stroke, clear the drawing, and select **Check my practice**. The browser sends the in-memory sample to `POST /api/learner-validation`; it does not persist the sample or reveal expert recordings, bundle IDs, measurements, tokens, or developer metadata.
 
-The learner response has one explicit state: `unavailable` when no active expert bundle exists, `practice_comparison` when a bundle exists without calibration, or `prototype_result` for a local prototype calibration. The verified expert batch is active locally for the 12 current targets. The supplied `ajstrokes/` and `hurry-strokes/` recordings derive prototype-only form/DTW limits for `a`, `ba`, `e`, `i`, `o`, and `u`; this is explicitly not an expert-approved research result. All other targets remain practice comparison until separately calibrated, particularly kudlit targets requiring outside-grid mark data.
+The learner response has one explicit state: `unavailable` when no active expert bundle exists, `practice_comparison` when a bundle exists without calibration, or `prototype_result` for a local prototype calibration. The verified expert batch is active locally for the 12 current targets. The supplied `ajstrokes/` and `hurry-strokes/` recordings derive prototype-only form/DTW limits for `a`, `ba`, `e`, `i`, `o`, and `u`; this is explicitly not an expert-approved research result. `be`, `bi`, `bo`, `bu`, `b`, and `b_` therefore remain practice comparison until separately calibrated, particularly because their kudlit/cancellation marks need approved outside-grid data.
+
+When a `prototype_result` contains confirmed errors, the backend creates a short-lived feedback-result ID. **Explain this feedback** resolves that ID server-side and returns deterministic source-constrained feedback. If `AI_GATEWAY_API_KEY` and a current `AI_GATEWAY_MODEL` are configured, the server may request an explanation from AI Gateway. It sends no PNG, pointer events, expert sample, reviewer data, bundle ID, or threshold values; the returned text is validated against the same allowed errors and sources. Provider failures return deterministic feedback instead.
 
 ### 3. Create an expert reference
 
@@ -73,8 +75,8 @@ The batch is not automatically trusted: each candidate still needs a matching ap
 
 Open `/developer-validation` and load a checked sample.
 
-- If there is no active bundle, the page reports that reference activation is pending.
-- If an active bundle exists, the page displays the sample PNG and shows provisional image-form and stroke evidence.
+- If an active bundle exists, the page displays the sample PNG and shows image-form and stroke comparison evidence. The current local expert batch provides active bundles for all 12 current targets.
+- If a future target has no active bundle, the page reports that reference activation is pending.
 - Stroke evidence uses constrained Dynamic Time Warping (DTW) for path strokes and point-distance comparison for stationary dot strokes.
 - The page still reports **scoring unavailable** until an expert-approved calibration configuration exists.
 
@@ -135,7 +137,8 @@ The visual reference pages are source material from the Lopez/KWF publication. T
 | `POST /api/reference-batches/expert-2026-10-24/import` | Copy the verified batch into candidate records; requires an importer code. |
 | `GET /api/reference-batches/expert-2026-10-24/coverage` | Show `active`, `approved_inactive`, `candidate`, or `missing` for each core target. |
 | `POST /api/validation/preview` | Return unavailable or provisional form/stroke evidence. |
-| `POST /api/learner-validation` | Return a learner-safe, non-persisting unavailable or practice-comparison result. |
+| `POST /api/learner-validation` | Return a learner-safe, non-persisting unavailable, practice-comparison, or prototype result. |
+| `POST /api/learner-feedback` | Resolve a short-lived server result ID into deterministic feedback or a validated optional AI explanation. |
 | `POST /api/stroke-annotations` | Save a protected, approved stroke/kudlit annotation tied to an existing reference bundle. |
 | `POST /api/feedback` | Produce deterministic, source-constrained feedback. |
 
@@ -178,10 +181,9 @@ When Next.js is inside a synced OneDrive directory, builds can occasionally fail
 
 ## What is still needed before real validation
 
-1. Expert-created recordings for pilot characters.
-2. Expert approval of a reference bundle and activation decision.
-3. Approved structural annotations where required.
-4. Expert-approved calibration thresholds for image and DTW evidence.
-5. Expert-labeled held-out samples for Chapter 3/4 evaluation metrics.
+1. Accepted calibration samples and reviewed thresholds for `be`, `bi`, `bo`, `bu`, `b`, and `b_`.
+2. Approved structural/kudlit annotations where required.
+3. Expert-labeled writer-disjoint held-out samples for Chapter 3/4 evaluation metrics.
+4. A valid AI Gateway key and current model ID if optional AI phrasing is to be enabled.
 
 See [FILE_REFERENCE.md](FILE_REFERENCE.md) for the role of each project file.

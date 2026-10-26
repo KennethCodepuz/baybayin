@@ -1,6 +1,6 @@
 # Implementation plan: expert-reference import and activation
 
-**Status:** Proposed; this document makes no runtime code changes.  
+**Status:** Historical plan, implemented for the declared local batch. The recordings were imported, reviewed locally, and activated for comparison; learner scoring coverage is in [CURRENT_SYSTEM_STATUS.md](docs/CURRENT_SYSTEM_STATUS.md).
 **Goal:** Import the 12 recordings in `expert reference/` into the protected developer reference library, preserve their expert provenance, and activate only explicitly reviewed reference bundles for future learner validation.  
 **Method:** Test-driven development. Add failing tests before each behavior, implement the smallest change, then run focused checks before the full project checks.
 

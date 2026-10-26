@@ -2,6 +2,8 @@
 
 This directory contains only schemas and synthetic examples. Do not commit real expert recordings, participant identifiers, consent forms, reviewer names, or unapproved results.
 
+The running application has local prototype scores only for `a`, `ba`, `e`, `i`, `o`, and `u`. Those practice limits are not an evaluation dataset and must not be used to report thesis metrics. `be`, `bi`, `bo`, `bu`, `b`, and `b_` currently have expert comparisons but no scoring thresholds. See [the current system status](../docs/CURRENT_SYSTEM_STATUS.md).
+
 Use one evaluation record per held-out drawing after an expert has supplied the ground-truth decision. Keep these data partitions separate:
 
 - **reference:** approved expert examples used to build bundles;

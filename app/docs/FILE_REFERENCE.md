@@ -34,6 +34,7 @@ This reference lists maintained project files. It excludes generated folders suc
 | File or directory | Role |
 |---|---|
 | `app/README.md` | Run instructions, current capability limits, endpoint overview, and local data guidance. |
+| `app/docs/CURRENT_SYSTEM_STATUS.md` | Authoritative table of current learner coverage, prototype limits, capability boundaries, and next evidence required. Read this before making any claim about the system. |
 | `app/docs/SYSTEM_DOCUMENTATION.md` | System architecture, workflows, validation behavior, privacy, and testing guide. |
 | `app/docs/FILE_REFERENCE.md` | This file-by-file reference. |
 | `app/validation-correctness-hardening-implementation-plan.md` | Plan for fixing the five validation safety issues. |
@@ -59,6 +60,7 @@ This reference lists maintained project files. It excludes generated folders suc
 | File | Role |
 |---|---|
 | `app/backend/main.py` | FastAPI entry point, Pydantic request models, local API routes, CORS configuration, sample validation, reference workflow, active-bundle activation, preview, and feedback endpoints. |
+| `app/backend/.env.example` | Non-secret template for the local developer token and optional server-side AI Gateway configuration. |
 | `app/backend/knowledge_graph.py` | Loads and validates the committed knowledge graph, then resolves current-release targets. |
 | `app/backend/reference_library.py` | Local Git-ignored JSON repository for records, specifications, bundles, manifests, and active-bundle registry/history. |
 | `app/backend/expert_reference_batch.py` | Validates the declared private expert batch before import and creates checksum-linked candidate copies without changing source files. |
@@ -75,7 +77,9 @@ This reference lists maintained project files. It excludes generated folders suc
 | `app/backend/learner_validation.py` | Converts internal validation evidence into a minimal learner-safe unavailable/practice response without exposing templates or scores. |
 | `app/backend/promote_expert_references.py` | Explicit local promotion utility that designates the verified expert batch as approved active provisional reference bundles. |
 | `app/backend/prototype_calibration.py` | Derives clearly labeled local prototype form/DTW calibration records from supplied accepted practice recordings. |
-| `app/backend/ai_feedback.py` | Defines and validates a future AI-feedback adapter; no AI provider is currently connected. |
+| `app/backend/feedback_store.py` | Keeps a short-lived, server-side learner-result context so feedback requests cannot forge validator errors. |
+| `app/backend/ai_feedback.py` | Builds the safe AI request and validates that an AI response contains only confirmed errors and approved source references. |
+| `app/backend/ai_provider.py` | Optional server-side AI Gateway adapter. It sends only the safe feedback context and reports failure so deterministic feedback can be used instead. |
 | `app/backend/evaluation_metrics.py` | Calculates binary accuracy, precision, recall, F1, and per-error confusion-matrix counts. |
 | `app/backend/requirements.txt` | Python dependency ranges for FastAPI, Uvicorn, HTTPX, pytest, and Pillow. |
 
@@ -98,8 +102,10 @@ This reference lists maintained project files. It excludes generated folders suc
 | `tests/test_validation_config.py` | Calibration-schema validation tests. |
 | `tests/test_scoring.py` | Calibration-gated form/stroke scoring and incomplete-evidence tests. |
 | `tests/test_feedback.py` | Deterministic source-constrained feedback tests. |
+| `tests/test_feedback_store.py` | Short-lived feedback-result storage tests. |
 | `tests/test_learner_validation.py` | Learner-safe state and no-private-reference/no-score response tests. |
-| `tests/test_ai_feedback.py` | Future AI feedback request/response safety tests. |
+| `tests/test_ai_feedback.py` | AI feedback request/response safety-contract tests. |
+| `tests/test_ai_provider.py` | Optional provider configuration, safe payload, and malformed-response fallback tests. |
 | `tests/test_evaluation_metrics.py` | Metric and confusion-matrix tests. |
 
 ## Next.js frontend
@@ -114,14 +120,15 @@ This reference lists maintained project files. It excludes generated folders suc
 | `app/frontend/app/layout.js` | Root page layout and document title. |
 | `app/frontend/app/globals.css` | Shared visual styles for pages, canvas, review cards, and image previews. |
 | `app/frontend/app/page.js` | Home route entry point. |
-| `app/frontend/app/drawing-canvas.js` | Interactive 600×450 capture canvas with a visual-only 4×3 square grid, target selection, pointer handling, replay, and JSON download. |
+| `app/frontend/app/developer-login/page.js` and `app/frontend/proxy.js` | Local prototype developer-access gate and protection for developer routes. |
+| `app/frontend/app/drawing-canvas.js` | Interactive 800×600 developer capture canvas with a centered visual-only 4×3 grid, target selection, pointer handling, replay, and JSON download. |
 | `app/frontend/app/recording-review.js` | Opens an imported sample and replays it without changing the active drawing. |
 | `app/frontend/app/developer-reference-library/page.js` | Developer reference-library route entry point. |
 | `app/frontend/app/developer-reference-library/reference-library.js` | Candidate import, expert-batch preflight/import, provenance review, replay, review transition, specification creation, bundle creation, and bundle activation interface. |
 | `app/frontend/app/developer-validation/page.js` | Developer-validation route entry point. |
 | `app/frontend/app/developer-validation/validator.js` | Loads samples, displays PNG preview and provisional branch evidence, and requests constrained feedback. |
 | `app/frontend/app/learn/page.js` | Learner-practice route entry point. |
-| `app/frontend/app/learn/learner-practice.js` | Guided learner capture, undo/clear controls, non-persisting practice submission, and learner-safe result display. |
+| `app/frontend/app/learn/learner-practice.js` | Guided learner capture, undo/clear controls, non-persisting practice submission, learner-safe result display, and feedback-explanation action. |
 
 ### Frontend libraries
 

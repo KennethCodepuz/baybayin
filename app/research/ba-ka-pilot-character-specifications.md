@@ -1,6 +1,6 @@
 # Draft pilot character specifications: ba and ka
 
-**Status:** Draft for expert review, 19 October 2026. These are not approved validation rules or ground-truth labels.  
+**Status:** Historical draft for expert review, 19 October 2026. These are not approved research rules or ground-truth labels and do not override the active local expert comparison bundles. See [CURRENT_SYSTEM_STATUS.md](../docs/CURRENT_SYSTEM_STATUS.md).
 **Purpose:** Translate the supplied illustrations into questions and candidate checks for a small pilot. The validator should only enforce criteria after the research team and a qualified reviewer have agreed on them.
 
 ## Source and scope

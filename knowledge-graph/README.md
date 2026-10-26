@@ -15,7 +15,7 @@ This directory is the curated, machine-readable foundation for the validator. It
 
 ## Important scope rule
 
-A record with `status: "source_asserted"` is a fact extracted from the book. It is not automatically a live handwriting-validation threshold. The validator needs approved reference recordings or vector templates for each target symbol before it can score a learner’s strokes.
+A record with `status: "source_asserted"` is a fact extracted from the book. It is not automatically a handwriting-validation threshold. The application currently has active local expert comparison recordings for the 12 current-release targets, but only `a`, `ba`, `e`, `i`, `o`, and `u` have local prototype form/DTW limits. The remaining targets are comparison-only until accepted calibration samples and reviewed thresholds exist.
 
 The graph intentionally stores semantic IDs and source page references instead of reproducing the book’s full charts or artwork. That keeps the data auditable and lets the project attach licensed/reference glyph assets later.
 
@@ -25,4 +25,4 @@ All `sourceRefs` use the PDF page number of the supplied file, not the printed p
 
 ## Current use
 
-The frontend can use this data to select a target, explain its expected sound/state, and display a validation status. The FastAPI service can load it as read-only knowledge data. Do not expose authoring or replacement of these files to ordinary users.
+The frontend uses this data to select a target, display a source-backed guide, and retrieve feedback sources. FastAPI loads it as read-only knowledge data. The graph does not decide correctness, store private recordings, or replace expert calibration. Do not expose authoring or replacement of these files to ordinary users.

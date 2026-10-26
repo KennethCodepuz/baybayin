@@ -1,6 +1,6 @@
 # Implementation plan: knowledge-graph integration and expert reference expansion
 
-**Status:** Proposed; this document contains no application implementation.  
+**Status:** Historical plan, implemented for the current 12-target release. The graph is read-only source context, not scoring thresholds; see [CURRENT_SYSTEM_STATUS.md](docs/CURRENT_SYSTEM_STATUS.md).
 **Goal:** Make the curated `knowledge-graph/` directory the read-only source of selectable Baybáyin targets, then expand the developer reference workflow from the `ba`/`ka` pilot to expert-approved templates for the 12 selected targets.
 **Method:** Test-driven development. For every step, write a failing test first, make the smallest implementation that passes it, then run the relevant suite.
 
