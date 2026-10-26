@@ -147,6 +147,7 @@ export default function LearnerPractice() {
   const [guideVisible, setGuideVisible] = useState(false);
   const [status, setStatus] = useState('Choose a character, then draw it in the grid.');
   const [result, setResult] = useState(null);
+  const [explanation, setExplanation] = useState(null);
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
@@ -219,7 +220,21 @@ export default function LearnerPractice() {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(sample),
       });
       setResult(response);
+      setExplanation(null);
       setStatus(response.message);
+    } catch (error) {
+      setStatus(error.message);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function explain() {
+    if (!result?.feedbackResultId) return;
+    setBusy(true);
+    try {
+      const response = await apiRequest('/learner-feedback', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ resultId: result.feedbackResultId }) });
+      setExplanation(response);
     } catch (error) {
       setStatus(error.message);
     } finally {
@@ -266,6 +281,8 @@ export default function LearnerPractice() {
       <h2>{result.state === 'unavailable' ? 'Practice comparison unavailable' : result.state === 'prototype_result' ? result.hybrid.state === 'pass' ? 'Prototype match' : 'Try that one again' : 'Practice comparison'}</h2>
       <p>{result.message}</p>
       {result.feedback.items.length > 0 && <ul>{result.feedback.items.map(item => <li key={item}>{feedbackText(item)}</li>)}</ul>}
+      {result.feedbackResultId && <div className="actions"><button type="button" onClick={explain} disabled={busy}>{explanation ? 'Explanation ready' : 'Explain this feedback'}</button></div>}
+      {explanation && <p className="ai-explanation">{explanation.message}</p>}
       {result.sourceRefs.length > 0 && <p className="hint">Source references: {result.sourceRefs.join(', ')}</p>}
     </section>}
   </main>;

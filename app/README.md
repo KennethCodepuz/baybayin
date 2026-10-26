@@ -112,7 +112,13 @@ Open **http://127.0.0.1:3000/developer-validation** to load a checked sample and
 
 An expert recording already includes both modalities: the sample's `image` is the final PNG and `events` are the ordered stroke events. Once an approved reference recording and matching specification exist, `POST /api/reference-bundles` can create a versioned bundle with a normalized canonical image and reproducible stroke features. `POST /api/validation/preview` returns the safe unavailable-state contract, while `POST /api/feedback` returns source-grounded fallback feedback from supplied validator error codes.
 
-The current feedback implementation is deterministic. It is the safety boundary for a future AI provider: any model must receive only structured validator errors and retrieved source references, and it may explain those errors but cannot change validation outcomes.
+Deterministic feedback is the safety boundary for the optional AI provider: any model receives only structured validator errors and retrieved source references, and it may explain those errors but cannot change validation outcomes.
+
+## Optional AI explanations
+
+The learner result is always determined by the deterministic form and stroke validator. When a scored practice result has errors, **Explain this feedback** asks the backend for a short explanation of those same confirmed errors; it never receives the learner image, pointer-event recording, expert recording, or a power to change the result. If the AI provider is unavailable, malformed, or unsupported by the configured model, the page receives the existing deterministic explanation instead.
+
+To enable the optional explanation layer, copy `backend/.env.example` to `backend/.env`, then set `AI_GATEWAY_API_KEY` and the exact current `AI_GATEWAY_MODEL` identifier supplied by the gateway. Keep this file local and restart FastAPI after changing it. Do not put either value in the Next.js frontend or commit it. Without both settings, the app remains fully usable with deterministic feedback.
 
 ## Algorithm and evaluation readiness
 
