@@ -1,6 +1,8 @@
 # Implementation plan: import and replay a saved drawing
 
 **Status:** Proposed plan; no feature implementation is included in this document.  
+> **Status:** Historical plan, implemented. Imported JSON can be checked and replayed; this workflow is still not handwriting correctness validation. See [CURRENT_SYSTEM_STATUS.md](docs/CURRENT_SYSTEM_STATUS.md).
+
 **Goal:** Let a reviewer open a JSON sample previously downloaded from the app, inspect its target and recording details, and replay its strokes.  
 **Approach:** Test-driven development: write or update each relevant test, confirm it fails for the intended reason, implement the smallest change, and run the tests again.
 

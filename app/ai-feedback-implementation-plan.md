@@ -1,6 +1,6 @@
 # Implementation plan: grounded AI learner feedback
 
-**Status:** Proposed — no provider, credential, or runtime behavior changes are made by this plan.  
+**Status:** Partially implemented. Safe result IDs, deterministic fallback, learner UI, and the server-side AI Gateway adapter are implemented. Live AI wording remains disabled until a valid Gateway key and current model ID are configured; Chapter 3 feedback evaluation is still pending. See [CURRENT_SYSTEM_STATUS.md](docs/CURRENT_SYSTEM_STATUS.md).
 **Goal:** Add optional AI explanations that make deterministic results friendlier without allowing AI to decide Baybayin correctness.
 
 ## 1. Fixed decision boundary

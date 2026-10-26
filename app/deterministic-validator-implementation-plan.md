@@ -1,6 +1,6 @@
 # Implementation plan: deterministic Baybayin validator
 
-**Status:** Proposed — this document does not enable scoring.  
+**Status:** Historical plan, partly implemented. Active expert bundles support all 12 current targets; local prototype scoring exists for `a`, `ba`, `e`, `i`, `o`, and `u`. The remaining targets and research-grade calibration are still pending. See [CURRENT_SYSTEM_STATUS.md](docs/CURRENT_SYSTEM_STATUS.md).
 **Goal:** Turn the existing form-comparison, DTW, and stroke-rule modules into a deterministic, expert-approved validator for learner practice.  
 **Decision boundary:** The validator—not an LLM—will decide form, stroke count, order, direction, and kudlit placement. An LLM may later rephrase confirmed results only.
 

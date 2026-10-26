@@ -6,7 +6,7 @@ This document shows how data moves through the Baybayin validator prototype. It 
 
 ```mermaid
 flowchart TD
-    A[Developer selects Baybayin target] --> B[Draws on 600×450 Next.js canvas with visual-only 4×3 grid]
+    A[Developer selects Baybayin target] --> B[Draws on 800×600 Next.js canvas with visual-only centered 4×3 grid]
     B --> C[Pointer events: down, move, up]
     B --> D[Final canvas PNG]
     C --> E[Version 1 JSON sample]
@@ -48,7 +48,7 @@ flowchart TD
 
 The system preserves older bundles and records for research auditability. It does not overwrite them.
 
-## 3. Provisional multimodal comparison flow
+## 3. Current learner comparison and prototype-scoring flow
 
 ```mermaid
 flowchart LR
@@ -62,9 +62,9 @@ flowchart LR
     F --> H[Stroke evidence: count, dots, DTW path distance]
     G --> I[Hybrid response]
     H --> I
-    I --> J{Approved annotation and calibration?}
-    J -->|No| K[Scoring unavailable / provisional evidence]
-    J -->|Yes, future phase| L[Form, stroke, and hybrid decision]
+    I --> J{Target has local prototype calibration?}
+    J -->|No: be bi bo bu b b_| K[practice_comparison: no correctness verdict]
+    J -->|Yes: a ba e i o u| L[prototype_result: practice match or needs more practice]
 ```
 
 ### Form branch
@@ -75,11 +75,31 @@ The form branch compares the completed PNG images after normalizing visible ink 
 
 The stroke branch keeps pen-lift boundaries. It compares normal path strokes using constrained Dynamic Time Warping (DTW). A stationary dot is compared by normalized position instead of DTW.
 
-### Why the system does not score yet
+### What the learner state means
 
-A numeric DTW distance or image overlap is not automatically “correct” or “incorrect.” An expert must approve acceptable variation and thresholds for the active bundle. Until then, the output must remain provisional.
+All 12 current-release targets have an active local expert comparison bundle. A numeric DTW distance or image overlap is not automatically a research-grade “correct” or “incorrect” result.
 
-## 4. Future approved-scoring flow
+- `a`, `ba`, `e`, `i`, `o`, and `u` have local **prototype** form/DTW limits derived from accepted `ajstrokes` and `hurry-strokes` recordings. These enable practice results, not thesis accuracy claims.
+- `be`, `bi`, `bo`, `bu`, `b`, and `b_` lack a calibration configuration. They return `practice_comparison` even though the expert recording is used for comparison.
+
+Kudlit/cancellation marks may be outside the visual grid. Full-canvas placement can be checked only when an approved target-specific annotation exists; it is not yet a completed calibrated check for every modified target.
+
+## 4. Feedback flow
+
+```mermaid
+flowchart TD
+    A[prototype_result with confirmed errors] --> B[Short-lived server feedback-result ID]
+    B --> C[Retrieve allowed error codes and graph source references]
+    C --> D{Valid AI Gateway configuration and provider response?}
+    D -->|No| E[Deterministic source-constrained feedback]
+    D -->|Yes| F[Validate AI explanation against allowed errors and sources]
+    F -->|valid| G[AI-grounded explanation]
+    F -->|invalid| E
+```
+
+AI is optional wording only. It receives no learner image, pointer events, expert recording, reviewer data, bundle ID, or threshold value. It cannot decide correctness or add an error.
+
+## 5. Future expert-calibrated scoring flow
 
 ```mermaid
 flowchart TD
@@ -104,7 +124,7 @@ A future score requires all of the following:
 
 If any item is missing, the system must return an unavailable or needs-review state instead of a pass/fail result.
 
-## 5. Chapter 3 and Chapter 4 evaluation flow
+## 6. Chapter 3 and Chapter 4 evaluation flow
 
 ```mermaid
 flowchart TD
@@ -130,22 +150,24 @@ flowchart TD
 
 Never use the same writer’s samples in both threshold tuning and held-out evaluation. Never treat synthetic development samples as professional ground truth.
 
-## 6. Where group members should work
+## 7. Where group members should work
 
 | If you are working on… | Start with… |
 |---|---|
-| Drawing/canvas behavior | `app/frontend/app/drawing-canvas.js` and `app/frontend/lib/capture.js` |
+| Learner drawing/canvas behavior | `app/frontend/app/learn/learner-practice.js` and `app/frontend/lib/capture.js` |
+| Developer capture | `app/frontend/app/drawing-canvas.js` and `app/frontend/lib/capture.js` |
 | Replay/import behavior | `app/frontend/app/recording-review.js` and `app/frontend/lib/review.js` |
 | Developer reference workflow | `app/frontend/app/developer-reference-library/reference-library.js` and `app/backend/reference_library.py` |
 | API behavior and request validation | `app/backend/main.py` |
 | Image-form comparison | `app/backend/multimodal.py` and `app/backend/form_matching.py` |
 | DTW/stroke comparison | `app/backend/stroke_matching.py` and `app/backend/stroke_rules.py` |
-| Calibration and hybrid scoring | `app/backend/validation_config.py`, `app/backend/scoring.py`, and `app/backend/multimodal.py` |
+| Calibration and hybrid scoring | `app/backend/validation_config.py`, `app/backend/scoring.py`, and `app/backend/prototype_calibration.py` |
+| Feedback and optional AI phrasing | `app/backend/feedback.py`, `app/backend/feedback_store.py`, `app/backend/ai_feedback.py`, and `app/backend/ai_provider.py` |
 | Knowledge source data | `knowledge-graph/` — change only with source references and team review |
 | Tests | The matching file in `app/backend/tests/` or `app/frontend/test/` |
 | Thesis evaluation data | `app/evaluation/` and `app/backend/evaluation_metrics.py` |
 
-## 7. Rules for contributors
+## 8. Rules for contributors
 
 1. Write or update a test before changing validation behavior.
 2. Do not commit files from `app/data/reference-library/`.

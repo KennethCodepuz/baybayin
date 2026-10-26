@@ -1,5 +1,7 @@
 # Baybayin Validator Implementation Plan
 
+> Historical roadmap. For delivered behavior and current limitations, use [app/docs/CURRENT_SYSTEM_STATUS.md](app/docs/CURRENT_SYSTEM_STATUS.md). This roadmap's original pending statements are not a live system-status report.
+
 **Status:** Planning draft; character standards, expert involvement, and research constraints still need confirmation.  
 **Purpose:** Build and evaluate a prototype that checks a selected Baybayin character's final form and writing process, and provides evidence-linked feedback.  
 **Working constraint:** No application code until explicitly authorized.

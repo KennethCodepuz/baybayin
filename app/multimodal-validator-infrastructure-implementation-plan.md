@@ -1,6 +1,6 @@
 # Implementation plan: multimodal Baybayin validator infrastructure
 
-**Status:** Proposed; this document does not implement the validator.  
+**Status:** Historical plan, partly implemented. Multimodal comparison is implemented; current prototype-scoring coverage and remaining calibration work are in [CURRENT_SYSTEM_STATUS.md](docs/CURRENT_SYSTEM_STATUS.md).
 **Goal:** Build the infrastructure for separate image-based form validation, JSON-based stroke validation, a hybrid decision, and source-grounded AI feedback. The system must remain unable to claim learner correctness until approved expert references and evaluation data are available.  
 **Method:** Test-driven development. Write each test before its implementation, verify it fails for the intended reason, implement the smallest change, and rerun the relevant suite.
 

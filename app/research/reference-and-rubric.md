@@ -1,6 +1,6 @@
 # Reference and rubric working notes
 
-**Status: draft, not approved for participant labeling or validation.** The physical Baybayin book is being digitized. A separate illustrated PDF has been supplied and reviewed for the pilot; its stroke instructions still need expert interpretation.
+**Status: draft, not approved for participant labeling or research-grade validation.** The complete Lopez/KWF PDF has been incorporated as the source-backed knowledge-graph reference, and the local application has active expert comparison recordings. This document remains a historical rubric draft; its unresolved stroke-rule statements still require formal expert review. See [CURRENT_SYSTEM_STATUS.md](../docs/CURRENT_SYSTEM_STATUS.md).
 
 ## Primary source register
 

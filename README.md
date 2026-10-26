@@ -1,29 +1,27 @@
 # Baybayin Validator Prototype
 
-This is an early development prototype for a Baybayin writing validator. It uses a Next.js frontend and a Python FastAPI backend.
+This is a local Baybayin handwriting-validator thesis prototype built with a Next.js frontend and a Python FastAPI backend. It compares a learner drawing with a matching active expert recording using both the final PNG and ordered pointer events.
 
-The system currently records a drawing and its ordered pen or pointer events. Developers can save those recordings as JSON, replay them later, and curate expert-reviewed examples for a future validator. It does not yet decide whether a Baybayin character, stroke order, or stroke direction is correct.
+Read [the current system status](app/docs/CURRENT_SYSTEM_STATUS.md) before relying on any result. It is the authoritative boundary between implemented prototype behavior and unimplemented research claims.
 
 ## What the prototype does now
 
-- Captures mouse, pen, or touch drawing events on a canvas.
-- Records stroke boundaries, coordinates, timestamps, pointer type, target label, and a final PNG image.
-- Checks the structural completeness of a recording through FastAPI.
-- Downloads a version 1 JSON drawing sample.
-- Opens a saved JSON sample and replays its recorded strokes.
-- Provides a local developer reference library for `ba` and `ka` recordings.
-- Stores candidate references with source, capture, review, checksum, and provenance metadata.
-- Requires an approved character-specification version before a candidate can become an approved reference.
-- Exports a graph-ready manifest of approved reference recordings.
+- Lets learners draw any of 12 current targets on the guided 800×600 canvas and submit a non-persisting practice attempt.
+- Compares the final form and ordered strokes with the active local expert recording using normalized image measurements, stroke count, dot-position comparison, and constrained DTW.
+- Gives prototype practice results for `a`, `ba`, `e`, `i`, `o`, and `u` using local prototype limits derived from accepted calibration recordings.
+- Gives a comparison-only result for `be`, `bi`, `bo`, `bu`, `b`, and `b_`, because those targets have no scoring threshold yet.
+- Preserves outside-grid drawing space for kudlit and other marks; approved annotations can evaluate above/below placement where available.
+- Captures, downloads, imports, and replays version 1 JSON recordings for developer/reference work.
+- Keeps a private local developer reference library with provenance, review, bundle, and activation records.
+- Provides deterministic source-constrained feedback. An optional server-side AI explanation layer can only rephrase confirmed errors and falls back safely when unavailable.
 
 ## What it does not do yet
 
-- Validate whether a learner wrote Baybayin correctly.
-- Determine the correct stroke count, order, direction, pen lifts, or acceptable handwriting variations.
-- Use the PDF or physical book automatically as a validation engine.
-- Include user accounts, authentication, cloud storage, or a database.
-
-The `ba` and `ka` writing rules remain pending expert review. Until a qualified reviewer approves a specification and reference recordings, no recording should be treated as ground truth.
+- Make research-grade correct/incorrect claims for `be`, `bi`, `bo`, `bu`, `b`, or `b_` until expert-reviewed calibration thresholds are created.
+- Report accuracy, precision, recall, F1, confusion matrices, or error-detection rates until a writer-disjoint expert-labeled held-out dataset is collected.
+- Validate every Baybayin character, unrestricted words, or transliterations.
+- Let an AI model decide correctness, inspect raw handwriting, set thresholds, or override deterministic results.
+- Include production authentication, a database, cloud storage, participant consent, or research-data retention workflows.
 
 ## Requirements
 
@@ -66,14 +64,15 @@ Open these pages in a browser:
 
 | Page | Purpose |
 | --- | --- |
-| `http://127.0.0.1:3000` | Capture a drawing, download a sample, and replay saved samples. |
-| `http://127.0.0.1:3000/developer-reference-library` | Import and curate developer reference recordings for `ba` and `ka`. |
+| `http://127.0.0.1:3000` | Learner practice: draw, compare, and receive a safe result. |
+| `http://127.0.0.1:3000/developer-login` | Local developer access gate; the prototype password is `ganbatte`. |
+| `http://127.0.0.1:3000/developer` | Developer workspace, capture, reference library, and validation inspector links. |
 
 Stop either service with `Ctrl+C` in its terminal.
 
 ## Developer reference workflow
 
-1. A qualified Baybayin writer draws `ba` or `ka` using the capture page.
+1. A qualified Baybayin writer draws a current-release target using the developer capture page.
 2. Download the checked JSON sample.
 3. Open the developer reference library and load that JSON file.
 4. Add the source page, convention, input method, reviewer code, and notes.
@@ -83,7 +82,7 @@ Stop either service with `Ctrl+C` in its terminal.
 
 Reference data is stored locally in `app/data/reference-library/`. Git ignores this directory so real recordings, manifests, and non-public review metadata are not committed. Back it up using the team’s approved private storage.
 
-The developer reference route has no authentication, so use it only on a developer-controlled local computer.
+The local developer area has a prototype password gate and protected backend reference routes. It remains suitable only for a developer-controlled local computer.
 
 ## Tests
 
@@ -104,4 +103,4 @@ npm.cmd run build
 
 ## Next milestone
 
-Find a qualified Baybayin expert, approve the `ba` and `ka` character specifications, and collect several reviewed reference recordings. That reference set will support the first limited stroke-comparison validator.
+Collect and obtain expert review for calibration samples for `be`, `bi`, `bo`, `bu`, `b`, and `b_`; then create versioned thresholds without using the held-out evaluation data. See [the current system status](app/docs/CURRENT_SYSTEM_STATUS.md).

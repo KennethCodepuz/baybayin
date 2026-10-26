@@ -1,6 +1,6 @@
 # Implementation plan: developer reference library and knowledge-base foundation
 
-**Status:** Proposed plan; no feature implementation is included in this document.  
+**Status:** Historical plan, partly implemented. The local private reference library and committed knowledge graph exist; their present validation boundary is in [CURRENT_SYSTEM_STATUS.md](docs/CURRENT_SYSTEM_STATUS.md).
 **Goal:** Let developers curate approved expert drawing recordings for a small `ba` and `ka` pilot, preserve their provenance, and create a source-traceable foundation for the future validator and knowledge graph.  
 **Approach:** Test-driven development. Write each test before the corresponding implementation, confirm it fails for the intended reason, make the smallest change, then rerun the relevant test suite.
 

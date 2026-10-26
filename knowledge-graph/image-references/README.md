@@ -9,7 +9,7 @@ This directory holds only the PDF pages needed to establish visual form referenc
 
 ## Important boundary
 
-These pages are authoritative visual source material, but they are **not** automatic ground-truth templates for computer-vision scoring. For each target, the project still needs an expert-approved character specification, a linked approved JSON stroke recording, a canonical image rendered from that recording, and reviewed image annotations/tolerances.
+These pages are authoritative visual source material, but they are **not** automatic ground-truth templates or thresholds for computer-vision scoring. The local application currently compares learner images with active expert-recording bundles; the source pages remain guide/provenance material. Only `a`, `ba`, `e`, `i`, `o`, and `u` have local prototype image/DTW limits. Every remaining target still needs accepted calibration data and reviewed tolerances before it can receive a score.
 
 Future per-character files should use this structure:
 

@@ -1,5 +1,7 @@
 # Implementation plan: validation-correctness hardening
 
+> Historical hardening plan. The completed safety work supports the current prototype comparator; it does not turn prototype calibration into research-grade validation. See [CURRENT_SYSTEM_STATUS.md](docs/CURRENT_SYSTEM_STATUS.md).
+
 **Status:** Proposed; this document makes no code changes.  
 **Goal:** Fix the five issues that must be resolved before expert recordings are collected or any learner pass/fail scoring can be enabled.  
 **Method:** Test-driven development. For each behavior, add a focused test that fails for the identified defect, implement the smallest fix, run the relevant test group, then run the complete backend and frontend checks at the end.

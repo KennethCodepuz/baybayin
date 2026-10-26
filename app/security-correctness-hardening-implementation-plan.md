@@ -1,5 +1,7 @@
 # Implementation plan: security and correctness hardening
 
+> Historical hardening plan. The application now has local developer access controls, protected reference APIs, bounded sample validation, and server-derived learner feedback. It is still localhost prototype security, not production authentication; see [CURRENT_SYSTEM_STATUS.md](docs/CURRENT_SYSTEM_STATUS.md).
+
 **Status:** Proposed; this document makes no runtime code changes.  
 **Goal:** Close the security, privacy, reliability, and logic gaps found in the 23 October 2026 audit while keeping the application a local developer and expert-reference tool.  
 **Method:** Test-driven development. Each phase starts with failing tests, then implements the smallest change that makes those tests pass. No learner pass/fail scoring will be enabled by this plan.

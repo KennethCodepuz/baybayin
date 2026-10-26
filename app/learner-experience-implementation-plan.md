@@ -1,6 +1,6 @@
 # Implementation plan: learner practice and validation experience
 
-**Status:** Proposed — no runtime behavior changes are made by this plan.  
+**Status:** Historical plan, partly implemented. The learner UI, active expert comparisons, six prototype-scored targets, and deterministic feedback now exist. Consult [CURRENT_SYSTEM_STATUS.md](docs/CURRENT_SYSTEM_STATUS.md) rather than the original starting-state statements below.
 **Goal:** Create a learner-facing Baybayin practice experience that captures handwriting safely, requests the hybrid validator, and explains only evidence the system is authorized to claim.  
 **Method:** Test-driven development. Each phase begins with failing tests, followed by the smallest implementation that satisfies them.
 

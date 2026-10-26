@@ -1,6 +1,6 @@
 # Implementation plan: DTW stroke validation, form comparison, and evaluation readiness
 
-**Status:** Proposed — no learner pass/fail scoring is enabled by this plan alone.  
+**Status:** Historical plan, partly implemented. DTW and form comparison now power local expert comparisons and six prototype practice results; held-out evaluation and research-grade threshold selection remain pending. See [CURRENT_SYSTEM_STATUS.md](docs/CURRENT_SYSTEM_STATUS.md).
 **Goal:** Build the algorithmic and evaluation-ready layers of the Baybayin validator while expert reference recordings and expert calibration are pending.  
 **Method:** Test-driven development (TDD). For every behavior, write a focused failing test first, implement the smallest change that passes it, then run the related suite before proceeding.
 
