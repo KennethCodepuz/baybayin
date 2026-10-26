@@ -7,6 +7,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from feedback import deterministic_feedback, retrieve_feedback_context
+from feedback_store import FeedbackResultStore
+from ai_feedback import build_ai_request, validate_ai_response, FeedbackValidationError
+from ai_provider import AIProviderError, generate_explanation
 from form_matching import FormMatchError
 from knowledge_graph import KnowledgeGraph, load_knowledge_graph
 from kudlit_rules import KudlitRuleError, validate_kudlit_annotation
@@ -169,11 +172,17 @@ class FeedbackRequest(BaseModel):
     stroke: BranchFeedback
 
 
+class LearnerFeedbackRequest(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    resultId: str = Field(min_length=10, max_length=100)
+
+
 app = FastAPI(title='Baybayin capture API')
 app.state.reference_repository = ReferenceRepository(Path(__file__).resolve().parent.parent / 'data' / 'reference-library')
 app.state.knowledge_graph = load_knowledge_graph(Path(__file__).resolve().parents[2] / 'knowledge-graph')
 app.state.expert_reference_root = Path(__file__).resolve().parents[2] / 'expert reference'
 app.state.expert_batch_manifest = Path(__file__).resolve().parent.parent / 'research' / 'expert-reference-batch-2026-10-24.json'
+app.state.feedback_results = FeedbackResultStore()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=['http://localhost:3000', 'http://127.0.0.1:3000'],
@@ -294,7 +303,33 @@ def validation_preview(sample: Sample):
 @app.post('/api/learner-validation')
 def validate_learner_practice(sample: Sample):
     """Public, write-free learner endpoint that hides private reference evidence."""
-    return learner_result(validation_preview(sample))
+    preview = validation_preview(sample)
+    result = learner_result(preview)
+    errors = [*preview['form'].get('errors', []), *preview['stroke'].get('errors', [])]
+    if result['state'] == 'prototype_result' and errors:
+        result['feedbackResultId'] = app.state.feedback_results.put({
+            'targetId': preview['targetId'], 'form': {'errors': preview['form']['errors']},
+            'stroke': {'errors': preview['stroke']['errors']},
+        })
+    return result
+
+
+@app.post('/api/learner-feedback')
+def learner_feedback(request: LearnerFeedbackRequest):
+    """Use optional AI explanation only after the deterministic feedback context is fixed."""
+    result = app.state.feedback_results.get(request.resultId)
+    if not result:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='This feedback request has expired. Check your practice again.')
+    try:
+        context = retrieve_feedback_context(knowledge_graph(), result['targetId'], [*result['form']['errors'], *result['stroke']['errors']])
+    except ValueError:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Knowledge-graph target not found')
+    fallback = deterministic_feedback(context, result)
+    try:
+        response = generate_explanation(build_ai_request(context, result))
+        return validate_ai_response(response, context, result)
+    except (AIProviderError, FeedbackValidationError):
+        return fallback
 
 
 @app.post('/api/feedback')

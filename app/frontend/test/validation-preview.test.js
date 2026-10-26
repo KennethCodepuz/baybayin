@@ -18,3 +18,7 @@ test('finds provisional measurement evidence without treating it as a score', ()
   assert.deepEqual(provisionalMeasurements(result.form), { maskIou: 0.8 });
   assert.equal(provisionalMeasurements(result.stroke), null);
 });
+
+test('does not crash when a calibrated or prototype branch uses object evidence', () => {
+  assert.equal(provisionalMeasurements({ evidence: { calibrationId: 'prototype-a-v1' } }), null);
+});
