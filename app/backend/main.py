@@ -14,6 +14,9 @@ from form_matching import FormMatchError
 from knowledge_graph import KnowledgeGraph, load_knowledge_graph
 from kudlit_rules import KudlitRuleError, validate_kudlit_annotation
 from learner_validation import learner_result
+from model_features import TrainingDataError
+from model_multioutput import validate_sample_with_model
+from model_training import ModelTrainingError
 from multimodal import FeatureError, combine_validation, unavailable_branch_result, validate_png_data_url
 from reference_bundle import BundleError, build_reference_bundle
 from expert_reference_batch import import_batch, preflight_batch
@@ -181,6 +184,8 @@ app = FastAPI(title='Baybayin capture API')
 app.state.reference_repository = ReferenceRepository(Path(__file__).resolve().parent.parent / 'data' / 'reference-library')
 app.state.knowledge_graph = load_knowledge_graph(Path(__file__).resolve().parents[2] / 'knowledge-graph')
 app.state.expert_reference_root = Path(__file__).resolve().parents[2] / 'expert reference'
+app.state.multioutput_model_path = Path(__file__).resolve().parents[2] / 'model-artifacts' / 'provisional-20261028' / 'multioutput-run-seed-20261028' / 'multioutput-deployment-model.json'
+app.state.centerline_model_path = Path(__file__).resolve().parents[2] / 'model-artifacts' / 'provisional-20261028' / 'centerline-pilot' / 'multioutput-deployment-model.json'
 app.state.expert_batch_manifest = Path(__file__).resolve().parent.parent / 'research' / 'expert-reference-batch-2026-10-24.json'
 app.state.feedback_results = FeedbackResultStore()
 app.add_middleware(
@@ -303,6 +308,14 @@ def validation_preview(sample: Sample):
 @app.post('/api/learner-validation')
 def validate_learner_practice(sample: Sample):
     """Public, write-free learner endpoint that hides private reference evidence."""
+    target = knowledge_graph().find_target(sample.target)
+    if target:
+        try:
+            model_path = app.state.centerline_model_path if app.state.centerline_model_path.is_file() else app.state.multioutput_model_path
+            result = validate_sample_with_model(sample.model_dump(), model_path, app.state.expert_reference_root)
+            return {**result, 'sourceRefs': target['sourceRefs']}
+        except (TrainingDataError, ModelTrainingError):
+            pass
     preview = validation_preview(sample)
     result = learner_result(preview)
     errors = [*preview['form'].get('errors', []), *preview['stroke'].get('errors', [])]

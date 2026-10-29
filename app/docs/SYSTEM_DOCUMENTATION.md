@@ -45,7 +45,7 @@ Use **Open saved sample** on the capture page. The system validates the JSON wit
 
 ### 2a. Learner practice
 
-`/learn` is separate from developer capture and reference-review pages. A learner selects a source-backed target and draws on the same 800×600 canvas and centered visual-only 4×3 grid used by developer capture. The surrounding area remains drawable for kudlit and other marks outside the base-character grid. Learners may show/hide the guide, undo the latest completed stroke, clear the drawing, and select **Check my practice**. The browser sends the in-memory sample to `POST /api/learner-validation`; it does not persist the sample or reveal expert recordings, bundle IDs, measurements, tokens, or developer metadata.
+`/learn` is separate from developer capture and reference-review pages. A learner selects a source-backed target and draws on the same 800×600 canvas and centered visual-only 4×3 grid used by developer capture. The surrounding area remains drawable for kudlit and other marks outside the base-character grid. Learners may show/hide the guide, undo the latest completed stroke, clear the drawing, and select **Check my practice**. When the local preliminary deployment model is present, the browser receives separate model outputs for form, count, process, and applicable kudlit validation. The browser sends the in-memory sample to `POST /api/learner-validation`; it does not persist the sample or reveal expert recordings, bundle IDs, measurements, tokens, or developer metadata.
 
 The learner response has one explicit state: `unavailable` when no active expert bundle exists, `practice_comparison` when a bundle exists without calibration, or `prototype_result` for a local prototype calibration. The verified expert batch is active locally for the 12 current targets. The supplied `ajstrokes/` and `hurry-strokes/` recordings derive prototype-only form/DTW limits for `a`, `ba`, `e`, `i`, `o`, and `u`; this is explicitly not an expert-approved research result. `be`, `bi`, `bo`, `bu`, `b`, and `b_` therefore remain practice comparison until separately calibrated, particularly because their kudlit/cancellation marks need approved outside-grid data.
 
@@ -137,7 +137,7 @@ The visual reference pages are source material from the Lopez/KWF publication. T
 | `POST /api/reference-batches/expert-2026-10-24/import` | Copy the verified batch into candidate records; requires an importer code. |
 | `GET /api/reference-batches/expert-2026-10-24/coverage` | Show `active`, `approved_inactive`, `candidate`, or `missing` for each core target. |
 | `POST /api/validation/preview` | Return unavailable or provisional form/stroke evidence. |
-| `POST /api/learner-validation` | Return a learner-safe, non-persisting unavailable, practice-comparison, or prototype result. |
+| `POST /api/learner-validation` | Return a learner-safe, non-persisting preliminary multi-output model result when available, otherwise the prior deterministic result. |
 | `POST /api/learner-feedback` | Resolve a short-lived server result ID into deterministic feedback or a validated optional AI explanation. |
 | `POST /api/stroke-annotations` | Save a protected, approved stroke/kudlit annotation tied to an existing reference bundle. |
 | `POST /api/feedback` | Produce deterministic, source-constrained feedback. |

@@ -14,6 +14,7 @@ Read [the current system status](app/docs/CURRENT_SYSTEM_STATUS.md) before relyi
 - Captures, downloads, imports, and replays version 1 JSON recordings for developer/reference work.
 - Keeps a private local developer reference library with provenance, review, bundle, and activation records.
 - Provides deterministic source-constrained feedback. An optional server-side AI explanation layer can only rephrase confirmed errors and falls back safely when unavailable.
+- Includes a local preliminary multi-output model validator that compares learner features with expert reference recordings and reports form, count, process, and applicable kudlit results.
 
 ## What it does not do yet
 

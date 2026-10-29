@@ -24,3 +24,6 @@ service-account*.json
 
 # Developer-only reference recordings and manifests.
 app/data/reference-library/
+
+# Derived preliminary-model features, writer splits, and trained artifacts.
+model-artifacts/

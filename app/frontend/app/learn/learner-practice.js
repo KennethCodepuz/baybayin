@@ -136,6 +136,16 @@ function feedbackText(item) {
   return labels[item] || 'Try again while following the visual guide.';
 }
 
+function validationText(output, state) {
+  if (state === 'not_applicable') return 'Not applicable for this character';
+  if (state === 'pass') return 'Looks consistent with the model reference';
+  const labels = {
+    form: 'Form needs more practice.', count: 'Stroke count needs more practice.',
+    process: 'Stroke process needs more practice.', kudlit: 'Kudlit or cancellation mark needs more practice.',
+  };
+  return labels[output] || 'Needs more practice.';
+}
+
 export default function LearnerPractice() {
   const canvasRef = useRef(null);
   const guideRef = useRef(null);
@@ -278,9 +288,13 @@ export default function LearnerPractice() {
     <p id="learner-status" role="status" aria-live="polite">{status}</p>
     {result && <section className={`review learner-result result-${result.state}`}>
       <p className="result-kicker">Your practice result</p>
-      <h2>{result.state === 'unavailable' ? 'Practice comparison unavailable' : result.state === 'prototype_result' ? result.hybrid.state === 'pass' ? 'Prototype match' : 'Try that one again' : 'Practice comparison'}</h2>
+      <h2>{result.state === 'unavailable' ? 'Practice comparison unavailable' : result.state === 'preliminary_model_validation' ? result.overall.state === 'pass' ? 'Preliminary model match' : 'Try that one again' : result.state === 'prototype_result' ? result.hybrid.state === 'pass' ? 'Prototype match' : 'Try that one again' : 'Practice comparison'}</h2>
       <p>{result.message}</p>
-      {result.feedback.items.length > 0 && <ul>{result.feedback.items.map(item => <li key={item}>{feedbackText(item)}</li>)}</ul>}
+      {result.state === 'preliminary_model_validation' && <>
+        <p className="hint">{result.limitation}</p>
+        <ul className="validation-list">{Object.entries(result.validation).map(([output, outcome]) => <li key={output}><strong>{output[0].toUpperCase() + output.slice(1)}:</strong> {validationText(output, outcome.state)}</li>)}</ul>
+      </>}
+      {result.feedback?.items?.length > 0 && <ul>{result.feedback.items.map(item => <li key={item}>{feedbackText(item)}</li>)}</ul>}
       {result.feedbackResultId && <div className="actions"><button type="button" onClick={explain} disabled={busy}>{explanation ? 'Explanation ready' : 'Explain this feedback'}</button></div>}
       {explanation && <p className="ai-explanation">{explanation.message}</p>}
       {result.sourceRefs.length > 0 && <p className="hint">Source references: {result.sourceRefs.join(', ')}</p>}

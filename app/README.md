@@ -95,6 +95,68 @@ The downloaded JSON includes a version, UTC creation time, manually entered targ
 
 The prototype listens on localhost and is for development only. Reference sources, permissions, character specifications, and an expert-approved stroke rubric are documented as pending in `research/reference-and-rubric.md`.
 
+## Preliminary model feature pipeline
+
+This offline research pipeline reads the cleaned Excel manifest and compares every group-protocol recording with its matching immutable expert reference. It produces image and stroke features plus writer-disjoint splits. It does not yet train a classifier or make thesis-performance claims.
+
+```powershell
+cd '.\app\backend'
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe model_features.py `
+  --manifest '..\..\outputs\dataset-cleaning-20261028\cleaned-handwriting-dataset.xlsx' `
+  --project-root '..\..' `
+  --expert-reference-root '..\..\expert reference' `
+  --features-output '..\..\model-artifacts\provisional-20261028\feature-rows.jsonl' `
+  --folds-output '..\..\model-artifacts\provisional-20261028\writer-folds.json'
+```
+
+The feature schema is `pilot-v1`. The split file contains three leave-one-writer-out folds. Generated feature rows, split files, and future trained models stay in Git-ignored `model-artifacts/` because they derive from research recordings.
+
+## Preliminary model training
+
+The training script fits two approaches for each writer-held-out fold: a transparent deterministic baseline and a fixed-seed weighted Random Forest. It writes per-sample predictions, a JSON evaluation report, and one JSON model artifact per fold.
+
+```powershell
+cd '.\app\backend'
+.\.venv\Scripts\python.exe model_training.py `
+  --features-input '..\..\model-artifacts\provisional-20261028\feature-rows.jsonl' `
+  --output-dir '..\..\model-artifacts\provisional-20261028\training-run-seed-20261028' `
+  --random-seed 20261028
+```
+
+These measurements describe only the current three-writer, group-protocol dataset. They are preliminary model-development evidence, not expert-reviewed final thesis performance or evidence of population-level generalization.
+
+## Preliminary multi-output learner validation
+
+The learner endpoint prefers the local centerline model at `model-artifacts/provisional-20261028/centerline-pilot/multioutput-deployment-model.json`. If that artifact is absent it tries the original model at `model-artifacts/provisional-20261028/multioutput-run-seed-20261028/multioutput-deployment-model.json`. It returns model outputs for form, count, process, and applicable kudlit validation.
+
+The centerline model replaces the mask-IoU training slot with one minus the symmetric centerline distance and replaces canvas-relative endpoint displacement with glyph-normalized endpoint displacement. Its artifact records this slot mapping and the reference checksums. In the current pilot the changes reduce, but do not eliminate, sensitivity to pen width. These are preliminary models, and tree-vote fractions are not calibrated probabilities.
+
+Recreate the original artifact after generating features:
+
+```powershell
+cd '.\app\backend'
+.\.venv\Scripts\python.exe model_multioutput.py `
+  --features-input '..\..\model-artifacts\provisional-20261028\feature-rows.jsonl' `
+  --output-dir '..\..\model-artifacts\provisional-20261028\multioutput-run-seed-20261028' `
+  --random-seed 20261028
+```
+
+Generate and evaluate the candidate, then train its deployment artifact (the training command refuses to overwrite an existing artifact):
+
+```powershell
+.\.venv\Scripts\python.exe compare_robust_features.py `
+  --project-root '..\..' `
+  --manifest '..\..\outputs\dataset-cleaning-20261028\cleaned-handwriting-dataset.xlsx' `
+  --baseline-features '..\..\model-artifacts\provisional-20261028\feature-rows.jsonl' `
+  --output '..\..\model-artifacts\provisional-20261028\centerline-pilot\comparison.json'
+.\.venv\Scripts\python.exe train_centerline_model.py `
+  --features-input '..\..\model-artifacts\provisional-20261028\centerline-pilot\candidate-features.jsonl' `
+  --output '..\..\model-artifacts\provisional-20261028\centerline-pilot\multioutput-deployment-model.json'
+```
+
+See [the multi-output implementation plan](multioutput-model-implementation-plan.md) for label mapping, current scope, and research limits.
+
 ## Knowledge graph
 
 The curated source data lives in `../knowledge-graph/` and is loaded by FastAPI as read-only data. It exposes these local endpoints:
